@@ -1,0 +1,2325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AUTO-HAUS TORQUE | Book Your Mobile Mechanic Service</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@zxing/library@0.21.1/umd/index.min.js"></script>
+<style>
+:root{--lime:#A8E000;--lime-d:#7AB800;--black:#0A0A0A;--orange:#A8E000;--orange-l:#C6FF2D;--grey-l:#F2F2F0;--grey-m:#D8D8D5;--grey-d:#888885;--white:#fff;--ff:'Barlow Condensed',sans-serif;--fb:'Barlow',sans-serif;--sh:0 4px 20px rgba(0,0,0,.10);--sh2:0 8px 40px rgba(0,0,0,.18);--r:12px;--r-sm:6px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--fb);font-size:14px;background:var(--grey-l);color:var(--black);min-height:100vh;}
+h1,h2,h3,h4,h5,h6{font-family:var(--ff);font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:4px;letter-spacing:.5px;}
+h1{font-size:2.6rem;line-height:1;}
+h2{font-size:2rem;line-height:1.1;}
+h3{font-size:1.5rem;}
+h4{font-size:1.2rem;}
+h5{font-size:1rem;}
+p{font-family:var(--fb);line-height:1.6;font-size:.92rem;}
+input,select,textarea{font-family:var(--fb);font-size:.92rem;}
+#app{min-height:100vh;}
+/* NAV — matched to main site */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(0,0,0,.95);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(168,224,0,.14);
+}
+.nav-top{
+  background:linear-gradient(90deg,#007A4D,#002395 40%,#DE3831 80%,#FFB612);
+  text-align:center;padding:.3rem 1rem;
+  font-family:var(--ff);font-size:1rem;font-weight:700;
+  letter-spacing:.12em;color:#fff;
+}
+.nav-inner{
+  max-width:1400px;margin:0 auto;padding:0 1.5rem;
+  display:flex;align-items:center;gap:1.25rem;height:70px;
+}
+.nav-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;flex-shrink:0;}
+.nav-brand img.co-logo{height:46px;width:auto;object-fit:contain;}
+.nav-brand-text{display:flex;flex-direction:column;line-height:1.1;}
+.nav-brand-name{
+  font-family:var(--ff);font-size:1rem;font-weight:900;
+  letter-spacing:.08em;color:#fff;text-decoration:none;
+}
+.nav-brand-tag{font-family:var(--ff);font-size:.82rem;color:var(--lime);letter-spacing:.18em;text-transform:uppercase;}
+.nav-sa-wrap{
+  display:flex;align-items:center;gap:.65rem;
+  padding-left:.85rem;border-left:1px solid rgba(168,224,0,.22);flex-shrink:0;
+}
+.nav-sa-wrap img{height:44px;width:auto;object-fit:contain;}
+.nav-sa-label{
+  font-family:var(--ff);font-size:.88rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--lime);line-height:1.3;
+  display:flex;flex-direction:column;
+}
+.nav-sa-label span{color:#D0D0D0;font-weight:400;}
+.nav-links{display:flex;align-items:center;gap:.15rem;margin:0 auto;list-style:none;}
+.nav-links a{
+  font-family:var(--ff);font-size:1.08rem;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;color:#D0D0D0;text-decoration:none;
+  padding:.4rem .7rem;border-radius:2px;transition:all .2s;
+}
+.nav-links a:hover{color:var(--lime);background:rgba(168,224,0,.08);}
+.nav-right{display:flex;align-items:center;gap:.85rem;flex-shrink:0;}
+.nav-phone{
+  display:flex;align-items:center;gap:.4rem;
+  font-family:var(--ff);font-size:1.06rem;font-weight:700;
+  color:#fff;text-decoration:none;letter-spacing:.05em;
+}
+.nav-phone span{color:var(--lime);}
+.nav-admin-btn{
+  background:transparent;border:1px solid rgba(255,255,255,.18);color:#fff;
+  font-family:var(--ff);font-size:.82rem;font-weight:700;letter-spacing:.08em;
+  padding:.6rem 1rem;border-radius:3px;cursor:pointer;text-transform:uppercase;transition:all .2s;
+}
+.nav-admin-btn:hover{border-color:var(--lime);color:var(--lime);}
+#app{padding-top:108px;}
+@media(max-width:1100px){
+  .nav-links,.nav-sa-wrap{display:none;}
+}
+@media(max-width:768px){
+  .nav-top{font-size:.8rem;letter-spacing:.08em;}
+  .nav-inner{padding:0 1rem;gap:.75rem;height:auto;min-height:70px;flex-wrap:wrap;padding-top:.6rem;padding-bottom:.6rem;}
+  .nav-right{width:100%;justify-content:flex-end;}
+  .nav-phone{font-size:.92rem;}
+  #app{padding-top:126px;}
+}
+/* STEP INDICATOR */
+.step-bar{background:var(--black);padding:0 32px 16px;}
+.step-track{display:flex;align-items:center;max-width:720px;margin:0 auto;}
+.step-dot{width:28px;height:28px;border-radius:50%;background:var(--grey-d);display:flex;align-items:center;justify-content:center;font-family:var(--ff);font-size:.8rem;font-weight:700;color:#fff;flex-shrink:0;transition:all .3s;position:relative;}
+.step-dot.active{background:var(--lime);color:var(--black);}
+.step-dot.done{background:var(--orange);color:#fff;}
+.step-line{flex:1;height:2px;background:var(--grey-d);transition:background .3s;}
+.step-line.done{background:var(--orange);}
+/* CONTAINER */
+.container{max-width:900px;margin:0 auto;padding:32px 24px;}
+.container-wide{max-width:1100px;margin:0 auto;padding:32px 24px;}
+/* CARDS */
+.card{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;}
+.card-head{padding:24px 28px;border-bottom:2px solid var(--grey-l);}
+.card-body{padding:28px;}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--ff);font-size:1rem;font-weight:700;letter-spacing:.5px;padding:12px 28px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:all .2s;text-decoration:none;}
+.btn-primary{background:var(--lime);color:var(--black);}
+.btn-primary:hover{background:var(--lime-d);transform:translateY(-1px);box-shadow:var(--sh);}
+.btn-orange{background:var(--orange);color:#fff;}
+.btn-orange:hover{background:var(--orange-l);transform:translateY(-1px);}
+.btn-black{background:var(--black);color:#fff;}
+.btn-black:hover{background:#222;}
+.btn-outline{background:transparent;border:2px solid var(--black);color:var(--black);}
+.btn-outline:hover{background:var(--black);color:#fff;}
+.btn-sm{padding:8px 18px;font-size:.88rem;}
+.btn-lg{padding:16px 40px;font-size:1.2rem;}
+.btn-full{width:100%;justify-content:center;}
+.btn-group{display:flex;gap:12px;flex-wrap:wrap;}
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group.full{grid-column:1/-1;}
+label{font-family:var(--ff);font-size:.9rem;font-weight:600;color:var(--black);letter-spacing:.3px;}
+input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{padding:11px 14px;border:2px solid var(--grey-m);border-radius:var(--r-sm);font-size:.92rem;background:#fff;transition:border .2s;width:100%;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--lime);}
+.input-note{font-size:.78rem;color:var(--grey-d);}
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--ff);font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.3px;}
+.badge-lime{background:rgba(200,230,52,.2);color:#6a8300;}
+.badge-orange{background:rgba(255,107,0,.15);color:var(--orange);}
+.badge-grey{background:var(--grey-l);color:var(--grey-d);}
+.badge-green{background:#e6f9ee;color:#1a8a42;}
+/* HERO */
+.hero{background:var(--black);min-height:calc(100vh - 108px);display:flex;align-items:center;position:relative;overflow:hidden;}
+.hero-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(200,230,52,.04) 60px,rgba(200,230,52,.04) 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(200,230,52,.04) 60px,rgba(200,230,52,.04) 61px);}
+.hero-accent{position:absolute;right:-100px;top:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(200,230,52,.12) 0%,transparent 65%);}
+.hero-accent2{position:absolute;left:-80px;bottom:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,107,0,.10) 0%,transparent 65%);}
+.hero-content{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:80px 32px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.hero-text{}
+.hero-label{font-family:var(--ff);font-size:.88rem;font-weight:700;color:var(--lime);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.hero-label::before{content:'';width:32px;height:2px;background:var(--lime);}
+.hero-title{font-family:var(--ff);font-size:3.8rem;font-weight:900;color:#fff;line-height:.95;text-decoration:none;margin-bottom:20px;letter-spacing:.5px;}
+.hero-title span{color:var(--lime);}
+.hero-sub{color:var(--grey-d);font-size:.95rem;line-height:1.7;margin-bottom:32px;max-width:460px;}
+.hero-cta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.hero-trust{display:flex;align-items:center;gap:6px;color:var(--grey-d);font-size:.82rem;}
+.hero-trust span{color:var(--lime);}
+.hero-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:32px;backdrop-filter:blur(12px);}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.stat-box{background:rgba(200,230,52,.08);border:1px solid rgba(200,230,52,.2);border-radius:var(--r-sm);padding:16px;text-align:center;}
+.stat-num{font-family:var(--ff);font-size:2rem;font-weight:900;color:var(--lime);}
+.stat-lbl{font-size:.78rem;color:var(--grey-d);letter-spacing:.5px;}
+.hero-services{display:flex;flex-direction:column;gap:10px;}
+.hero-svc-item{display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.06);}
+.hero-svc-icon{font-size:1.4rem;}
+.hero-svc-name{font-family:var(--ff);font-weight:600;color:#fff;font-size:.95rem;}
+.hero-svc-price{font-family:var(--ff);font-size:.85rem;color:var(--lime);margin-left:auto;}
+/* SERVICES OVERVIEW */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.svc-card{background:#fff;border-radius:var(--r);padding:24px;border:2px solid transparent;transition:all .2s;cursor:pointer;position:relative;overflow:hidden;}
+.svc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--lime);}
+.svc-card:hover{border-color:var(--lime);transform:translateY(-3px);box-shadow:var(--sh2);}
+.svc-icon{font-size:2.4rem;margin-bottom:14px;}
+.svc-name{font-family:var(--ff);font-size:1.2rem;font-weight:800;margin-bottom:8px;text-decoration:underline;}
+.svc-desc{font-size:.82rem;color:var(--grey-d);line-height:1.5;}
+.svc-price{font-family:var(--ff);font-size:1.3rem;font-weight:700;color:var(--orange);margin-top:12px;}
+/* UPLOAD ZONE */
+.upload-zone{border:3px dashed var(--grey-m);border-radius:var(--r);padding:48px 32px;text-align:center;transition:all .3s;cursor:pointer;position:relative;}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--lime);background:rgba(200,230,52,.04);}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-icon{font-size:3.5rem;margin-bottom:16px;}
+.upload-title{font-family:var(--ff);font-size:1.4rem;font-weight:700;margin-bottom:8px;}
+.upload-sub{font-size:.85rem;color:var(--grey-d);}
+.scan-animation{display:none;position:relative;border-radius:var(--r);overflow:hidden;}
+.scan-img{width:100%;max-height:200px;object-fit:cover;border-radius:var(--r);}
+.scan-line{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--lime),transparent);animation:scan 2s linear 3;}
+@keyframes scan{0%{top:0}100%{top:100%}}
+/* VEHICLE INFO GRID */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.info-field{background:var(--grey-l);border-radius:var(--r-sm);padding:14px 16px;}
+.info-label{font-family:var(--ff);font-size:.75rem;font-weight:700;color:var(--grey-d);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.info-value{font-family:var(--ff);font-size:1.1rem;font-weight:700;color:var(--black);}
+/* MAKE GRID */
+.make-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.make-card{border:2px solid var(--grey-m);border-radius:var(--r-sm);padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;background:#fff;}
+.make-card:hover{border-color:var(--lime);background:rgba(200,230,52,.05);}
+.make-card.selected{border-color:var(--lime);background:rgba(200,230,52,.1);}
+.make-name{font-family:var(--ff);font-size:.95rem;font-weight:700;margin-top:8px;}
+.make-emoji{font-size:1.8rem;}
+/* BODY TYPE */
+.body-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.body-card{border:2px solid var(--grey-m);border-radius:var(--r);padding:20px 14px;text-align:center;cursor:pointer;transition:all .2s;background:#fff;}
+.body-card:hover{border-color:var(--orange);}
+.body-card.selected{border-color:var(--orange);background:rgba(255,107,0,.06);}
+.body-emoji{font-size:2.5rem;margin-bottom:10px;}
+.body-name{font-family:var(--ff);font-size:1rem;font-weight:700;}
+/* SERVICE CATALOG */
+.catalog-layout{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start;}
+.catalog-grid{display:grid;grid-template-columns:1fr;gap:14px;}
+.service-card{border:2px solid var(--grey-m);border-radius:var(--r);padding:20px;background:#fff;transition:all .2s;cursor:pointer;}
+.service-card:hover{border-color:var(--lime);box-shadow:var(--sh);}
+.service-card.in-cart{border-color:var(--lime);background:rgba(200,230,52,.05);}
+.sc-top{display:flex;align-items:flex-start;gap:16px;}
+.sc-icon{font-size:2.2rem;flex-shrink:0;}
+.sc-info{flex:1;}
+.sc-name{font-family:var(--ff);font-size:1.2rem;font-weight:800;margin-bottom:6px;}
+.sc-desc{font-size:.82rem;color:var(--grey-d);line-height:1.5;margin-bottom:12px;}
+.sc-items{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.sc-item{background:var(--grey-l);border-radius:20px;padding:3px 10px;font-size:.75rem;color:var(--grey-d);}
+.sc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--grey-l);}
+.sc-price{font-family:var(--ff);font-size:1.5rem;font-weight:900;color:var(--orange);}
+/* CART */
+.cart-box{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:24px;position:sticky;top:100px;}
+.cart-title{font-family:var(--ff);font-size:1.3rem;font-weight:800;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.cart-count{background:var(--orange);color:#fff;font-size:.75rem;padding:2px 8px;border-radius:20px;}
+.cart-empty{text-align:center;padding:32px 0;color:var(--grey-d);font-size:.88rem;}
+.cart-items{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.cart-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--grey-l);border-radius:var(--r-sm);}
+.ci-left{display:flex;align-items:center;gap:10px;}
+.ci-icon{font-size:1.2rem;}
+.ci-name{font-family:var(--ff);font-size:.9rem;font-weight:700;}
+.ci-price{font-family:var(--ff);font-size:.95rem;font-weight:700;color:var(--orange);}
+.ci-remove{background:none;border:none;color:var(--grey-d);cursor:pointer;font-size:1.1rem;padding:2px 6px;border-radius:4px;transition:all .2s;}
+.ci-remove:hover{color:#e53935;background:rgba(229,57,53,.1);}
+.cart-total{border-top:2px solid var(--grey-m);padding-top:14px;margin-top:4px;}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.ct-label{font-family:var(--ff);font-size:.9rem;color:var(--grey-d);}
+.ct-val{font-family:var(--ff);font-size:1rem;font-weight:700;}
+.ct-val.big{font-size:1.4rem;color:var(--orange);}
+.disclaimer{background:rgba(255,107,0,.08);border:1px solid rgba(255,107,0,.25);border-radius:var(--r-sm);padding:12px 14px;font-size:.78rem;color:var(--orange);line-height:1.5;margin:12px 0;}
+/* CALENDAR */
+.calendar{background:#fff;border-radius:var(--r);padding:24px;}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.cal-month{font-family:var(--ff);font-size:1.4rem;font-weight:800;}
+.cal-nav-btn{background:var(--grey-l);border:none;border-radius:var(--r-sm);width:34px;height:34px;cursor:pointer;font-size:1rem;transition:all .2s;}
+.cal-nav-btn:hover{background:var(--lime);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-dow{text-align:center;font-family:var(--ff);font-size:.78rem;font-weight:700;color:var(--grey-d);padding-bottom:8px;}
+.cal-day{text-align:center;padding:10px 4px;border-radius:var(--r-sm);cursor:pointer;font-family:var(--ff);font-size:.95rem;font-weight:600;transition:all .2s;border:2px solid transparent;}
+.cal-day.empty{cursor:default;}
+.cal-day.past{color:var(--grey-m);cursor:not-allowed;}
+.cal-day.available:hover{background:rgba(200,230,52,.2);border-color:var(--lime);}
+.cal-day.selected{background:var(--lime);color:var(--black);}
+.cal-day.full{color:var(--grey-d);text-decoration:line-through;cursor:not-allowed;}
+.cal-day.today{border-color:var(--orange);}
+/* TIME SLOTS */
+.slots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;}
+.slot-btn{border:2px solid var(--grey-m);border-radius:var(--r-sm);padding:14px;text-align:center;cursor:pointer;transition:all .2s;background:#fff;}
+.slot-btn:hover{border-color:var(--lime);}
+.slot-btn.selected{border-color:var(--lime);background:rgba(200,230,52,.1);}
+.slot-btn.booked{border-color:var(--grey-m);background:var(--grey-l);cursor:not-allowed;opacity:.5;}
+.slot-time{font-family:var(--ff);font-size:1.2rem;font-weight:800;}
+.slot-status{font-size:.75rem;color:var(--grey-d);margin-top:2px;}
+.slot-status.avail{color:#1a8a42;}
+/* ORDER REVIEW */
+.review-section{margin-bottom:20px;}
+.review-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--grey-l);}
+.review-label{font-size:.88rem;color:var(--grey-d);}
+.review-value{font-family:var(--ff);font-weight:700;font-size:.95rem;}
+.payment-split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+.pay-box{border-radius:var(--r);padding:20px;text-align:center;}
+.pay-box.deposit{background:rgba(200,230,52,.1);border:2px solid var(--lime);}
+.pay-box.balance{background:rgba(255,107,0,.08);border:2px solid rgba(255,107,0,.3);}
+.pay-amount{font-family:var(--ff);font-size:2rem;font-weight:900;margin-bottom:4px;}
+.pay-label{font-size:.78rem;color:var(--grey-d);}
+.pay-due{font-size:.75rem;font-weight:600;margin-top:6px;}
+/* PAYMENT FORM */
+.payment-card{max-width:500px;margin:0 auto;}
+.payment-secure{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:rgba(26,138,66,.08);border-radius:var(--r-sm);margin-bottom:24px;font-size:.82rem;color:#1a8a42;font-weight:600;}
+.card-icons{display:flex;align-items:center;gap:8px;margin-bottom:20px;}
+.card-icon{padding:4px 10px;border:1px solid var(--grey-m);border-radius:4px;font-family:var(--ff);font-size:.75rem;font-weight:700;color:var(--grey-d);}
+.card-number-wrap{position:relative;}
+.card-type-badge{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:var(--ff);font-size:.75rem;font-weight:700;color:var(--orange);}
+/* CONFIRMATION */
+.confirm-hero{background:linear-gradient(135deg,var(--black) 0%,#1a1a1a 100%);border-radius:var(--r);padding:40px;text-align:center;margin-bottom:24px;position:relative;overflow:hidden;}
+.confirm-check{width:72px;height:72px;background:var(--lime);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 20px;animation:popIn .4s ease-out;}
+@keyframes popIn{0%{transform:scale(0)}80%{transform:scale(1.1)}100%{transform:scale(1)}}
+.confirm-ref{font-family:var(--ff);font-size:.85rem;color:var(--grey-d);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.confirm-refnum{font-family:var(--ff);font-size:2rem;font-weight:900;color:var(--lime);}
+/* PROGRESS TRACKER */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;gap:20px;align-items:flex-start;padding:16px 0;}
+.tl-left{display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;}
+.tl-dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;border:3px solid var(--grey-m);}
+.tl-dot.done{background:var(--lime);border-color:var(--lime);}
+.tl-dot.active{background:var(--orange);border-color:var(--orange);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,0,.4)}50%{box-shadow:0 0 0 8px rgba(255,107,0,0)}}
+.tl-dot.pending{background:var(--grey-l);border-color:var(--grey-m);}
+.tl-line{width:2px;flex:1;min-height:30px;background:var(--grey-m);}
+.tl-line.done{background:var(--lime);}
+.tl-content{flex:1;padding-top:8px;}
+.tl-title{font-family:var(--ff);font-size:1.1rem;font-weight:700;margin-bottom:4px;}
+.tl-desc{font-size:.82rem;color:var(--grey-d);}
+.tl-time{font-size:.75rem;color:var(--orange);font-weight:600;margin-top:4px;}
+/* RATING */
+.stars{display:flex;gap:8px;justify-content:center;margin:20px 0;}
+.star{font-size:2.5rem;cursor:pointer;transition:transform .2s;filter:grayscale(1);}
+.star.lit{filter:grayscale(0);}
+.star:hover{transform:scale(1.2);}
+/* NOTIFICATION */
+.notif-bar{background:rgba(200,230,52,.12);border:1px solid rgba(200,230,52,.3);border-radius:var(--r-sm);padding:12px 16px;display:flex;align-items:center;gap:12px;font-size:.85rem;margin-bottom:16px;}
+.notif-icon{font-size:1.2rem;}
+/* ADMIN */
+.admin-layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 60px);}
+.admin-sidebar{background:var(--black);padding:24px 0;}
+.admin-nav-item{padding:12px 24px;cursor:pointer;font-family:var(--ff);font-size:.95rem;font-weight:600;color:var(--grey-d);transition:all .2s;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;}
+.admin-nav-item:hover{color:#fff;border-left-color:var(--lime);}
+.admin-nav-item.active{color:var(--lime);background:rgba(200,230,52,.08);border-left-color:var(--lime);}
+.admin-main{background:var(--grey-l);padding:28px;}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+/* REPORT CHARTS */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.kpi-card{background:#fff;border-radius:var(--r);padding:20px;box-shadow:var(--sh);border-top:4px solid var(--lime);}
+.kpi-val{font-family:var(--ff);font-size:2rem;font-weight:900;color:var(--black);}
+.kpi-lbl{font-size:.78rem;color:var(--grey-d);margin-top:4px;}
+.kpi-trend{font-family:var(--ff);font-size:.82rem;font-weight:700;margin-top:8px;}
+.kpi-trend.up{color:#1a8a42;}
+.kpi-trend.dn{color:#e53935;}
+.chart-wrap{background:#fff;border-radius:var(--r);padding:20px;box-shadow:var(--sh);}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:160px;padding:0 8px;}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.bar{border-radius:4px 4px 0 0;width:100%;min-height:4px;transition:height .5s ease;}
+.bar-lbl{font-size:.68rem;color:var(--grey-d);font-family:var(--ff);}
+.bar-val{font-size:.7rem;font-family:var(--ff);font-weight:700;color:var(--orange);}
+/* TABLES */
+.data-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.data-table th{background:var(--black);color:#fff;font-family:var(--ff);font-weight:700;padding:10px 14px;text-align:left;letter-spacing:.3px;}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--grey-l);}
+.data-table tr:hover td{background:rgba(200,230,52,.05);}
+.status-pill{display:inline-block;padding:3px 10px;border-radius:20px;font-family:var(--ff);font-size:.75rem;font-weight:700;}
+.status-confirmed{background:#e6f9ee;color:#1a8a42;}
+.status-in-progress{background:rgba(255,107,0,.12);color:var(--orange);}
+.status-completed{background:rgba(200,230,52,.2);color:#6a8300;}
+.status-cancelled{background:#fde8e8;color:#e53935;}
+/* PRICE EDITOR */
+.price-table{width:100%;border-collapse:collapse;}
+.price-table th{background:var(--black);color:#fff;font-family:var(--ff);font-weight:700;padding:10px 14px;text-align:left;}
+.price-table td{padding:8px 14px;border-bottom:1px solid var(--grey-l);}
+.price-input{width:100px;padding:6px 10px;border:2px solid var(--grey-m);border-radius:var(--r-sm);font-family:var(--ff);font-weight:700;font-size:.95rem;text-align:center;}
+.price-input:focus{border-color:var(--lime);outline:none;}
+/* VALET PACKAGES */
+.valet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.valet-card{border:2px solid var(--grey-m);border-radius:var(--r);padding:24px;background:#fff;transition:all .2s;cursor:pointer;position:relative;}
+.valet-card:hover{border-color:var(--lime);transform:translateY(-3px);box-shadow:var(--sh2);}
+.valet-card.in-cart{border-color:var(--lime);background:rgba(200,230,52,.06);}
+.valet-card.featured{border-color:var(--orange);}
+.valet-badge{position:absolute;top:-10px;right:16px;background:var(--orange);color:#fff;font-family:var(--ff);font-size:.75rem;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.5px;}
+.valet-name{font-family:var(--ff);font-size:1.3rem;font-weight:900;margin-bottom:10px;}
+.valet-price{font-family:var(--ff);font-size:1.8rem;font-weight:900;color:var(--orange);margin-bottom:14px;}
+.valet-items{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.valet-items li{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--grey-d);}
+.valet-items li::before{content:'✓';color:var(--lime);font-weight:900;font-size:.9rem;}
+/* TABS */
+.tab-bar{display:flex;gap:0;border-bottom:2px solid var(--grey-m);margin-bottom:24px;}
+.tab-btn{font-family:var(--ff);font-size:1rem;font-weight:700;padding:10px 22px;background:none;border:none;cursor:pointer;color:var(--grey-d);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;}
+.tab-btn.active{color:var(--orange);border-bottom-color:var(--orange);}
+.tab-btn:hover{color:var(--black);}
+/* BOOKING MODE TABS */
+.bm-tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:var(--r);overflow:hidden;border:2px solid var(--grey-m);margin-bottom:24px;}
+.bm-tab{padding:16px 20px;cursor:pointer;transition:all .2s;border:none;background:var(--white);text-align:left;display:flex;align-items:center;gap:12px;position:relative;}
+.bm-tab:first-child{border-right:2px solid var(--grey-m);}
+.bm-tab.bm-active-std{background:rgba(200,230,52,.1);border-bottom:3px solid var(--lime);}
+.bm-tab.bm-active-emg{background:rgba(220,38,38,.06);border-bottom:3px solid #dc2626;}
+.bm-tab-icon{font-size:1.8rem;flex-shrink:0;}
+.bm-tab-title{font-family:var(--ff);font-size:1.05rem;font-weight:800;display:block;letter-spacing:.3px;}
+.bm-tab-sub{font-size:.75rem;color:var(--grey-d);display:block;margin-top:2px;line-height:1.4;}
+.bm-fee-badge{font-family:var(--ff);font-size:.72rem;font-weight:800;padding:2px 8px;border-radius:12px;margin-top:4px;display:inline-block;letter-spacing:.3px;}
+.bm-fee-std{background:rgba(200,230,52,.2);color:#5a7000;}
+.bm-fee-emg{background:rgba(220,38,38,.12);color:#dc2626;}
+.emg-banner{background:linear-gradient(135deg,rgba(220,38,38,.08),rgba(220,38,38,.04));border:2px solid rgba(220,38,38,.25);border-radius:var(--r);padding:18px 20px;margin-bottom:20px;}
+.emg-banner-title{font-family:var(--ff);font-size:1.1rem;font-weight:800;color:#dc2626;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.emg-fee-row{display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:var(--r-sm);padding:12px 16px;margin-top:12px;border:1px solid rgba(220,38,38,.2);}
+.emg-fee-label{font-family:var(--ff);font-size:.88rem;font-weight:700;color:#dc2626;}
+.emg-fee-amount{font-family:var(--ff);font-size:1.4rem;font-weight:900;color:#dc2626;}
+.emg-checklist{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+.emg-checklist li{font-size:.82rem;color:#7f1d1d;display:flex;align-items:flex-start;gap:8px;line-height:1.4;}
+.emg-checklist li::before{content:'✓';color:#dc2626;font-weight:900;flex-shrink:0;}
+/* ALERT */
+.alert{border-radius:var(--r-sm);padding:14px 16px;margin-bottom:16px;font-size:.85rem;display:flex;align-items:flex-start;gap:10px;}
+.alert-info{background:rgba(200,230,52,.1);border:1px solid rgba(200,230,52,.4);color:#5a7000;}
+.alert-warn{background:rgba(255,107,0,.08);border:1px solid rgba(255,107,0,.3);color:var(--orange);}
+.alert-success{background:#e6f9ee;border:1px solid #a8ddb8;color:#1a5c2a;}
+/* FLOAT CART BTN */
+.float-cart{position:fixed;bottom:24px;right:24px;background:var(--orange);color:#fff;border:none;border-radius:50px;padding:14px 22px;font-family:var(--ff);font-size:1rem;font-weight:700;cursor:pointer;box-shadow:var(--sh2);display:flex;align-items:center;gap:8px;z-index:50;transition:all .2s;}
+.float-cart:hover{background:var(--orange-l);transform:translateY(-2px);}
+.float-cart-count{background:var(--lime);color:var(--black);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:900;}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal{background:#fff;border-radius:var(--r);max-width:500px;width:100%;padding:32px;box-shadow:var(--sh2);position:relative;max-height:90vh;overflow-y:auto;}
+.modal-close{position:absolute;top:14px;right:14px;background:var(--grey-l);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:var(--grey-m);}
+/* MISC */
+.divider{border:none;border-top:2px solid var(--grey-l);margin:20px 0;}
+.text-center{text-align:center;}
+.text-grey{color:var(--grey-d);}
+.mt-8{margin-top:8px;}
+.mt-16{margin-top:16px;}
+.mt-24{margin-top:24px;}
+.mb-16{margin-bottom:16px;}
+.mb-24{margin-bottom:24px;}
+.flex{display:flex;}
+.flex-center{display:flex;align-items:center;}
+.flex-between{display:flex;align-items:center;justify-content:space-between;}
+.gap-8{gap:8px;}
+.gap-16{gap:16px;}
+.fw-bold{font-weight:700;}
+.font-ff{font-family:var(--ff);}
+.color-orange{color:var(--orange);}
+.color-lime{color:var(--lime);}
+.hidden{display:none!important;}
+@media(max-width:768px){
+.hero-content{grid-template-columns:1fr;gap:32px;}
+.hero-title{font-size:2.8rem;}
+.svc-grid{grid-template-columns:1fr 1fr;}
+.make-grid{grid-template-columns:repeat(3,1fr);}
+.body-grid{grid-template-columns:repeat(2,1fr);}
+.catalog-layout{grid-template-columns:1fr;}
+.form-grid{grid-template-columns:1fr;}
+.kpi-grid{grid-template-columns:1fr 1fr;}
+.admin-layout{grid-template-columns:1fr;}
+.valet-grid{grid-template-columns:1fr;}
+.payment-split{grid-template-columns:1fr;}
+}
+/* ===== SCANNER STEP 1 ===== */
+.scanner-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+@media(max-width:720px){.scanner-layout{grid-template-columns:1fr;}}
+.scanner-panel{background:var(--black);border-radius:var(--r);overflow:hidden;}
+.scanner-panel-head{padding:13px 16px;background:rgba(200,230,52,.1);border-bottom:2px solid rgba(200,230,52,.2);display:flex;align-items:center;gap:8px;}
+.scanner-panel-title{font-family:var(--ff);font-size:.95rem;font-weight:800;color:var(--lime);}
+.scanner-panel-body{padding:14px;}
+#cameraFeed{width:100%;border-radius:var(--r-sm);background:#111;max-height:200px;object-fit:cover;display:block;}
+.scan-overlay-wrap{position:relative;border-radius:var(--r-sm);overflow:hidden;background:#111;min-height:120px;display:flex;align-items:center;justify-content:center;}
+.scan-overlay-wrap video{border-radius:var(--r-sm);}
+.scan-crosshair{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;}
+.scan-sweep{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--lime),transparent);animation:sweep 1.8s linear infinite;display:none;}
+.scan-sweep.active{display:block;}
+@keyframes sweep{0%{top:0}100%{top:100%}}
+.sc-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--ff);font-size:.82rem;font-weight:700;padding:8px 14px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:all .2s;letter-spacing:.3px;}
+.sc-btn-lime{background:var(--lime);color:var(--black);}
+.sc-btn-lime:hover{background:var(--lime-d);}
+.sc-btn-orange{background:var(--orange);color:#fff;}
+.sc-btn-orange:hover{background:var(--orange-l);}
+.sc-btn-dark{background:#2a2a2a;color:#ccc;border:1px solid #444;}
+.sc-btn-dark:hover{background:#383838;}
+.sc-status{margin-top:10px;padding:8px 12px;border-radius:var(--r-sm);font-size:.8rem;font-weight:600;display:none;align-items:center;gap:6px;}
+.sc-status.show{display:flex;}
+.sc-scanning{background:rgba(200,230,52,.1);border:1px solid rgba(200,230,52,.3);color:var(--lime);}
+.sc-success{background:#e6f9ee;border:1px solid #a8ddb8;color:#1a5c2a;}
+.sc-error{background:#fde8e8;border:1px solid #f5aaaa;color:#b00020;}
+.disc-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
+.disc-field{background:#1a1a1a;border-radius:var(--r-sm);padding:9px 11px;border-left:3px solid #444;transition:border-color .3s;}
+.disc-field.filled{border-left-color:var(--lime);}
+.disc-field-label{font-family:var(--ff);font-size:.65rem;font-weight:700;color:#666;letter-spacing:1px;text-transform:uppercase;}
+.disc-field-input{width:100%;border:none;background:transparent;font-family:var(--ff);font-size:.9rem;font-weight:700;color:#eee;padding:2px 0 0;outline:none;}
+.disc-field-input::placeholder{color:#555;font-weight:400;}
+.parts-catalogue{background:var(--black);border-radius:var(--r);overflow:hidden;margin-top:14px;}
+.parts-head{padding:11px 14px;background:rgba(255,107,0,.1);border-bottom:2px solid rgba(255,107,0,.2);display:flex;align-items:center;justify-content:space-between;}
+.parts-title{font-family:var(--ff);font-size:.9rem;font-weight:800;color:var(--orange);}
+.parts-list{padding:10px 14px;display:flex;flex-direction:column;gap:7px;max-height:210px;overflow-y:auto;}
+.part-row{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#141414;border-radius:var(--r-sm);border:1px solid #252525;}
+.part-name{font-size:.78rem;color:#ccc;}
+.part-right{display:flex;align-items:center;gap:8px;}
+.part-price{font-family:var(--ff);font-size:.85rem;font-weight:700;color:var(--lime);}
+.part-tag{font-size:.68rem;padding:2px 6px;border-radius:10px;font-family:var(--ff);font-weight:700;}
+.pt-oem{background:rgba(200,230,52,.15);color:#8ab300;}
+.pt-compat{background:rgba(255,107,0,.15);color:var(--orange);}
+.parts-empty{padding:20px;text-align:center;color:#555;font-size:.82rem;}
+/* ===== DATETIME STEP 5 ===== */
+.dt-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+@media(max-width:640px){.dt-layout{grid-template-columns:1fr;}}
+.dt-panel{background:var(--white);border:2px solid var(--grey-m);border-radius:var(--r);padding:20px;transition:border-color .3s;}
+.dt-panel.dt-active{border-color:var(--lime);}
+.dt-panel-title{font-family:var(--ff);font-size:1.1rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+input[type=date],input[type=time]{padding:13px 14px;border:2px solid var(--grey-m);border-radius:var(--r-sm);font-size:1rem;font-family:var(--ff);font-weight:600;background:#fff;transition:border .2s;width:100%;color:var(--black);cursor:pointer;}
+input[type=date]:focus,input[type=time]:focus{outline:none;border-color:var(--lime);}
+.quick-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.quick-btn{font-family:var(--ff);font-size:.78rem;font-weight:700;padding:5px 13px;border-radius:20px;border:2px solid var(--grey-m);background:#fff;cursor:pointer;transition:all .2s;color:var(--black);}
+.quick-btn:hover{background:rgba(200,230,52,.15);border-color:var(--lime);}
+.quick-btn.qb-active{background:var(--lime);border-color:var(--lime);color:var(--black);}
+.slot-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+.slot-chip{border:2px solid var(--grey-m);border-radius:var(--r-sm);padding:11px 14px;text-align:center;cursor:pointer;transition:all .2s;background:#fff;min-width:76px;}
+.slot-chip:hover:not(.chip-taken){border-color:var(--lime);background:rgba(200,230,52,.07);}
+.slot-chip.chip-selected{border-color:var(--lime);background:rgba(200,230,52,.13);}
+.slot-chip.chip-taken{border-color:var(--grey-m);background:var(--grey-l);cursor:not-allowed;opacity:.5;}
+.slot-chip-time{font-family:var(--ff);font-size:1.05rem;font-weight:900;}
+.slot-chip-stat{font-size:.68rem;margin-top:2px;}
+.slot-chip-stat.ok{color:#1a8a42;}
+.slot-chip-stat.no{color:#e53935;}
+.dt-confirm{background:linear-gradient(135deg,rgba(200,230,52,.1),rgba(255,107,0,.07));border:2px solid var(--lime);border-radius:var(--r);padding:16px 20px;margin-top:20px;display:none;align-items:center;gap:14px;}
+.dt-confirm.show{display:flex;}
+.dt-confirm-icon{font-size:2rem;flex-shrink:0;}
+.dt-confirm-date{font-family:var(--ff);font-size:1.15rem;font-weight:900;}
+.dt-confirm-sub{font-size:.78rem;color:var(--grey-d);margin-top:3px;}
+.dt-err{color:#e53935;font-size:.8rem;font-weight:600;margin-top:8px;display:none;}
+.dt-err.show{display:block;}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--grey-l);}
+::-webkit-scrollbar-thumb{background:var(--grey-m);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--grey-d);}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+/* ===== STEP 1 SCANNER (reference) ===== */
+.media-box{background:#030617;border-radius:1.2rem;margin:.8rem 0;overflow:hidden;aspect-ratio:16/10;border:1px solid #334155;display:flex;align-items:center;justify-content:center;}
+.media-box video,.media-box img,.media-box canvas{width:100%;height:100%;object-fit:contain;background:#000;}
+.pill{background:#0f172f;border-radius:40px;padding:.25rem .9rem;font-size:.7rem;font-weight:500;border:1px solid #334155;display:inline-block;margin-right:8px;margin-top:8px;color:#b9c7dd;}
+.pill.ok{background:#064e3b;border-color:#2dd4bf;color:#ccfbf1;}
+.pill.bad{background:#7f1a1a;border-color:#f87171;color:#fee2e2;}
+.pill.warn{background:#854d0e;border-color:#facc15;color:#fef9c3;}
+/* ANIMATE */
+.fade-in{animation:fadeIn .4s ease-out;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ===================== DATA =====================
+const VEHICLES=['Audi','BAIC','BMW','Chery','Ford','GWM','Haval','Honda','Hyundai','Isuzu','KIA','Lexus','Mazda','Mercedes-Benz','Nissan','Omoda','Opel','Renault','Suzuki','Toyota','Volkswagen','Volvo'];
+const BODY_TYPES=[{id:'hatchback',name:'Hatchback',icon:'🚗'},{id:'sedan',name:'Sedan',icon:'🚙'},{id:'van',name:'Van',icon:'🚐'},{id:'minibus',name:'Minibus',icon:'🚌'}];
+const TIME_SLOTS=['07:00','09:30','12:00','14:30','17:00'];
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+const DEFAULT_SERVICES=[
+{id:'minor',icon:'🔧',name:'Minor Service',category:'mechanical',price:850,duration:'2–3 hrs',description:'A comprehensive minor service keeping your vehicle in peak condition. Includes oil and filter change, inspection of all fluid levels, air filter check, spark plug inspection, brake fluid top-up, tyre pressure and tread depth check, battery health test, and a full safety inspection report.',includes:['Oil & filter change','Air filter inspection','Spark plug check','All fluids top-up','Tyre pressure & tread','Battery health test','Safety inspection report','Service sticker']},
+{id:'major',icon:'⚙️',name:'Major Service',category:'mechanical',price:1650,duration:'3–4 hrs',description:'A thorough major service covering every critical system in your vehicle. Everything in the minor service plus full oil & filter change, new air and fuel filters, spark plug replacement, coolant flush, brake fluid flush, transmission fluid inspection, and an extensive 50-point vehicle health check with digital report.',includes:['All Minor Service items','Fuel filter replacement','Spark plugs replaced','Coolant system flush','Brake fluid flush','Transmission fluid check','50-point health check','Digital inspection report']},
+{id:'electrical',icon:'⚡',name:'Electrical & Diagnostics',category:'electrical',price:750,duration:'1.5–2.5 hrs',description:'Advanced electronic diagnostics and electrical system inspection using professional-grade OBD2 scanners. Our technician performs a full electrical system scan, battery and alternator load test, fault code reading and clearing, wiring harness inspection, sensor diagnostics, and a complete lighting and fuse box check.',includes:['OBD2 full system scan','Battery & alternator test','Fault code read & clear','Wiring harness inspection','Sensor diagnostics','Lighting & indicators','Fuse box inspection','Digital fault report']},
+{id:'suspension',icon:'🔩',name:'Suspension & Brakes',category:'mechanical',price:1200,duration:'2–3.5 hrs',description:'Comprehensive suspension and braking system assessment by our trained technicians. Covers brake pad and disc inspection with measurements, shock absorber assessment, wheel alignment check, tie rod and ball joint inspection, wheel bearing check, brake fluid flush included, and a full suspension geometry report.',includes:['Brake pad inspection','Disc rotor measurement','Shock absorber check','Wheel alignment report','Tie rod & ball joints','Wheel bearing check','Brake fluid flush','Suspension geometry report']},
+{id:'drivetrain',icon:'🔄',name:'Drivetrain & Transmission',category:'drivetrain',price:1800,duration:'2.5–4 hrs',description:'In-depth drivetrain and transmission service to keep your vehicle performing optimally. Our technician checks and changes gearbox oil, performs clutch assessment, inspects CV joints and drive shafts, checks differential oil levels, inspects the propshaft (where applicable), and performs transfer case checks on 4x4 vehicles.',includes:['Gearbox oil service','Clutch assessment','CV joint inspection','Drive shaft check','Differential oil check','Propshaft inspection','Transfer case check','Drivetrain health report']},
+{id:'ecu',icon:'💻',name:'ECU Programming & Coding',category:'electrical',price:950,duration:'1.5–2.5 hrs',description:'Specialist ECU programming and coding service using professional diagnostic equipment. Covers ECU fault code diagnosis, software updates (where available), immobiliser coding and key fob programming, throttle body and idle speed resets, module calibration, and performance parameter reset to manufacturer specifications.',includes:['ECU fault diagnosis','Software updates','Key fob programming','Immobiliser coding','Throttle body reset','Module calibration','Performance reset','Comprehensive ECU report']},
+{id:'aircon',icon:'❄️',name:'Air Conditioning & HVAC',category:'hvac',price:850,duration:'1.5–2 hrs',description:'Complete air conditioning and HVAC system service. Our certified technician performs a gas recharge using industry-standard R134a or R1234yf refrigerant, compressor performance testing, cabin filter replacement, evaporator anti-bacterial treatment, condenser inspection, full leak detection test, and temperature output verification.',includes:['Gas recharge (R134a/R1234yf)','Compressor performance test','Cabin filter replacement','Evaporator treatment','Condenser inspection','Leak detection test','Temperature verification','HVAC health report']},
+{id:'maintenance',icon:'✨',name:'Routine Maintenance & Valet',category:'maintenance',price:650,duration:'1.5–2.5 hrs',description:'All-in-one routine maintenance combined with a professional vehicle valet. Covers tyre rotation and pressure check, brake fluid level check, all fluid top-ups, windscreen wiper replacement (if needed), exterior hand wash, full interior vacuum and wipe-down, window cleaning inside and out, tyre dressing, and service reminder reset.',includes:['Tyre rotation & pressure','All fluid top-ups','Wiper blade check','Exterior hand wash','Interior vacuum & wipe','Window clean in & out','Tyre dressing','Service reminder reset']},
+{id:'engine',icon:'🏎️',name:'Engine & Mechanical',category:'mechanical',price:2200,duration:'3–5 hrs',description:'Comprehensive engine inspection and mechanical assessment by our expert technicians. Full engine bay inspection, timing belt or chain condition assessment, head gasket integrity check, engine mount inspection, exhaust system inspection and leak check, cooling system pressure test, valve clearance check, and a full engine health report with recommendations.',includes:['Full engine inspection','Timing belt/chain check','Head gasket check','Engine mount inspection','Exhaust leak check','Cooling system pressure test','Valve clearance check','Comprehensive engine report']}
+];
+
+const DEFAULT_VALET=[
+{id:'v1',name:'Express Wash',price:199,emoji:'💧',tag:null,desc:'A quick but thorough exterior refresh, perfect for a weekly clean.',items:['Hand exterior wash','Wheel & rim clean','Window clean (exterior)','Tyre shine application','Quick interior dust & wipe','Door sill wipe']},
+{id:'v2',name:'Interior Refresh',price:349,emoji:'🪑',tag:null,desc:'Deep interior clean to restore your cabin to showroom condition.',items:['Full vacuum (seats, carpets, boot)','Dashboard & console wipe','Door panels cleaned','Window clean (interior)','Air vent detailing','Deodorising spray']},
+{id:'v3',name:'Silver Valet',price:549,emoji:'🥈',tag:null,desc:'Complete exterior and interior valet — the full package for everyday upkeep.',items:['Full exterior hand wash','Complete interior refresh','Tyre & rim detailing','Window clean (in & out)','Dashboard UV protection','Engine bay rinse']},
+{id:'v4',name:'Gold Detail',price:899,emoji:'🥇',tag:'Most Popular',desc:'Professional detailing with paint decontamination and carnauba wax.',items:['Everything in Silver Valet','Clay bar decontamination','1-stage machine polish','Carnauba wax application','Leather conditioning','Engine bay steam clean','Boot interior shampoo']},
+{id:'v5',name:'Platinum Ceramic',price:1699,emoji:'💎',tag:'Premium',desc:'Ultimate vehicle protection with ceramic coating and full paint correction.',items:['Everything in Gold Detail','Full paint correction','SiO₂ ceramic coating','Interior deep shampoo','Glass coating (all windows)','Odour elimination','12-month protection warranty','Before & after photos']}
+];
+
+// ===================== STATE =====================
+let S={
+  step:0,
+  vehicle:{vin:'',reg:'',engine:'',license:'',make:'',model:''},
+  customer:{name:'',phone:'',email:'',whatsapp:''},
+  address:'',
+  bodyType:'',
+  selectedMake:'',
+  cart:[],
+  serviceTab:'mechanical',
+  selectedDate:null,
+  selectedTime:null,
+  calYear:new Date().getFullYear(),
+  calMonth:new Date().getMonth(),
+  bookingRef:'',
+  rating:0,
+  adminView:false,
+  adminTab:'dashboard',
+  adminLoggedIn:false,
+  adminPw:'',
+  reportTab:'monthly',
+  showModal:false,
+  modalContent:'',
+  prices:null,
+  valetPrices:null,
+  adminPrices:null,
+  adminValet:null,
+  // scanner (step 1)
+  activeStream:null,
+  currentImageBitmap:null,
+  zxingReader:null,
+  // booking type (step 5)
+  bookingMode:'standard' // 'standard' | 'emergency'
+};
+
+// ===================== STORAGE HELPERS =====================
+function getBookings(){try{return JSON.parse(localStorage.getItem('mm_bookings')||'[]');}catch(e){return[];}}
+function saveNewBooking(b){const arr=getBookings();arr.push(b);localStorage.setItem('mm_bookings',JSON.stringify(arr));}
+function getServicePrices(){try{const p=JSON.parse(localStorage.getItem('mm_prices'));if(p)return p;}catch(e){}return DEFAULT_SERVICES.reduce((a,s)=>{a[s.id]=s.price;return a},{});}
+function saveServicePrices(p){localStorage.setItem('mm_prices',JSON.stringify(p));}
+function getValetPrices(){try{const p=JSON.parse(localStorage.getItem('mm_valet_prices'));if(p)return p;}catch(e){}return DEFAULT_VALET.reduce((a,v)=>{a[v.id]=v.price;return a},{});}
+function saveValetPrices(p){localStorage.setItem('mm_valet_prices',JSON.stringify(p));}
+function getServices(){const pp=getServicePrices();return DEFAULT_SERVICES.map(s=>({...s,price:pp[s.id]||s.price}));}
+function getValets(){const pp=getValetPrices();return DEFAULT_VALET.map(v=>({...v,price:pp[v.id]||v.price}));}
+function getSlotBookings(dateStr){return getBookings().filter(b=>b.date===dateStr&&b.status!=='cancelled').map(b=>b.time);}
+function generateRef(){const n=String(Date.now()).slice(-6);return 'MM-'+new Date().getFullYear()+'-'+n;}
+function formatPrice(p){return 'R'+Number(p).toLocaleString('en-ZA');}
+function formatDate(d){if(!d)return'';const dt=new Date(d+'T00:00:00');return dt.toLocaleDateString('en-ZA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
+const CALLOUT_FEE=950; // R950 emergency / priority callout fee
+function calloutFee(){return S.bookingMode==='emergency'?CALLOUT_FEE:0;}
+function cartTotal(){return S.cart.reduce((a,i)=>a+i.price,0)+calloutFee();}
+function cartDeposit(){return Math.round(cartTotal()*0.5);}
+
+// ===================== RENDER =====================
+function render(){
+  const app=document.getElementById('app');
+  if(S.adminView){app.innerHTML=renderAdmin();setupAdminEvents();return;}
+  let html='';
+  if(S.step===0)html=renderLanding();
+  else if(S.step===1)html=renderLicense();
+  else if(S.step===2)html=renderCustomer();
+  else if(S.step===3)html=renderVehicle();
+  else if(S.step===4)html=renderServices();
+  else if(S.step===5)html=renderDateTime();
+  else if(S.step===6)html=renderReview();
+  else if(S.step===7)html=renderPayment();
+  else if(S.step===8)html=renderConfirmation();
+  else if(S.step===9)html=renderTracker();
+  else if(S.step===10)html=renderRating();
+  app.innerHTML=html;
+  setupEvents();
+  attachStep1Events();
+  if(S.showModal)showModal();
+}
+
+function renderNav(){
+  return`<header id="nav">
+    <div class="nav-top">🇿🇦 &nbsp; Proudly serving in English, Afrikaans &amp; isiXhosa &nbsp;|&nbsp; Gqeberha &amp; Surrounding Areas</div>
+    <nav class="nav-inner">
+      <a class="nav-brand" href="index.html">
+        <img class="co-logo"
+             src="https://raw.githubusercontent.com/Zachy065/Our-Work-/main/logo.png"
+             alt="AUTO-HAUS TORQUE Logo"
+             onerror="this.style.display='none'" />
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">AUTO-HAUS TORQUE</span>
+          <span class="nav-brand-tag">Your Drive, Our Doorstep</span>
+        </div>
+      </a>
+
+      <div class="nav-sa-wrap">
+        <img src="https://raw.githubusercontent.com/zakssrangs-max/Auto/main/416ba628225add4333334d650f3592ad.png"
+             alt="Proudly South African"
+             title="Proudly South African Member"
+             onerror="this.style.display='none'" />
+        <span class="nav-sa-label">Proudly<span>South African</span></span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="index.html#hero">Home</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#story">Our Story</a></li>
+        <li><a href="index.html#howitworks">How It Works</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="index.html#eco">Eco Promise</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a class="nav-phone" href="tel:+27000000000">📞 <span>Call / WhatsApp</span></a>
+        <a class="nav-admin-btn" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;">Main Site</a>
+        ${S.step>0&&S.step<8?`<button class="nav-admin-btn" onclick="goHome()">Cancel Booking</button>`:''}
+        <button class="nav-admin-btn" onclick="goAdmin()">Admin</button>
+      </div>
+    </nav>
+  </header>`;
+}
+
+function renderStepBar(){
+  if(S.step===0||S.step>=8)return'';
+  const steps=['Licence','Details','Vehicle','Services','Date & Time','Review','Payment'];
+  let html='<div class="step-bar"><div class="step-track">';
+  steps.forEach((s,i)=>{
+    const num=i+1;
+    const cls=S.step>num?'done':S.step===num?'active':'';
+    html+=`<div class="step-dot ${cls}">${S.step>num?'✓':num}</div>`;
+    if(i<steps.length-1)html+=`<div class="step-line ${S.step>num?'done':''}"></div>`;
+  });
+  html+='</div></div>';
+  return html;
+}
+
+// ---- LANDING ----
+function renderLanding(){
+  const services=getServices();
+  return`
+  ${renderNav()}
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-accent"></div>
+    <div class="hero-accent2"></div>
+    <div class="hero-content fade-in">
+      <div class="hero-text">
+        <div class="hero-label">MOBILE AUTO SERVICES · SOUTH AFRICA</div>
+        <div class="hero-title" style="text-decoration:none">WE COME<br>TO <span>YOU.</span></div>
+        <p class="hero-sub">Professional mobile mechanic and car valet services in Gqeberha & surrounding areas. Clear booking steps, transparent pricing, and a cleaner handoff from website to confirmed job.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" onclick="goStep(1)">📋 Book a Service <span style="font-size:.85em">→</span></button>
+          <button class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,.3)" onclick="scrollToServices()">View Services</button>
+        </div>
+        <div style="margin-top:24px;display:flex;gap:20px;flex-wrap:wrap">
+          <div class="hero-trust"><span>✓</span> No workshop visit needed</div>
+          <div class="hero-trust"><span>✓</span> Skilled technicians</div>
+          <div class="hero-trust"><span>✓</span> Contactless process</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-stats">
+          <div class="stat-box"><div class="stat-num">22+</div><div class="stat-lbl">Vehicle Makes</div></div>
+          <div class="stat-box"><div class="stat-num">9+</div><div class="stat-lbl">Service Types</div></div>
+          <div class="stat-box"><div class="stat-num">5</div><div class="stat-lbl">Valet Packages</div></div>
+          <div class="stat-box"><div class="stat-num">7–18</div><div class="stat-lbl">Service Hours</div></div>
+        </div>
+        <div class="hero-services">
+          <div class="hero-svc-item"><span class="hero-svc-icon">🔧</span><span class="hero-svc-name">Minor Service</span><span class="hero-svc-price">from R850</span></div>
+          <div class="hero-svc-item"><span class="hero-svc-icon">⚙️</span><span class="hero-svc-name">Major Service</span><span class="hero-svc-price">from R1,650</span></div>
+          <div class="hero-svc-item"><span class="hero-svc-icon">💎</span><span class="hero-svc-name">Platinum Valet</span><span class="hero-svc-price">from R1,699</span></div>
+        </div>
+        <button class="btn btn-primary btn-full mt-16" onclick="goStep(1)">Book Now — Contactless 📱</button>
+      </div>
+    </div>
+  </section>
+  <section id="services-section" style="padding:60px 32px;background:var(--grey-l)">
+    <div style="max-width:1100px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:40px">
+        <div style="font-family:var(--ff);font-size:.85rem;font-weight:700;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">OUR SERVICES</div>
+        <h2 style="font-size:2.4rem;font-family:var(--ff)">Expert Mobile Auto Services</h2>
+        <p class="text-grey mt-8" style="max-width:540px;margin:8px auto 0">All services are performed at your location by certified technicians. Pricing is standard across all vehicle makes, models and body types.</p>
+      </div>
+      <div class="svc-grid">
+        ${services.map(s=>`
+          <div class="svc-card">
+            <div class="svc-icon">${s.icon}</div>
+            <div class="svc-name">${s.name}</div>
+            <div class="svc-desc">${s.description.slice(0,100)}...</div>
+            <div class="svc-price">${formatPrice(s.price)}</div>
+          </div>`).join('')}
+      </div>
+      <div style="text-align:center;margin-top:40px">
+        <h3 style="font-size:1.8rem;font-family:var(--ff);margin-bottom:16px">Car Valet Packages</h3>
+        <div class="valet-grid" style="max-width:1100px;margin:0 auto">
+          ${getValets().map(v=>`
+            <div class="valet-card ${v.tag==='Premium'?'featured':''}">
+              ${v.tag?`<div class="valet-badge">${v.tag}</div>`:''}
+              <div style="font-size:2rem;margin-bottom:10px">${v.emoji}</div>
+              <div class="valet-name">${v.name}</div>
+              <div class="valet-price">${formatPrice(v.price)}</div>
+              <p style="font-size:.8rem;color:var(--grey-d);margin-bottom:12px">${v.desc}</p>
+              <ul class="valet-items">${v.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:48px">
+        <button class="btn btn-primary btn-lg" onclick="goStep(1)">Book Your Service Now →</button>
+      </div>
+    </div>
+  </section>
+  <footer style="background:var(--black);color:var(--grey-d);padding:32px;text-align:center;font-size:.82rem">
+    <div style="font-family:var(--ff);font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:8px">AUTO<span style="color:var(--lime)">-HAUS</span> TORQUE</div>
+    <p>Mobile Mechanic Booking & Service Intake · Gqeberha, South Africa · bookings@autohaustorque.co.za · +27 0XX XXX XXXX</p>
+    <p style="margin-top:8px">© ${new Date().getFullYear()} AUTO-HAUS TORQUE. All rights reserved. Registered in South Africa.</p>
+    <div style="margin-top:12px"><button class="nav-admin-btn" onclick="goAdmin()" style="font-size:.75rem">Admin Portal</button></div>
+  </footer>`;
+}
+
+// ---- STEP 1: SA LICENCE DISC SCANNER (reference — exact from mobi_v4) ----
+function renderLicense(){
+  return`
+  ${renderNav()}${renderStepBar()}
+  <div class="container fade-in" style="max-width:800px">
+    <div class="card mt-16">
+      <div class="card-head">
+        <h2 style="font-size:1.6rem">📄 Step 1: Scan Your Licence Disk</h2>
+        <p class="text-grey mt-8">Upload a photo or use your camera to scan the PDF417 barcode on your South African vehicle licence disk. The system will auto-fill your vehicle details.</p>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-info"><span>ℹ️</span><div>We support PDF417 barcodes found on SA licence disks. For best results, ensure good lighting and a sharp image.</div></div>
+
+        <div class="btn-group mb-16">
+          <input type="file" id="diskUploadInput" accept="image/*" style="display:none" onchange="handleImageUpload(this.files[0])">
+          <button class="btn btn-outline btn-sm" onclick="document.getElementById('diskUploadInput').click()">📁 Upload Image</button>
+          <button class="btn btn-primary btn-sm" id="startCamScannerBtn">📷 Start Camera</button>
+          <button class="btn btn-sm" id="captureFrameBtn" style="background:#334155;color:white">🎞️ Capture Frame</button>
+          <button class="btn btn-sm" id="stopCamScannerBtn" style="background:#7e2e2e;color:white">⏹️ Stop Camera</button>
+        </div>
+
+        <div class="media-box">
+          <video id="scannerVideo" autoplay playsinline muted style="display:none;width:100%;height:100%;object-fit:contain;"></video>
+          <img id="previewImg" alt="preview" style="display:none;width:100%;height:100%;object-fit:contain;" />
+          <canvas id="hiddenCanvas" style="display:none;"></canvas>
+          <div id="placeholderMsg" style="display:flex;align-items:center;justify-content:center;height:100%;color:#6c7a92;flex-direction:column;gap:8px;padding:20px;text-align:center;">
+            <div style="font-size:2.5rem">📀</div>
+            <div>No image — upload or start camera</div>
+          </div>
+        </div>
+
+        <div class="btn-group mt-8">
+          <button class="btn btn-primary" id="decodeBtn">🔍 Decode Barcode</button>
+          <button class="btn btn-sm" id="loadSampleBtn" style="background:#1e293b;color:white">📋 Load Sample</button>
+        </div>
+
+        <div class="mt-16">
+          <span id="scanStatusPill" class="pill">Scanner: idle</span>
+          <span id="parseStatusPill" class="pill">Parser: waiting</span>
+        </div>
+
+        <div class="form-group mt-16">
+          <label>📝 RAW DECODED TEXT (or paste manually)</label>
+          <textarea id="barcodeRawText" rows="2" placeholder="Paste %-separated SA licence string here..." style="font-family:monospace;font-size:.82rem;resize:vertical;"></textarea>
+          <button class="btn btn-sm btn-primary" id="manualParseBtn" style="width:auto;margin-top:8px">Parse &amp; Fill Vehicle</button>
+        </div>
+
+        <div id="scanArea" class="hidden mt-16">
+          <div style="text-align:center;padding:20px;background:rgba(200,230,52,.08);border-radius:var(--r);">
+            <div style="font-size:2rem">🔍</div>
+            <div>Scanning...</div>
+          </div>
+        </div>
+
+        <div id="vehicleFields" class="hidden mt-16">
+          <div class="alert alert-success"><span>✅</span><div>Vehicle information extracted! Please verify the details below.</div></div>
+          <div class="info-grid">
+            <div class="info-field"><div class="info-label">Registration Number</div><div class="info-value" id="disp-reg">—</div></div>
+            <div class="info-field"><div class="info-label">VIN Number</div><div class="info-value" id="disp-vin">—</div></div>
+            <div class="info-field"><div class="info-label">Engine Number</div><div class="info-value" id="disp-engine">—</div></div>
+            <div class="info-field"><div class="info-label">Licence Number</div><div class="info-value" id="disp-license">—</div></div>
+          </div>
+          <div class="form-grid mt-16">
+            <div class="form-group">
+              <label>Vehicle Make</label>
+              <select id="f-make">
+                <option value="">Select make...</option>
+                ${VEHICLES.map(v=>`<option value="${v}">${v}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Vehicle Model</label>
+              <input type="text" id="f-model" placeholder="e.g. Polo 1.6">
+            </div>
+            <div class="form-group">
+              <label>Registration Number</label>
+              <input type="text" id="f-reg" placeholder="ABC 123 GP">
+            </div>
+            <div class="form-group">
+              <label>VIN Number</label>
+              <input type="text" id="f-vin" placeholder="17-character VIN">
+            </div>
+          </div>
+        </div>
+
+        <div id="auditLog" class="alert alert-info" style="background:#0b1020;color:#b9c7dd;font-family:monospace;font-size:.75rem;max-height:150px;overflow-y:auto;margin-top:16px;">Ready — upload image or start camera, then click Decode.</div>
+
+        <div class="btn-group mt-24">
+          <button class="btn btn-outline" onclick="goStep(0)">← Cancel</button>
+          <button class="btn btn-primary" id="continueBtn" onclick="validateLicenseStep()">Continue →</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ---- STEP 2: CUSTOMER INFO ----
+function renderCustomer(){
+  return`
+  ${renderNav()}${renderStepBar()}
+  <div class="container fade-in" style="max-width:660px">
+    <div class="card mt-16">
+      <div class="card-head">
+        <h2 style="font-size:1.6rem">Your Contact Information</h2>
+        <p class="text-grey mt-8">We'll use these details to confirm your booking, send updates, and keep you informed at every step of the service.</p>
+      </div>
+      <div class="card-body">
+        <div class="notif-bar"><span class="notif-icon">📱</span><div>You'll receive notifications via <strong>SMS, Email & WhatsApp</strong> at every stage of your booking.</div></div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" id="f-fname" value="${(S.customer.name||'').split(' ')[0]||''}" placeholder="Your first name">
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" id="f-lname" value="${(S.customer.name||'').split(' ').slice(1).join(' ')||''}" placeholder="Your last name">
+          </div>
+          <div class="form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="f-phone" value="${S.customer.phone||''}" placeholder="e.g. 083 000 0000">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Number *</label>
+            <input type="tel" id="f-whatsapp" value="${S.customer.whatsapp||S.customer.phone||''}" placeholder="Same as mobile or different">
+            <span class="input-note">Check <a href="#" onclick="sameAsPhone();return false" style="color:var(--orange)">same as mobile</a></span>
+          </div>
+          <div class="form-group full">
+            <label>Email Address *</label>
+            <input type="email" id="f-email" value="${S.customer.email||''}" placeholder="your@email.co.za">
+          </div>
+          <div class="form-group full">
+            <label>Service Address *</label>
+            <input type="text" id="f-address" value="${S.address||''}" placeholder="Street address where we should come to you">
+            <span class="input-note">Our technician will come to this address. Please ensure access is available.</span>
+          </div>
+        </div>
+        <div class="alert alert-warn mt-16">
+          <span>🔒</span>
+          <div>Your personal information is stored securely and will only be used for your service booking. We do not share your data with third parties.</div>
+        </div>
+        <div class="btn-group mt-24">
+          <button class="btn btn-outline" onclick="goStep(1)">← Back</button>
+          <button class="btn btn-primary" onclick="validateCustomerStep()">Continue →</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ---- STEP 3: VEHICLE CONFIRMATION ----
+function renderVehicle(){
+  return`
+  ${renderNav()}${renderStepBar()}
+  <div class="container fade-in">
+    <div class="card mt-16">
+      <div class="card-head">
+        <h2 style="font-size:1.6rem">Confirm Vehicle & Select Body Type</h2>
+        <p class="text-grey mt-8">Please confirm your vehicle details and select the body type.</p>
+      </div>
+      <div class="card-body">
+        <div class="info-grid mb-24">
+          <div class="info-field"><div class="info-label">Make</div><div class="info-value">${S.vehicle.make||'Not specified'}</div></div>
+          <div class="info-field"><div class="info-label">Model</div><div class="info-value">${S.vehicle.model||'Not specified'}</div></div>
+          <div class="info-field"><div class="info-label">Registration</div><div class="info-value">${S.vehicle.reg||'Not specified'}</div></div>
+          <div class="info-field"><div class="info-label">VIN</div><div class="info-value" style="font-size:.82rem">${S.vehicle.vin||'Not specified'}</div></div>
+        </div>
+        <h4 style="font-size:1.1rem;margin-bottom:16px">Select Body Type</h4>
+        <div class="body-grid">
+          ${BODY_TYPES.map(bt=>`
+            <div class="body-card ${S.bodyType===bt.id?'selected':''}" onclick="selectBodyType('${bt.id}')">
+              <div class="body-emoji">${bt.icon}</div>
+              <div class="body-name">${bt.name}</div>
+            </div>`).join('')}
+        </div>
+        <div class="disclaimer mt-16">
+          ⚠️ <strong>Standard Pricing Notice:</strong> At AUTO-HAUS TORQUE, standard booking prices are clearly displayed before checkout. Final scope remains subject to vehicle condition, parts required, and approved additional work where applicable. Prices displayed are inclusive of standard labour and materials as described per service.
+        </div>
+        <div class="btn-group mt-24">
+          <button class="btn btn-outline" onclick="goStep(2)">← Back</button>
+          <button class="btn btn-primary" onclick="validateVehicleStep()">Continue →</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ---- STEP 4: SERVICES ----
+function renderServices(){
+  const services=getServices();
+  const valets=getValets();
+  const cats=[{id:'mechanical',label:'🔧 Mechanical'},{id:'electrical',label:'⚡ Electrical'},{id:'drivetrain',label:'🔄 Drivetrain'},{id:'hvac',label:'❄️ HVAC'},{id:'maintenance',label:'✨ Maintenance'},{id:'valet',label:'💧 Car Valet'}];
+  const cartIds=S.cart.map(c=>c.id);
+  const activeTab=S.serviceTab||'mechanical';
+
+  let catalogItems='';
+  if(activeTab==='valet'){
+    catalogItems=`<div class="valet-grid" style="grid-template-columns:1fr 1fr">
+      ${valets.map(v=>`
+        <div class="valet-card ${cartIds.includes(v.id)?'in-cart':''} ${v.tag==='Premium'?'featured':''}" onclick="toggleCart({id:'${v.id}',name:'${v.name}',price:${v.price},icon:'${v.emoji}',type:'valet'})">
+          ${v.tag?`<div class="valet-badge">${v.tag}</div>`:''}
+          <div style="font-size:1.8rem;margin-bottom:8px">${v.emoji}</div>
+          <div class="valet-name" style="font-size:1.1rem">${v.name}</div>
+          <div class="valet-price" style="font-size:1.4rem">${formatPrice(v.price)}</div>
+          <p style="font-size:.78rem;color:var(--grey-d);margin-bottom:10px">${v.desc}</p>
+          <ul class="valet-items">${v.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+          <div style="margin-top:14px">
+            <button class="btn btn-sm ${cartIds.includes(v.id)?'btn-black':'btn-primary'} btn-full">
+              ${cartIds.includes(v.id)?'✓ Added — Remove':'+ Add to Booking'}
+            </button>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  } else {
+    const filtered=services.filter(s=>s.category===activeTab);
+    catalogItems=`<div class="catalog-grid">
+      ${filtered.map(s=>`
+        <div class="service-card ${cartIds.includes(s.id)?'in-cart':''}">
+          <div class="sc-top">
+            <div class="sc-icon">${s.icon}</div>
+            <div class="sc-info">
+              <div class="sc-name">${s.name}</div>
+              <div class="sc-desc">${s.description}</div>
+              <div class="sc-items">${s.includes.map(i=>`<span class="sc-item">✓ ${i}</span>`).join('')}</div>
+            </div>
+          </div>
+          <div class="sc-footer">
+            <div>
+              <div class="sc-price">${formatPrice(s.price)}</div>
+              <div style="font-size:.75rem;color:var(--grey-d)">⏱ ${s.duration}</div>
+            </div>
+            <button class="btn btn-sm ${cartIds.includes(s.id)?'btn-black':'btn-primary'}" onclick="toggleCart({id:'${s.id}',name:'${s.name}',price:${s.price},icon:'${s.icon}',type:'service'})">
+              ${cartIds.includes(s.id)?'✓ Remove':'+ Add'}
+            </button>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  }
+
+  const total=cartTotal();
+  return`
+  ${renderNav()}${renderStepBar()}
+  <div class="container-wide fade-in">
+    <div style="margin-top:16px;margin-bottom:16px">
+      <h2 style="font-size:1.8rem">Select Services for your ${S.vehicle.make||'Vehicle'}</h2>
+      <p class="text-grey">Browse and add services to your booking. You can add multiple services.</p>
+    </div>
+    <div class="catalog-layout">
+      <div>
+        <div class="tab-bar">
+          ${cats.map(c=>`<button class="tab-btn ${activeTab===c.id?'active':''}" onclick="S.serviceTab='${c.id}';render()">${c.label}</button>`).join('')}
+        </div>
+        ${catalogItems}
+      </div>
+      <div>
+        <div class="cart-box">
+          <div class="cart-title">Your Booking <span class="cart-count">${S.cart.length}</span></div>
+          ${S.cart.length===0?`<div class="cart-empty">🛒<br>No services added yet.<br>Select services from the left.</div>`:`
+          <div class="cart-items">
+            ${S.cart.map(i=>`
+              <div class="cart-item">
+                <div class="ci-left"><span class="ci-icon">${i.icon}</span><span class="ci-name">${i.name}</span></div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span class="ci-price">${formatPrice(i.price)}</span>
+                  <button class="ci-remove" onclick="removeFromCart('${i.id}')">×</button>
+                </div>
+              </div>`).join('')}
+          </div>
+          <div class="cart-total">
+            <div class="cart-total-row"><span class="ct-label">Subtotal</span><span class="ct-val">${formatPrice(total)}</span></div>
+            <div class="cart-total-row"><span class="ct-label">50% Deposit (due now)</span><span class="ct-val" style="color:var(--lime)">${formatPrice(cartDeposit())}</span></div>
+            <div class="cart-total-row"><span class="ct-label">Balance (due 24h before)</span><span class="ct-val" style="color:var(--orange)">${formatPrice(total-cartDeposit())}</span></div>
+          </div>
+          <div class="disclaimer">
+            ⚠️ Same standard pricing applies to all vehicle body types. Prices include labour and materials.
+          </div>
+          <button class="btn btn-primary btn-full mt-8" onclick="validateServicesStep()">Proceed to Booking →</button>`}
+        </div>
+        <div style="margin-top:16px;padding:14px;background:#fff;border-radius:var(--r);box-shadow:var(--sh)">
+          <div style="font-family:var(--ff);font-size:.95rem;font-weight:700;margin-bottom:8px">💡 Why book with AUTO-HAUS TORQUE?</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;font-size:.78rem;color:var(--grey-d)">
+            <li>✓ Certified & vetted technicians</li>
+            <li>✓ We come to your location</li>
+            <li>✓ Real-time WhatsApp updates</li>
+            <li>✓ Transparent flat-rate pricing</li>
+            <li>✓ Service completed report</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="btn-group mt-16 mb-24">
+      <button class="btn btn-outline" onclick="goStep(3)">← Back</button>
+    </div>
+  </div>`;
+}
+
+// ---- STEP 5: DATE/TIME (FIXED) ----
+function renderDateTime(){
+  const todayStr=new Date().toISOString().split('T')[0];
+  const bookedSlots=S.selectedDate?getSlotBookings(S.selectedDate):[];
+  const hasDate=!!S.selectedDate;
+  const hasTime=!!S.selectedTime;
+  const isEmg=S.bookingMode==='emergency';
+
+  // ---- BOOKING MODE TABS ----
+  const modeTabs=`
+  <div class="bm-tabs">
+    <button class="bm-tab ${!isEmg?'bm-active-std':''}" onclick="setBookingMode('standard')">
+      <div class="bm-tab-icon">📅</div>
+      <div>
+        <span class="bm-tab-title">Standard Booking</span>
+        <span class="bm-tab-sub">Normal scheduling · Choose any available slot</span>
+        <span class="bm-fee-badge bm-fee-std">No callout fee</span>
+      </div>
+    </button>
+    <button class="bm-tab ${isEmg?'bm-active-emg':''}" onclick="setBookingMode('emergency')">
+      <div class="bm-tab-icon">🚨</div>
+      <div>
+        <span class="bm-tab-title" style="${isEmg?'color:#dc2626':''}">Priority / Emergency</span>
+        <span class="bm-tab-sub">Urgent · We prioritise your booking immediately</span>
+        <span class="bm-fee-badge bm-fee-emg">+ R950 callout fee</span>
+      </div>
+    </button>
+  </div>`;
+
+  // ---- EMERGENCY BANNER (shown only in emergency mode) ----
+  const emgBanner=isEmg?`
+  <div class="emg-banner">
+    <div class="emg-banner-title">🚨 Priority / Emergency Booking Selected</div>
+    <p style="font-size:.85rem;color:#7f1d1d;line-height:1.6;">You have selected our <strong>Priority / Emergency</strong> service. An AUTO-HAUS TORQUE technician will be dispatched and your booking will jump to the front of our queue ahead of all standard bookings.</p>
+    <ul class="emg-checklist">
+      <li>Your booking is prioritised above all standard slots</li>
+      <li>Technician dispatched as soon as your slot is confirmed</li>
+      <li>Real-time WhatsApp & SMS updates from the moment of booking</li>
+      <li>Ideal for breakdowns, urgent pre-trip checks, and emergencies</li>
+    </ul>
+    <div class="emg-fee-row">
+      <div>
+        <div class="emg-fee-label">Priority Callout Fee</div>
+        <div style="font-size:.73rem;color:#9a3535;margin-top:2px">Added automatically · Included in your total</div>
+      </div>
+      <div class="emg-fee-amount">R950</div>
+    </div>
+  </div>`:'';
+
+  // ---- TIME SLOTS ----
+  const slotsHtml=hasDate?`
+    <p style="font-size:.78rem;color:var(--grey-d);margin-bottom:12px">All times SAST · 2.5 h apart for technician travel · Click a ${isEmg?'<span style="color:#dc2626;font-weight:700">🚨 priority</span>':'green'} slot to book</p>
+    <div class="slot-chips">
+      ${TIME_SLOTS.map(t=>{
+        const taken=bookedSlots.includes(t);
+        const sel=S.selectedTime===t;
+        const cls='slot-chip'+(taken?' chip-taken':sel?(isEmg?' chip-selected chip-emg':' chip-selected'):'');
+        return`<div class="${cls}" data-time="${t}" onclick="pickSlot(this)"
+          style="${sel&&isEmg?'border-color:#dc2626;background:rgba(220,38,38,.08)':''}">
+          <div class="slot-chip-time" style="${sel&&isEmg?'color:#dc2626':''}">${isEmg&&!taken?'🚨':''} ${t}</div>
+          <div class="slot-chip-stat ${taken?'no':'ok'}">${taken?'🔴 Taken':isEmg?'⚡ Priority':'🟢 Free'}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="dt-err ${!hasTime&&S._dtValidated?'show':''}" id="errTime">⚠️ Please pick a time slot above.</div>
+    ${hasTime?`<div style="margin-top:10px;font-size:.82rem;color:${isEmg?'#dc2626':'#1a8a42'};font-weight:600;display:flex;align-items:center;gap:6px">
+      <span>${isEmg?'🚨':'✓'}</span>
+      <span>${isEmg?'Priority slot':'Slot'} ${S.selectedTime} SAST selected${isEmg?' — you will be prioritised':''}</span>
+    </div>`:''}`
+    :`<div style="text-align:center;padding:28px 16px;color:var(--grey-d);border:2px dashed ${isEmg?'rgba(220,38,38,.3)':'var(--grey-m)'};border-radius:var(--r-sm)">
+        <div style="font-size:2rem;margin-bottom:8px">${isEmg?'🚨':'📆'}</div>
+        <div style="font-size:.88rem">Select a date on the left first</div>
+      </div>`;
+
+  // ---- CONFIRM BOX ----
+  const confirmBox=hasDate&&hasTime?`
+  <div class="dt-confirm show" id="dtConfirmBox" style="${isEmg?'border-color:#dc2626;background:linear-gradient(135deg,rgba(220,38,38,.07),rgba(220,38,38,.03))':''}">
+    <div class="dt-confirm-icon">${isEmg?'🚨':'✅'}</div>
+    <div>
+      <div class="dt-confirm-date" style="${isEmg?'color:#dc2626':''}">
+        ${formatDate(S.selectedDate)} · ${S.selectedTime} SAST
+        ${isEmg?'<span style="font-family:var(--ff);font-size:.82rem;background:#dc2626;color:#fff;padding:2px 8px;border-radius:10px;margin-left:8px;font-weight:700">PRIORITY</span>':''}
+      </div>
+      <div class="dt-confirm-sub">
+        Your technician will come to: <strong>${S.address||'your chosen address'}</strong>
+        ${isEmg?'<br><span style="color:#dc2626;font-weight:600;font-size:.78rem">🚨 Priority callout fee of R950 has been added to your total.</span>':''}
+      </div>
+    </div>
+  </div>`:`<div class="dt-confirm" id="dtConfirmBox"></div>`;
+
+  return`
+  ${renderNav()}${renderStepBar()}
+  <div class="container fade-in">
+    <div class="card mt-16">
+      <div class="card-head">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <div>
+            <h2 style="font-size:1.6rem">${isEmg?'🚨 Priority / Emergency Booking':'📅 Choose Your Date &amp; Time'}</h2>
+            <p class="text-grey mt-8">${isEmg?'Your booking will be prioritised above all standard slots. A R950 callout fee applies.':'Select when you\'d like your technician to come to you.'}</p>
+          </div>
+          <span class="badge" style="background:${isEmg?'rgba(220,38,38,.12)':'rgba(200,230,52,.2)'};color:${isEmg?'#dc2626':'#5a7000'};font-family:var(--ff);font-size:.78rem;font-weight:700;padding:4px 12px;border-radius:20px;">
+            ${isEmg?'🚨 PRIORITY · +R950':'🕐 07:00 – 17:00 SAST'}
+          </span>
+        </div>
+      </div>
+      <div class="card-body">
+
+        ${modeTabs}
+        ${emgBanner}
+
+        <div class="notif-bar" style="margin-bottom:24px;${isEmg?'background:rgba(220,38,38,.06);border-color:rgba(220,38,38,.2)':''}">
+          <span class="notif-icon">${isEmg?'⚡':'⏰'}</span>
+          <div>${isEmg
+            ?'<strong>Priority booking:</strong> Your slot is treated as urgent. Our team will contact you within <strong>15 minutes</strong> of booking to confirm dispatch.'
+            :'Service hours: <strong>07:00 – 17:00 Mon–Sat</strong>. Slots are 2.5 hours apart to allow technician travel between jobs.'
+          }</div>
+        </div>
+
+        <div class="dt-layout">
+          <!-- DATE PANEL -->
+          <div class="dt-panel ${hasDate?'dt-active':''}" id="dtPanelDate" style="${hasDate&&isEmg?'border-color:rgba(220,38,38,.4)':''}">
+            <div class="dt-panel-title" style="${isEmg?'color:#dc2626':''}">📆 Step A — Select Date</div>
+            <div class="quick-btns">
+              ${[['Today',0],['Tomorrow',1],['+2 Days',2],['Next Week',7]].map(([lbl,n])=>{
+                const ds=addDays(n);
+                return`<button class="quick-btn ${S.selectedDate===ds?'qb-active':''}" onclick="setDateQuick('${ds}')">${lbl}</button>`;
+              }).join('')}
+            </div>
+            <input type="date" id="dtDateInput" min="${todayStr}" value="${S.selectedDate||''}"
+              onchange="onDatePicked(this.value)"
+              style="${hasDate?`border-color:${isEmg?'#dc2626':'var(--lime)'};border-width:2px`:''}">
+            <div class="dt-err ${!hasDate&&S._dtValidated?'show':''}" id="errDate">⚠️ Please select a date before continuing.</div>
+            ${hasDate?`<div style="margin-top:10px;font-size:.82rem;color:${isEmg?'#dc2626':'#1a8a42'};font-weight:600">✓ ${formatDate(S.selectedDate)}</div>`:''}
+          </div>
+
+          <!-- TIME PANEL -->
+          <div class="dt-panel ${hasTime?'dt-active':''}" id="dtPanelTime" style="${hasTime&&isEmg?'border-color:rgba(220,38,38,.4)':''}">
+            <div class="dt-panel-title" style="${isEmg?'color:#dc2626':''}">
+              ${isEmg?'🚨':'🕐'} Step B — Select ${isEmg?'Priority ':''} Time Slot
+            </div>
+            ${slotsHtml}
+          </div>
+        </div>
+
+        ${confirmBox}
+
+        <div class="btn-group mt-24">
+          <button class="btn btn-outline" onclick="goStep(4)">← Back</button>
+          <button class="btn" onclick="validateDateStep()"
+            style="background:${isEmg?'#dc2626':'var(--lime)'};color:${isEmg?'#fff':'var(--black)'};font-family:var(--ff);font-size:1rem;font-weight:700;padding:12px 28px;border-radius:var(--r-sm);border:none;cursor:pointer;">
+            ${isEmg?'🚨 Confirm Priority Booking →':'Continue →'}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ---- STEP 6: REVIEW ----
+function renderReview(){
+  const total=cartTotal();
+  const dep=cartDeposit();
+  const bal=total-dep;
+  const v=S.vehicle||{};
+  const bodyType=BODY_TYPES.find(b=>b.id===S.bodyType);
+  // Audit: flag missing critical fields
+  const missingFields=[];
+  if(!v.vin)missingFields.push('VIN');
+  if(!v.engine)missingFields.push('Engine Number');
+  if(!v.reg)missingFields.push('Registration');
+  return`
+  ${renderNav()}${renderStepBar()}
+  <div class="container fade-in" style="max-width:720px">
+    <div class="card mt-16">
+      <div class="card-head">
+        <h2 style="font-size:1.6rem">Review Your Booking</h2>
+        <p class="text-grey mt-8">Please review all details carefully. You can go back to correct anything before payment.</p>
+      </div>
+      <div class="card-body">
+        ${missingFields.length?`
+        <div class="alert alert-warn" style="margin-bottom:20px">
+          <span>⚠️</span>
+          <div><strong>Some vehicle fields are missing:</strong> ${missingFields.join(', ')}. Your technician may need these to source correct parts. <a href="#" onclick="goStep(1);return false" style="color:var(--orange);font-weight:700">Go back to fill them in</a> or continue if unavailable.</div>
+        </div>`:''}
+
+        <!-- CUSTOMER -->
+        <div style="background:var(--grey-l);border-radius:var(--r-sm);padding:16px 18px;margin-bottom:16px">
+          <div style="font-family:var(--ff);font-size:.82rem;font-weight:700;color:var(--grey-d);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">👤 Customer Details</div>
+          <div class="review-row"><span class="review-label">Full Name</span><span class="review-value">${S.customer?.name||'—'}</span></div>
+          <div class="review-row"><span class="review-label">Mobile</span><span class="review-value">${S.customer?.phone||'—'}</span></div>
+          <div class="review-row"><span class="review-label">WhatsApp</span><span class="review-value">${S.customer?.whatsapp||S.customer?.phone||'—'}</span></div>
+          <div class="review-row"><span class="review-label">Email</span><span class="review-value">${S.customer?.email||'—'}</span></div>
+          <div class="review-row" style="border:none"><span class="review-label">Service Address</span><span class="review-value" style="text-align:right;max-width:300px">${S.address||'—'}</span></div>
+        </div>
+
+        <!-- VEHICLE -->
+        <div style="background:var(--grey-l);border-radius:var(--r-sm);padding:16px 18px;margin-bottom:16px">
+          <div style="font-family:var(--ff);font-size:.82rem;font-weight:700;color:var(--grey-d);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">🚗 Vehicle Details</div>
+          <div class="review-row"><span class="review-label">Make &amp; Model</span><span class="review-value">${v.make||'—'} ${v.model||''}</span></div>
+          <div class="review-row"><span class="review-label">Body Type</span><span class="review-value">${bodyType?bodyType.icon+' '+bodyType.name:'—'}</span></div>
+          <div class="review-row"><span class="review-label">Colour</span><span class="review-value">${v.color||'—'}</span></div>
+          <div class="review-row"><span class="review-label">Registration</span><span class="review-value">${v.reg||'<span style="color:var(--orange)">Not provided</span>'}</span></div>
+          <div class="review-row"><span class="review-label">VIN</span><span class="review-value" style="font-size:.8rem;font-family:monospace">${v.vin||'<span style="color:var(--orange)">Not provided</span>'}</span></div>
+          <div class="review-row"><span class="review-label">Engine No.</span><span class="review-value" style="font-size:.82rem">${v.engine||'<span style="color:var(--orange)">Not provided</span>'}</span></div>
+          <div class="review-row" style="border:none"><span class="review-label">Licence Expiry</span><span class="review-value">${v.expiry||'—'}</span></div>
+        </div>
+
+        <!-- APPOINTMENT -->
+        <div style="background:var(--grey-l);border-radius:var(--r-sm);padding:16px 18px;margin-bottom:16px">
+          <div style="font-family:var(--ff);font-size:.82rem;font-weight:700;color:var(--grey-d);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">📅 Appointment</div>
+          <div class="review-row"><span class="review-label">Date</span><span class="review-value">${formatDate(S.selectedDate)}</span></div>
+          <div class="review-row" style="border:none"><span class="review-label">Time</span><span class="review-value">${S.selectedTime||'—'} SAST</span></div>
+        </div>
+
+        <!-- SERVICES -->
+        <div style="background:var(--grey-l);border-radius:var(--r-sm);padding:16px 18px;margin-bottom:16px">
+          <div style="font-family:var(--ff);font-size:.82rem;font-weight:700;color:var(--grey-d);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">🔧 Services Booked</div>
+          ${S.cart.length?S.cart.map(i=>`
+            <div class="review-row"><span class="review-label">${i.icon||'🔧'} ${i.name}</span><span class="review-value">${formatPrice(i.price)}</span></div>`).join('')
+          :'<div class="review-row"><span style="color:var(--orange)">No services selected</span></div>'}
+          ${S.bookingMode==='emergency'?`
+            <div class="review-row" style="background:rgba(220,38,38,.05);border-radius:var(--r-sm);padding:8px 4px;">
+              <span class="review-label" style="color:#dc2626;display:flex;align-items:center;gap:6px"><span>🚨</span> Priority / Emergency Callout Fee</span>
+              <span class="review-value" style="color:#dc2626">${formatPrice(CALLOUT_FEE)}</span>
+            </div>`:''}
+          <div class="review-row" style="border-top:2px solid var(--grey-m);margin-top:6px;padding-top:10px;border-bottom:none">
+            <span class="review-label" style="font-family:var(--ff);font-weight:800">TOTAL</span>
+            <span class="review-value" style="font-size:1.3rem;color:var(--orange)">${formatPrice(total)}</span>
+          </div>
+        </div>
+
+        <!-- PAYMENT SPLIT -->
+        <div class="payment-split">
+          <div class="pay-box deposit">
+            <div style="font-size:.75rem;color:#6a8300;font-family:var(--ff);font-weight:700;letter-spacing:.5px;margin-bottom:4px">50% DEPOSIT — DUE NOW</div>
+            <div class="pay-amount" style="color:var(--lime-d)">${formatPrice(dep)}</div>
+            <div class="pay-due" style="color:#6a8300;font-size:.75rem;margin-top:4px">✓ Secures your booking slot</div>
+          </div>
+          <div class="pay-box balance">
+            <div style="font-size:.75rem;color:var(--orange);font-family:var(--ff);font-weight:700;letter-spacing:.5px;margin-bottom:4px">50% BALANCE — DUE LATER</div>
+            <div class="pay-amount" style="color:var(--orange)">${formatPrice(bal)}</div>
+            <div class="pay-due" style="color:var(--orange);font-size:.75rem;margin-top:4px">Due 24 hrs before service via portal</div>
+          </div>
+        </div>
+
+        <div class="alert alert-warn mt-16">
+          <span>💳</span>
+          <div>Booking is only confirmed after your <strong>${formatPrice(dep)} deposit</strong> is received. The ${formatPrice(bal)} balance must be paid at least 24 hours before ${formatDate(S.selectedDate)} via this portal.</div>
+        </div>
+
+        <div style="background:var(--grey-l);border-radius:var(--r-sm);padding:14px 16px;font-size:.76rem;color:var(--grey-d);line-height:1.7;margin-top:8px">
+          By proceeding you agree to AUTO-HAUS TORQUE's booking terms. Cancellations require 48 hours notice for a full refund. Any pre-existing faults or additional defects discovered during service will be communicated before extra work is done.
+        </div>
+
+        <div class="btn-group mt-24">
+          <button class="btn btn-outline" onclick="goStep(5)">← Back</button>
+          <button class="btn btn-orange btn-lg" onclick="goStep(7)">Proceed to Payment — ${formatPrice(dep)} →</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ---- STEP 7: PAYMENT ----
+function renderPayment(){
+  const dep=cartDeposit();
+  const total=cartTotal();
+  const bal=total-dep;
+  return`
+  ${renderNav()}${renderStepBar()}
+  <div class="container fade-in" style="max-width:580px">
+    <div class="card mt-16">
+      <div class="card-head">
+        <h2 style="font-size:1.6rem">🔒 Secure Payment</h2>
+        <p class="text-grey mt-8">Pay your 50% deposit to confirm your booking. The remainder is due 24 hours before your service date.</p>
+      </div>
+      <div class="card-body">
+        <!-- AMOUNT BANNER -->
+        <div style="background:linear-gradient(135deg,rgba(200,230,52,.12),rgba(200,230,52,.06));border:2px solid rgba(200,230,52,.3);border-radius:var(--r);padding:20px;text-align:center;margin-bottom:24px">
+          <div style="font-family:var(--ff);font-size:.78rem;font-weight:700;color:var(--grey-d);letter-spacing:1px;text-transform:uppercase">50% Deposit — Due Now</div>
+          <div style="font-family:var(--ff);font-size:2.8rem;font-weight:900;color:var(--black);margin:4px 0">${formatPrice(dep)}</div>
+          <div style="font-size:.76rem;color:var(--grey-d)">Balance of <strong>${formatPrice(bal)}</strong> payable 24 hrs before ${formatDate(S.selectedDate)}</div>
+        </div>
+
+        <!-- SECURE BADGE -->
+        <div class="payment-secure" style="margin-bottom:20px">🔒 256-bit SSL Encryption · Powered by PayGate South Africa</div>
+
+        <!-- PAYMENT METHODS -->
+        <div style="margin-bottom:18px">
+          <div style="font-family:var(--ff);font-size:.78rem;font-weight:700;color:var(--grey-d);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Accepted Payment Methods</div>
+          <div class="card-icons">
+            <div class="card-icon">VISA</div>
+            <div class="card-icon">MC</div>
+            <div class="card-icon">AMEX</div>
+            <div class="card-icon">EFT</div>
+            <div class="card-icon" style="color:var(--orange)">SnapScan</div>
+            <div class="card-icon" style="color:var(--lime-d)">Capitec Pay</div>
+          </div>
+        </div>
+
+        <!-- CARD FORM -->
+        <div id="payFormWrap">
+          <div class="form-group mb-16">
+            <label>Cardholder Name *</label>
+            <input type="text" id="f-cardholder" placeholder="Name exactly as on card" value="${S.customer?.name||''}" autocomplete="cc-name">
+            <div class="dt-err" id="errCardholder">⚠️ Please enter the cardholder name.</div>
+          </div>
+          <div class="form-group mb-16">
+            <label>Card Number *</label>
+            <div class="card-number-wrap">
+              <input type="text" id="f-cardnum" placeholder="0000  0000  0000  0000" maxlength="19"
+                oninput="formatCardNum(this)" autocomplete="cc-number"
+                style="letter-spacing:.1em;font-family:var(--ff);font-weight:700">
+              <span class="card-type-badge" id="cardTypeBadge">CARD</span>
+            </div>
+            <div class="dt-err" id="errCardnum">⚠️ Please enter a valid 16-digit card number.</div>
+          </div>
+          <div class="form-grid" style="gap:16px">
+            <div class="form-group">
+              <label>Expiry Date *</label>
+              <input type="text" id="f-card-expiry" placeholder="MM/YY" maxlength="5"
+                oninput="formatCardExpiry(this)" autocomplete="cc-exp">
+              <div class="dt-err" id="errExpiry">⚠️ Enter valid expiry (MM/YY).</div>
+            </div>
+            <div class="form-group">
+              <label>CVV *</label>
+              <input type="password" id="f-cvv" placeholder="•••" maxlength="4" autocomplete="cc-csc">
+              <div class="dt-err" id="errCvv">⚠️ Enter 3 or 4 digit CVV.</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(200,230,52,.08);border:1px solid rgba(200,230,52,.2);border-radius:var(--r-sm);padding:12px 14px;font-size:.76rem;color:#6a8300;margin-top:16px;line-height:1.6">
+            🔒 Your card details are encrypted and never stored on our servers. AUTO-HAUS TORQUE will never ask for your PIN or full card number by phone, WhatsApp, or email.
+          </div>
+
+          <div class="btn-group mt-24">
+            <button class="btn btn-outline" onclick="goStep(6)">← Back</button>
+            <button class="btn btn-orange btn-lg" id="payBtn" onclick="processPayment()">
+              🔒 Pay ${formatPrice(dep)} Securely
+            </button>
+          </div>
+        </div>
+
+        <!-- PROCESSING STATE (hidden initially) -->
+        <div id="payProcessing" style="display:none;text-align:center;padding:40px 20px">
+          <div style="font-size:3rem;margin-bottom:16px;animation:spin 1s linear infinite;display:inline-block">⚙️</div>
+          <div style="font-family:var(--ff);font-size:1.3rem;font-weight:700;margin-bottom:8px">Processing Payment...</div>
+          <div style="font-size:.85rem;color:var(--grey-d)">Please do not close this page. This takes a few seconds.</div>
+        </div>
+
+        <div style="text-align:center;margin-top:16px;font-size:.72rem;color:var(--grey-d)">
+          By clicking "Pay Securely" you agree to our Terms of Service and authorise AUTO-HAUS TORQUE to charge ${formatPrice(dep)} to your card.
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ---- STEP 8: CONFIRMATION ----
+function renderConfirmation(){
+  const total=cartTotal();
+  const dep=cartDeposit();
+  return`
+  ${renderNav()}
+  <div class="container fade-in" style="max-width:700px">
+    <div class="confirm-hero mt-16">
+      <div class="confirm-check">✓</div>
+      <div class="confirm-ref">BOOKING REFERENCE</div>
+      <div class="confirm-refnum">${S.bookingRef}</div>
+      <h2 style="color:#fff;font-size:1.8rem;margin-top:12px;text-decoration:none">Booking Confirmed!</h2>
+      <p style="color:rgba(255,255,255,.6);font-size:.9rem;margin-top:8px">Thank you, ${S.customer.name.split(' ')[0]}. Your booking is confirmed and our team has been notified.</p>
+    </div>
+    <div class="card mb-16">
+      <div class="card-body">
+        <div class="notif-bar"><span>📱</span><div>Confirmation sent to <strong>${S.customer.email}</strong> and <strong>${S.customer.whatsapp}</strong></div></div>
+        <h4 style="font-size:1rem;margin-bottom:14px">Booking Summary</h4>
+        <div class="review-row"><span class="review-label">Date & Time</span><span class="review-value">${formatDate(S.selectedDate)} · ${S.selectedTime}</span></div>
+        <div class="review-row"><span class="review-label">Vehicle</span><span class="review-value">${S.vehicle.make} ${S.vehicle.model}</span></div>
+        <div class="review-row"><span class="review-label">Location</span><span class="review-value" style="text-align:right;max-width:280px">${S.address}</span></div>
+        <div class="review-row"><span class="review-label">Services</span><span class="review-value">${S.cart.map(i=>i.name).join(', ')}</span></div>
+        <div class="review-row"><span class="review-label">Deposit Paid</span><span class="review-value" style="color:var(--lime-d)">✓ ${formatPrice(dep)}</span></div>
+        <div class="review-row"><span class="review-label">Balance Due</span><span class="review-value" style="color:var(--orange)">${formatPrice(total-dep)} — 24h before service</span></div>
+        <hr class="divider">
+        <h4 style="font-size:1rem;margin-bottom:14px">What Happens Next</h4>
+        <div class="timeline">
+          ${[
+            {icon:'✅',label:'Booking Confirmed',desc:'Your booking has been received and your deposit processed.',done:true},
+            {icon:'👤',label:'Technician Assigned',desc:`An AUTO-HAUS TORQUE technician will be assigned to your booking within 2 hours.`,done:false},
+            {icon:'📱',label:'Pre-Service Reminder',desc:'You will receive a WhatsApp reminder 24 hours before your service.',done:false},
+            {icon:'🚗',label:'Technician En Route',desc:'On the day of service, you\'ll be notified when your technician is on the way.',done:false},
+            {icon:'🔧',label:'Service In Progress',desc:'Live updates will be sent as each stage of the service is completed.',done:false},
+            {icon:'📋',label:'Job Completion Report',desc:'You\'ll receive a full digital service report on completion.',done:false},
+            {icon:'⭐',label:'Rate Your Experience',desc:'Leave a rating to help us maintain our high service standards.',done:false}
+          ].map((t,i,arr)=>`
+            <div class="tl-item">
+              <div class="tl-left">
+                <div class="tl-dot ${t.done?'done':'pending'}">${t.done?'✓':t.icon}</div>
+                ${i<arr.length-1?`<div class="tl-line ${t.done?'done':''}"></div>`:''}
+              </div>
+              <div class="tl-content">
+                <div class="tl-title">${t.label}</div>
+                <div class="tl-desc">${t.desc}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+        <div class="alert alert-warn mt-16">
+          <span>💰</span>
+          <div>Remember: Your balance of <strong>${formatPrice(total-dep)}</strong> must be paid via this portal at least 24 hours before your service on ${formatDate(S.selectedDate)}.</div>
+        </div>
+        <div class="btn-group mt-24">
+          <button class="btn btn-primary btn-lg" onclick="goStep(9)">Track My Booking →</button>
+          <button class="btn btn-outline" onclick="goHome()">Back to Home</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ---- STEP 9: TRACKER ----
+function renderTracker(){
+  const statuses=['Booking Confirmed','Technician Assigned','En Route','Service Started','Service Completed','Report Sent'];
+  const currentStatus=2;
+  return`
+  ${renderNav()}
+  <div class="container fade-in" style="max-width:660px">
+    <div class="card mt-16">
+      <div class="card-head">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <h2 style="font-size:1.6rem">Track Your Booking</h2>
+          <span class="badge badge-orange">🔴 LIVE STATUS</span>
+        </div>
+        <p class="text-grey mt-8">Booking Ref: <strong>${S.bookingRef}</strong> · ${S.vehicle.make} ${S.vehicle.model}</p>
+      </div>
+      <div class="card-body">
+        <div class="notif-bar"><span>📍</span><div>Your technician is <strong>en route</strong> to ${S.address}. Estimated arrival: <strong>25 mins</strong></div></div>
+        <div class="timeline">
+          ${[
+            {icon:'✅',label:'Booking Confirmed',desc:'Deposit received · Booking confirmed',time:'Just now',status:'done'},
+            {icon:'👤',label:'Technician Assigned',desc:'Technician: David M. · Rating: ⭐ 4.9',time:'15 min ago',status:'done'},
+            {icon:'🚗',label:'Technician En Route',desc:'Currently travelling to your location',time:'Now',status:'active'},
+            {icon:'🔧',label:'Service In Progress',desc:'Service has not started yet',time:'',status:'pending'},
+            {icon:'📋',label:'Service Completed',desc:'Awaiting completion',time:'',status:'pending'},
+            {icon:'⭐',label:'Rate Your Experience',desc:'Please rate when service is done',time:'',status:'pending'}
+          ].map((t,i,arr)=>`
+            <div class="tl-item">
+              <div class="tl-left">
+                <div class="tl-dot ${t.status}">${t.status==='done'?'✓':t.icon}</div>
+                ${i<arr.length-1?`<div class="tl-line ${t.status==='done'?'done':''}"></div>`:''}
+              </div>
+              <div class="tl-content">
+                <div class="tl-title">${t.label}</div>
+                <div class="tl-desc">${t.desc}</div>
+                ${t.time?`<div class="tl-time">${t.time}</div>`:''}
+              </div>
+            </div>`).join('')}
+        </div>
+        <div class="btn-group mt-24">
+          <button class="btn btn-primary" onclick="goStep(10)">Rate My Service ⭐</button>
+          <button class="btn btn-outline" onclick="goHome()">Back to Home</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ---- STEP 10: RATING ----
+function renderRating(){
+  return`
+  ${renderNav()}
+  <div class="container fade-in" style="max-width:540px">
+    <div class="card mt-16">
+      <div class="card-head text-center">
+        <div style="font-size:3rem;margin-bottom:8px">⭐</div>
+        <h2 style="font-size:1.6rem">Rate Your Experience</h2>
+        <p class="text-grey mt-8">Thank you for choosing AUTO-HAUS TORQUE. Please rate your service.</p>
+      </div>
+      <div class="card-body text-center">
+        <div class="stars" id="starRow">
+          ${[1,2,3,4,5].map(n=>`<span class="star ${S.rating>=n?'lit':''}" onclick="setRating(${n})">⭐</span>`).join('')}
+        </div>
+        <div style="font-family:var(--ff);font-size:1.3rem;font-weight:700;margin-bottom:20px" id="ratingLabel">${['','Poor','Fair','Good','Great','Excellent!'][S.rating]||'Tap a star to rate'}</div>
+        <div class="form-group">
+          <label>Comments (optional)</label>
+          <textarea id="f-comment" rows="4" placeholder="Tell us about your experience with our technician and service..." style="resize:none"></textarea>
+        </div>
+        <div class="btn-group mt-24" style="justify-content:center">
+          ${S.rating>0?`<button class="btn btn-primary btn-lg" onclick="submitRating()">Submit Review →</button>`:`<button class="btn btn-primary btn-lg" disabled style="opacity:.4;cursor:not-allowed">Select a Rating</button>`}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ===================== ADMIN =====================
+function renderAdmin(){
+  if(!S.adminLoggedIn)return renderAdminLogin();
+  const tabs={dashboard:'📊 Dashboard',bookings:'📋 Bookings',prices:'💰 Price Editor',reports:'📈 Reports'};
+  return`
+  ${renderNav()}
+  <div class="admin-layout">
+    <div class="admin-sidebar">
+      <div style="padding:24px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:8px">
+        <div style="font-family:var(--ff);font-size:1.1rem;font-weight:800;color:#fff">Admin Portal</div>
+        <div style="font-size:.75rem;color:var(--grey-d)">AUTO-HAUS TORQUE</div>
+      </div>
+      ${Object.entries(tabs).map(([k,v])=>`
+        <div class="admin-nav-item ${S.adminTab===k?'active':''}" onclick="S.adminTab='${k}';renderAdmin2()">${v} ${k.charAt(0).toUpperCase()+k.slice(1)}</div>`).join('')}
+      <div style="padding:24px;margin-top:auto">
+        <button class="btn btn-outline btn-sm btn-full" style="color:var(--grey-d);border-color:var(--grey-d)" onclick="exitAdmin()">← Exit Admin</button>
+      </div>
+    </div>
+    <div class="admin-main" id="adminMain">
+      ${renderAdminContent()}
+    </div>
+  </div>`;
+}
+
+function renderAdminLogin(){
+  return`
+  ${renderNav()}
+  <div class="container fade-in" style="max-width:420px">
+    <div class="card mt-16">
+      <div class="card-head text-center">
+        <div style="font-size:2.5rem;margin-bottom:8px">🔐</div>
+        <h2 style="font-size:1.6rem">Admin Login</h2>
+        <p class="text-grey mt-8">Enter your administrator password to access the portal.</p>
+      </div>
+      <div class="card-body">
+        ${S.adminPwError?`<div class="alert alert-warn"><span>⚠️</span><div>Incorrect password. Please try again.</div></div>`:''}
+        <div class="form-group mb-16">
+          <label>Password</label>
+          <input type="password" id="f-adminpw" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')checkAdminPw()">
+          <span class="input-note">Demo password: <strong>admin123</strong></span>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="exitAdmin()">← Back</button>
+          <button class="btn btn-primary" onclick="checkAdminPw()">Login →</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderAdminContent(){
+  if(S.adminTab==='dashboard')return renderAdminDashboard();
+  if(S.adminTab==='bookings')return renderAdminBookings();
+  if(S.adminTab==='prices')return renderAdminPrices();
+  if(S.adminTab==='reports')return renderAdminReports();
+  return '';
+}
+
+function renderAdminDashboard(){
+  const bkgs=getBookings();
+  const today=new Date().toISOString().split('T')[0];
+  const todayBkgs=bkgs.filter(b=>b.date===today);
+  const totalRevenue=bkgs.filter(b=>b.status!=='cancelled').reduce((a,b)=>a+b.deposit,0);
+  const pending=bkgs.filter(b=>b.status==='confirmed').length;
+  return`
+  <div class="admin-header">
+    <h2 style="font-size:1.8rem">Dashboard</h2>
+    <div style="font-size:.82rem;color:var(--grey-d)">${new Date().toLocaleDateString('en-ZA',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-val">${bkgs.length}</div>
+      <div class="kpi-lbl">Total Bookings</div>
+      <div class="kpi-trend up">↑ All time</div>
+    </div>
+    <div class="kpi-card" style="border-top-color:var(--orange)">
+      <div class="kpi-val">${todayBkgs.length}</div>
+      <div class="kpi-lbl">Today's Bookings</div>
+      <div class="kpi-trend">${todayBkgs.length>0?'↑ Active':'-'}</div>
+    </div>
+    <div class="kpi-card" style="border-top-color:#1a8a42">
+      <div class="kpi-val">${formatPrice(totalRevenue)}</div>
+      <div class="kpi-lbl">Revenue (Deposits)</div>
+      <div class="kpi-trend up">↑ Collected</div>
+    </div>
+    <div class="kpi-card" style="border-top-color:var(--grey-d)">
+      <div class="kpi-val">${pending}</div>
+      <div class="kpi-lbl">Pending Services</div>
+      <div class="kpi-trend">Upcoming</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h4 style="font-size:1rem;margin-bottom:16px">Recent Bookings</h4>
+      ${bkgs.length===0?`<div style="text-align:center;padding:32px;color:var(--grey-d)">No bookings yet. Demo bookings will appear here.</div>`:
+      `<table class="data-table">
+        <thead><tr><th>Ref</th><th>Customer</th><th>Vehicle</th><th>Date</th><th>Time</th><th>Services</th><th>Total</th><th>Status</th></tr></thead>
+        <tbody>${bkgs.slice(-10).reverse().map(b=>`
+          <tr>
+            <td><strong>${b.id}</strong></td>
+            <td>${b.customer.name}</td>
+            <td>${b.vehicle.make} ${b.vehicle.model}</td>
+            <td>${b.date}</td>
+            <td>${b.time}</td>
+            <td>${b.services.map(s=>s.name).join(', ')}</td>
+            <td>${formatPrice(b.total)}</td>
+            <td><span class="status-pill status-${b.status||'confirmed'}">${b.status||'confirmed'}</span></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`}
+    </div>
+  </div>`;
+}
+
+function renderAdminBookings(){
+  const bkgs=getBookings();
+  return`
+  <div class="admin-header">
+    <h2 style="font-size:1.8rem">All Bookings</h2>
+    <button class="btn btn-sm btn-primary" onclick="addDemoBooking()">+ Add Demo Booking</button>
+  </div>
+  <div class="card">
+    <div class="card-body" style="overflow-x:auto">
+      ${bkgs.length===0?`<div style="text-align:center;padding:48px;color:var(--grey-d)">No bookings found. Complete a booking or add a demo booking above.</div>`:
+      `<table class="data-table">
+        <thead><tr><th>Ref</th><th>Customer</th><th>Mobile</th><th>Vehicle</th><th>Body</th><th>Date</th><th>Time</th><th>Services</th><th>Total</th><th>Deposit</th><th>Balance</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>${bkgs.map(b=>`
+          <tr>
+            <td><strong>${b.id}</strong></td>
+            <td>${b.customer.name}</td>
+            <td>${b.customer.phone}</td>
+            <td>${b.vehicle.make} ${b.vehicle.model}</td>
+            <td>${b.vehicle.bodyType||'—'}</td>
+            <td>${b.date}</td>
+            <td>${b.time}</td>
+            <td>${b.services.map(s=>s.name).join(', ')}</td>
+            <td><strong>${formatPrice(b.total)}</strong></td>
+            <td style="color:#1a8a42">${formatPrice(b.deposit)}</td>
+            <td style="color:var(--orange)">${formatPrice(b.balance)}</td>
+            <td><span class="status-pill status-${b.status||'confirmed'}">${b.status||'confirmed'}</span></td>
+            <td>
+              <select onchange="updateBookingStatus('${b.id}',this.value)" style="padding:4px 8px;border-radius:4px;border:1px solid var(--grey-m);font-size:.75rem">
+                <option value="confirmed" ${(b.status||'confirmed')==='confirmed'?'selected':''}>Confirmed</option>
+                <option value="in-progress" ${b.status==='in-progress'?'selected':''}>In Progress</option>
+                <option value="completed" ${b.status==='completed'?'selected':''}>Completed</option>
+                <option value="cancelled" ${b.status==='cancelled'?'selected':''}>Cancelled</option>
+              </select>
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`}
+    </div>
+  </div>`;
+}
+
+function renderAdminPrices(){
+  const services=getServices();
+  const valets=getValets();
+  const pp=getServicePrices();
+  const vp=getValetPrices();
+  return`
+  <div class="admin-header">
+    <h2 style="font-size:1.8rem">Price Editor</h2>
+    <span class="badge badge-lime">Admin Only — Authorised Users</span>
+  </div>
+  <div class="card mb-16">
+    <div class="card-body">
+      <h4 style="font-size:1rem;margin-bottom:16px">Mechanical & Technical Services</h4>
+      <div class="alert alert-info mb-16"><span>ℹ️</span><div>Prices shown are standard for all vehicle makes, models and body types (Hatchback, Sedan, Van & Minibus).</div></div>
+      <table class="price-table">
+        <thead><tr><th>Service</th><th>Category</th><th>Duration</th><th>Current Price (ZAR)</th><th>Action</th></tr></thead>
+        <tbody>
+          ${services.map(s=>`
+            <tr>
+              <td>${s.icon} <strong>${s.name}</strong></td>
+              <td><span class="badge badge-grey">${s.category}</span></td>
+              <td>${s.duration}</td>
+              <td><input class="price-input" type="number" id="price-${s.id}" value="${pp[s.id]||s.price}" min="0" step="50"></td>
+              <td><button class="btn btn-sm btn-primary" onclick="saveServicePrice('${s.id}')">Save</button></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h4 style="font-size:1rem;margin-bottom:16px">Car Valet Packages</h4>
+      <table class="price-table">
+        <thead><tr><th>Package</th><th>Description</th><th>Current Price (ZAR)</th><th>Action</th></tr></thead>
+        <tbody>
+          ${valets.map(v=>`
+            <tr>
+              <td>${v.emoji} <strong>${v.name}</strong></td>
+              <td style="font-size:.8rem;color:var(--grey-d)">${v.desc}</td>
+              <td><input class="price-input" type="number" id="valet-${v.id}" value="${vp[v.id]||v.price}" min="0" step="50"></td>
+              <td><button class="btn btn-sm btn-primary" onclick="saveValetPrice('${v.id}')">Save</button></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function renderAdminReports(){
+  const bkgs=getBookings().filter(b=>b.status!=='cancelled');
+  const tabs=['daily','weekly','monthly','annual'];
+  const now=new Date();
+
+  // Compute data
+  let chartData=[];
+  let labels=[];
+  if(S.reportTab==='daily'){
+    for(let i=6;i>=0;i--){
+      const d=new Date(now);d.setDate(d.getDate()-i);
+      const ds=d.toISOString().split('T')[0];
+      const amt=bkgs.filter(b=>b.date===ds).reduce((a,b)=>a+b.total,0);
+      labels.push(DAYS[d.getDay()]);chartData.push(amt);
+    }
+  } else if(S.reportTab==='weekly'){
+    for(let i=3;i>=0;i--){
+      const wStart=new Date(now);wStart.setDate(wStart.getDate()-i*7-6);
+      const wEnd=new Date(now);wEnd.setDate(wEnd.getDate()-i*7);
+      const amt=bkgs.filter(b=>{const bd=new Date(b.date);return bd>=wStart&&bd<=wEnd;}).reduce((a,b)=>a+b.total,0);
+      labels.push(`Wk${4-i}`);chartData.push(amt);
+    }
+  } else if(S.reportTab==='monthly'){
+    for(let i=5;i>=0;i--){
+      const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+      const amt=bkgs.filter(b=>b.date.startsWith(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`)).reduce((a,b)=>a+b.total,0);
+      labels.push(MONTHS[d.getMonth()].slice(0,3));chartData.push(amt);
+    }
+  } else {
+    for(let i=3;i>=0;i--){
+      const yr=now.getFullYear()-i;
+      const amt=bkgs.filter(b=>b.date.startsWith(String(yr))).reduce((a,b)=>a+b.total,0);
+      labels.push(String(yr));chartData.push(amt);
+    }
+  }
+
+  const maxVal=Math.max(...chartData,1);
+  const totalR=bkgs.reduce((a,b)=>a+b.total,0);
+  const totalBookings=bkgs.length;
+  const avgVal=totalBookings>0?Math.round(totalR/totalBookings):0;
+
+  return`
+  <div class="admin-header">
+    <h2 style="font-size:1.8rem">Sales Reports</h2>
+    <button class="btn btn-sm btn-outline" onclick="exportReport()">⬇ Export CSV</button>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-val">${formatPrice(totalR)}</div><div class="kpi-lbl">Total Revenue</div></div>
+    <div class="kpi-card" style="border-top-color:var(--orange)"><div class="kpi-val">${totalBookings}</div><div class="kpi-lbl">Total Bookings</div></div>
+    <div class="kpi-card" style="border-top-color:#1a8a42"><div class="kpi-val">${formatPrice(avgVal)}</div><div class="kpi-lbl">Avg Booking Value</div></div>
+    <div class="kpi-card" style="border-top-color:var(--grey-d)"><div class="kpi-val">${formatPrice(Math.round(totalR*0.5))}</div><div class="kpi-lbl">Deposits Collected</div></div>
+  </div>
+  <div class="chart-wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <h4 style="font-size:1rem">Revenue Chart</h4>
+      <div class="tab-bar" style="border:none;margin:0">
+        ${tabs.map(t=>`<button class="tab-btn ${S.reportTab===t?'active':''}" onclick="S.reportTab='${t}';renderAdmin2()" style="padding:6px 14px;font-size:.8rem">${t.charAt(0).toUpperCase()+t.slice(1)}</button>`).join('')}
+      </div>
+    </div>
+    <div class="bar-chart">
+      ${chartData.map((v,i)=>{
+        const h=Math.max(Math.round((v/maxVal)*140),4);
+        const colors=['var(--lime)','var(--orange)','var(--lime)','var(--orange)','var(--lime)','var(--orange)'];
+        return`<div class="bar-col">
+          <div class="bar-val">${v>0?formatPrice(v):''}</div>
+          <div class="bar" style="height:${h}px;background:${colors[i%6]}"></div>
+          <div class="bar-lbl">${labels[i]}</div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>
+  <div class="card mt-16">
+    <div class="card-body">
+      <h4 style="font-size:1rem;margin-bottom:16px">Service Breakdown</h4>
+      ${bkgs.length===0?`<div style="color:var(--grey-d);text-align:center;padding:24px">No completed bookings to report.</div>`:
+      (() => {
+        const svcCount={};
+        bkgs.forEach(b=>b.services.forEach(s=>{svcCount[s.name]=(svcCount[s.name]||0)+1;}));
+        const sorted=Object.entries(svcCount).sort((a,b)=>b[1]-a[1]);
+        const total2=sorted.reduce((a,b)=>a+b[1],0);
+        return`<div style="display:flex;flex-direction:column;gap:10px">
+          ${sorted.map(([name,count])=>`
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:.85rem">
+                <span>${name}</span><span style="font-family:var(--ff);font-weight:700">${count} bookings (${Math.round(count/total2*100)}%)</span>
+              </div>
+              <div style="height:8px;background:var(--grey-l);border-radius:4px"><div style="height:8px;background:var(--orange);border-radius:4px;width:${Math.round(count/total2*100)}%"></div></div>
+            </div>`).join('')}
+        </div>`;
+      })()}
+    </div>
+  </div>`;
+}
+
+// ===================== EVENTS =====================
+function setupEvents(){
+  // drag-drop on scanner zone handled inline
+}
+
+function setupAdminEvents(){}
+
+// ===== STEP 1 SCANNER HELPERS (exact reference from mobi_v4) =====
+function getZXingReader(){
+  if(!S.zxingReader && window.ZXing){
+    S.zxingReader = new window.ZXing.BrowserMultiFormatReader();
+  }
+  return S.zxingReader;
+}
+
+async function decodeCurrentImage(){
+  if(!S.currentImageBitmap){ addAuditMsg('No image loaded — upload or capture first.',true); return; }
+  const reader = getZXingReader();
+  if(!reader){ addAuditMsg('ZXing library not loaded. Refresh page.',true); return; }
+  addAuditMsg('Decoding with ZXing (PDF417 supported)...');
+  try{
+    const canvas = document.createElement('canvas');
+    canvas.width  = S.currentImageBitmap.width;
+    canvas.height = S.currentImageBitmap.height;
+    canvas.getContext('2d').drawImage(S.currentImageBitmap, 0, 0);
+    const imgEl = new Image();
+    imgEl.src = canvas.toDataURL('image/png');
+    await new Promise(resolve=>{ imgEl.onload = resolve; });
+    const result = await reader.decodeFromImageElement(imgEl);
+    if(result && result.getText()){
+      const decodedText = result.getText();
+      const ta = document.getElementById('barcodeRawText');
+      if(ta) ta.value = decodedText;
+      addAuditMsg(`✅ Decoded: ${result.getBarcodeFormat()} | ${decodedText.length} chars`);
+      const pill = document.getElementById('scanStatusPill');
+      if(pill){ pill.innerHTML = 'Scanner: decoded ✓'; pill.className = 'pill ok'; }
+      if(decodedText.includes('%')){
+        parseAndPopulateVehicle(decodedText);
+      } else {
+        addAuditMsg('Decoded but not SA licence format — paste into textarea and click Parse.',true);
+      }
+    } else {
+      addAuditMsg('No barcode found — ensure PDF417 strip is visible and in focus.',true);
+    }
+  } catch(e){
+    addAuditMsg(`Decode error: ${e.message}`,true);
+  }
+}
+
+function parseAndPopulateVehicle(rawText){
+  if(!rawText || !rawText.includes('%')){
+    addAuditMsg('Invalid SA licence format — text must contain % separators.',true);
+    return;
+  }
+  let parts = rawText.split('%');
+  if(rawText.startsWith('%') && parts[0]==='') parts = parts.slice(1);
+  while(parts.length < 14) parts.push('');
+
+  const vehicleData = {
+    plate:    parts[5]  || '',   // licence disc number
+    register: parts[6]  || '',   // registration number
+    body:     parts[7]  || '',   // body type
+    make:     parts[8]  || '',   // vehicle make
+    model:    parts[9]  || '',   // vehicle model
+    colour:   parts[10] || '',   // colour
+    vin:      parts[11] || '',   // VIN
+    engine:   parts[12] || '',   // engine number
+    expiry:   parts[13] || ''    // expiry date
+  };
+
+  // Write into global booking state
+  S.vehicle = {
+    make:    vehicleData.make,
+    model:   vehicleData.model,
+    reg:     vehicleData.register,
+    vin:     vehicleData.vin,
+    engine:  vehicleData.engine,
+    license: vehicleData.plate,
+    color:   vehicleData.colour,
+    expiry:  vehicleData.expiry
+  };
+
+  // Populate editable form inputs
+  const fMake  = document.getElementById('f-make');
+  const fModel = document.getElementById('f-model');
+  const fReg   = document.getElementById('f-reg');
+  const fVin   = document.getElementById('f-vin');
+  if(fMake)  fMake.value  = vehicleData.make;
+  if(fModel) fModel.value = vehicleData.model;
+  if(fReg)   fReg.value   = vehicleData.register;
+  if(fVin)   fVin.value   = vehicleData.vin;
+
+  // Populate display info-fields
+  const dispReg     = document.getElementById('disp-reg');
+  const dispVin     = document.getElementById('disp-vin');
+  const dispEngine  = document.getElementById('disp-engine');
+  const dispLicense = document.getElementById('disp-license');
+  if(dispReg)     dispReg.innerText     = vehicleData.register || '—';
+  if(dispVin)     dispVin.innerText     = vehicleData.vin      || '—';
+  if(dispEngine)  dispEngine.innerText  = vehicleData.engine   || '—';
+  if(dispLicense) dispLicense.innerText = vehicleData.plate    || '—';
+
+  // Update parse status pill
+  const parsePill = document.getElementById('parseStatusPill');
+  if(parsePill){ parsePill.innerHTML = 'Parser: populated ✓'; parsePill.className = 'pill ok'; }
+
+  addAuditMsg(`Parsed → ${vehicleData.make} ${vehicleData.model} | Reg: ${vehicleData.register} | VIN: ${vehicleData.vin} | Engine: ${vehicleData.engine}`);
+
+  // Show the vehicle fields card
+  const vf = document.getElementById('vehicleFields');
+  const sa = document.getElementById('scanArea');
+  if(vf) vf.classList.remove('hidden');
+  if(sa) sa.classList.add('hidden');
+}
+
+function addAuditMsg(msg, isErr=false){
+  const auditDiv = document.getElementById('auditLog');
+  if(!auditDiv) return;
+  const line = document.createElement('div');
+  line.style.cssText = `color:${isErr?'#f87171':'#86efac'};padding:1px 0;border-bottom:1px solid rgba(255,255,255,.04);`;
+  line.textContent = (isErr ? '⚠️ ' : '✓ ') + msg;
+  auditDiv.insertBefore(line, auditDiv.firstChild);
+  while(auditDiv.children.length > 8) auditDiv.lastChild.remove();
+}
+
+async function startCameraScanner(){
+  if(S.activeStream) stopCameraScanner();
+  const video       = document.getElementById('scannerVideo');
+  const previewImg  = document.getElementById('previewImg');
+  const placeholder = document.getElementById('placeholderMsg');
+  if(video)       video.style.display       = 'block';
+  if(previewImg)  previewImg.style.display  = 'none';
+  if(placeholder) placeholder.style.display = 'none';
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({ video:{facingMode:'environment'}, audio:false });
+    S.activeStream = stream;
+    if(video) video.srcObject = stream;
+    addAuditMsg('Camera active — point at the PDF417 barcode on the licence disk');
+    const pill = document.getElementById('scanStatusPill');
+    if(pill){ pill.innerHTML = 'Scanner: camera active'; pill.className = 'pill ok'; }
+  } catch(err){
+    addAuditMsg(`Camera access denied: ${err.message} — use Upload Image instead.`, true);
+    const pill = document.getElementById('scanStatusPill');
+    if(pill){ pill.innerHTML = 'Scanner: no camera'; pill.className = 'pill bad'; }
+  }
+}
+
+function stopCameraScanner(){
+  if(S.activeStream){ S.activeStream.getTracks().forEach(t=>t.stop()); S.activeStream = null; }
+  const video = document.getElementById('scannerVideo');
+  if(video){ video.srcObject = null; video.style.display = 'none'; }
+  const placeholder = document.getElementById('placeholderMsg');
+  if(placeholder) placeholder.style.display = 'flex';
+  addAuditMsg('Camera stopped');
+}
+
+async function captureFrameScanner(){
+  const video      = document.getElementById('scannerVideo');
+  const canvas     = document.getElementById('hiddenCanvas');
+  const previewImg = document.getElementById('previewImg');
+  if(!S.activeStream || !video || !video.videoWidth){
+    addAuditMsg('Start camera first, then click Capture Frame.',true);
+    return;
+  }
+  canvas.width  = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+  previewImg.src = canvas.toDataURL('image/png');
+  previewImg.style.display = 'block';
+  video.style.display = 'none';
+  S.currentImageBitmap = await createImageBitmap(canvas);
+  addAuditMsg(`Frame captured (${canvas.width}×${canvas.height}px) — click Decode Barcode`);
+}
+
+function handleImageUpload(file){
+  if(!file) return;
+  stopCameraScanner();
+  const url = URL.createObjectURL(file);
+  const previewImg  = document.getElementById('previewImg');
+  const placeholder = document.getElementById('placeholderMsg');
+  const video       = document.getElementById('scannerVideo');
+  if(previewImg)  { previewImg.src = url; previewImg.style.display = 'block'; }
+  if(placeholder)   placeholder.style.display = 'none';
+  if(video)         video.style.display = 'none';
+  const img = new Image();
+  img.src = url;
+  img.onload = async ()=>{
+    S.currentImageBitmap = await createImageBitmap(img);
+    addAuditMsg(`Image loaded: ${file.name} (${img.width}×${img.height}px) — click Decode Barcode`);
+    URL.revokeObjectURL(url);
+  };
+}
+
+function loadSampleBarcode(){
+  const sample = "%MVL1CC27%0141%4024O035%1%40240480S3X2%KV27FNGP%HJP953L%Hatch back / Luikrug%TOYOTA%C-HR%Grey / Grys%NMTKY9BX00R056922%8NRU276266%2023-09-30%";
+  const ta = document.getElementById('barcodeRawText');
+  if(ta) ta.value = sample;
+  addAuditMsg('Sample SA licence disc barcode loaded — click "Parse & Fill Vehicle" to extract data');
+}
+
+function manualParseFromText(){
+  const raw = document.getElementById('barcodeRawText')?.value || '';
+  if(!raw.trim()){ addAuditMsg('Paste barcode text into the textarea first, then click Parse.',true); return; }
+  parseAndPopulateVehicle(raw);
+}
+
+function attachStep1Events(){
+  if(S.step !== 1) return;
+  document.getElementById('startCamScannerBtn')?.addEventListener('click', startCameraScanner);
+  document.getElementById('captureFrameBtn')?.addEventListener('click',   captureFrameScanner);
+  document.getElementById('stopCamScannerBtn')?.addEventListener('click', stopCameraScanner);
+  document.getElementById('decodeBtn')?.addEventListener('click',         decodeCurrentImage);
+  document.getElementById('loadSampleBtn')?.addEventListener('click',     loadSampleBarcode);
+  document.getElementById('manualParseBtn')?.addEventListener('click',    manualParseFromText);
+}
+
+// ===== DATETIME HELPERS =====
+function addDays(n){
+  const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().split('T')[0];
+}
+function setBookingMode(mode){
+  S.bookingMode=mode;
+  S.selectedDate=null;
+  S.selectedTime=null;
+  S._dtValidated=false;
+  render();
+}
+function setDateQuick(dateStr){
+  S.selectedDate=dateStr;S.selectedTime=null;render();
+}
+function onDatePicked(val){
+  if(!val)return;
+  const today=new Date().toISOString().split('T')[0];
+  if(val<today){showToast('Please select today or a future date.');return;}
+  S.selectedDate=val;S.selectedTime=null;render();
+}
+function pickSlot(el){
+  // el is the chip DOM element passed via onclick="pickSlot(this)"
+  if(!el||el.classList.contains('chip-taken'))return;
+  const t=el.dataset.time;
+  if(!t)return;
+  S.selectedTime=t;
+  S._dtValidated=false;
+  render(); // full re-render guarantees correct visual state
+}
+
+function goStep(n){S.step=n;window.scrollTo(0,0);render();}
+function goHome(){S.step=0;S.cart=[];S.vehicle={make:'',model:'',reg:'',vin:'',engine:'',license:'',color:'',expiry:''};S.customer={};S.address='';S.bodyType='';S.selectedDate=null;S.selectedTime=null;S.bookingRef='';S.bookingMode='standard';if(S.activeStream)stopCameraScanner();render();}
+function goAdmin(){S.adminView=true;render();}
+function exitAdmin(){S.adminView=false;render();}
+function renderAdmin2(){document.getElementById('adminMain').innerHTML=renderAdminContent();setupAdminEvents();}
+function scrollToServices(){document.getElementById('services-section')?.scrollIntoView({behavior:'smooth'});}
+function sameAsPhone(){const p=document.getElementById('f-phone');const w=document.getElementById('f-whatsapp');if(p&&w)w.value=p.value;}
+// Legacy stubs kept for safety
+function handleDiskUpload(){}
+function simulateScan(){}
+function skipLicenseScan(){manualEntryMode&&manualEntryMode();}
+function selectDate(d){S.selectedDate=d;S.selectedTime=null;render();}
+function selectTime(t){pickSlot(t);}
+function prevMonth(){S.calMonth--;if(S.calMonth<0){S.calMonth=11;S.calYear--;}render();}
+function nextMonth(){S.calMonth++;if(S.calMonth>11){S.calMonth=0;S.calYear++;}render();}
+function selectBodyType(b){S.bodyType=b;render();}
+function toggleCart(item){const idx=S.cart.findIndex(i=>i.id===item.id);if(idx>=0)S.cart.splice(idx,1);else S.cart.push(item);render();}
+function removeFromCart(id){S.cart=S.cart.filter(i=>i.id!==id);render();}
+function setRating(n){S.rating=n;render();}
+
+function validateLicenseStep(){
+  const make  = document.getElementById('f-make')?.value  || '';
+  const model = document.getElementById('f-model')?.value || '';
+  if(!make) { showToast('⚠️ Please select your vehicle make.'); document.getElementById('f-make')?.focus(); return; }
+  if(!model){ showToast('⚠️ Please enter your vehicle model.'); document.getElementById('f-model')?.focus(); return; }
+  // Commit all editable fields to state
+  S.vehicle.make    = make;
+  S.vehicle.model   = model;
+  S.vehicle.reg     = document.getElementById('f-reg')?.value   || S.vehicle.reg     || '';
+  S.vehicle.vin     = document.getElementById('f-vin')?.value   || S.vehicle.vin     || '';
+  // Stop camera if still running
+  if(S.activeStream) stopCameraScanner();
+  goStep(2);
+}
+
+function validateCustomerStep(){
+  const fname=document.getElementById('f-fname')?.value?.trim();
+  const lname=document.getElementById('f-lname')?.value?.trim();
+  const phone=document.getElementById('f-phone')?.value?.trim();
+  const email=document.getElementById('f-email')?.value?.trim();
+  const whatsapp=document.getElementById('f-whatsapp')?.value?.trim();
+  const address=document.getElementById('f-address')?.value?.trim();
+  if(!fname||!lname){alert('Please enter your full name.');return;}
+  if(!phone||phone.length<10){alert('Please enter a valid mobile number.');return;}
+  if(!email||!email.includes('@')){alert('Please enter a valid email address.');return;}
+  if(!address){alert('Please enter the service address.');return;}
+  S.customer={name:`${fname} ${lname}`,phone,email,whatsapp:whatsapp||phone};
+  S.address=address;
+  goStep(3);
+}
+
+function validateVehicleStep(){
+  if(!S.bodyType){alert('Please select a vehicle body type.');return;}
+  goStep(4);
+}
+
+function validateServicesStep(){
+  if(S.cart.length===0){alert('Please add at least one service to your booking.');return;}
+  goStep(5);
+}
+
+function validateDateStep(){
+  S._dtValidated=true;
+  if(!S.selectedDate){
+    render();
+    showToast('⚠️ Please select a date first.');
+    return;
+  }
+  const today=new Date().toISOString().split('T')[0];
+  if(S.selectedDate<today){
+    showToast('⚠️ The selected date is in the past. Please choose today or a future date.');
+    return;
+  }
+  if(!S.selectedTime){
+    render();
+    showToast('⚠️ Please select a time slot.');
+    return;
+  }
+  S._dtValidated=false;
+  goStep(6);
+}
+
+function formatCardNum(input){
+  let v=input.value.replace(/\D/g,'').slice(0,16);
+  input.value=v.replace(/(.{4})/g,'$1 ').trim();
+  const badge=document.getElementById('cardTypeBadge');
+  if(badge){
+    if(v.startsWith('4'))badge.textContent='VISA';
+    else if(/^5[1-5]/.test(v))badge.textContent='MC';
+    else if(/^3[47]/.test(v))badge.textContent='AMEX';
+    else badge.textContent='CARD';
+  }
+}
+function formatCardExpiry(input){
+  let v=input.value.replace(/\D/g,'').slice(0,4);
+  if(v.length>=2)v=v.slice(0,2)+'/'+v.slice(2);
+  input.value=v;
+}
+// Keep old name as alias in case anything references it
+function formatExpiry(input){formatCardExpiry(input);}
+
+function showFieldErr(id,show){
+  const el=document.getElementById(id);
+  if(el)el.className='dt-err'+(show?' show':'');
+}
+
+function processPayment(){
+  const ch=(document.getElementById('f-cardholder')?.value||'').trim();
+  const cn=(document.getElementById('f-cardnum')?.value||'').replace(/\s/g,'');
+  const ex=(document.getElementById('f-card-expiry')?.value||'').trim();
+  const cv=(document.getElementById('f-cvv')?.value||'').trim();
+
+  let valid=true;
+  showFieldErr('errCardholder',!ch);if(!ch)valid=false;
+  showFieldErr('errCardnum',cn.length<16);if(cn.length<16)valid=false;
+  showFieldErr('errExpiry',ex.length<5);if(ex.length<5)valid=false;
+  showFieldErr('errCvv',cv.length<3);if(cv.length<3)valid=false;
+
+  if(!valid){showToast('⚠️ Please fill in all card details correctly.');return;}
+
+  // Validate expiry not in the past
+  const [mm,yy]=ex.split('/');
+  const expDate=new Date(2000+parseInt(yy),parseInt(mm)-1,1);
+  if(expDate<new Date()){showFieldErr('errExpiry',true);showToast('⚠️ Your card has expired.');return;}
+
+  // Switch to processing state
+  const form=document.getElementById('payFormWrap');
+  const proc=document.getElementById('payProcessing');
+  if(form)form.style.display='none';
+  if(proc)proc.style.display='block';
+
+  setTimeout(()=>{
+    S.bookingRef=generateRef();
+    const booking={
+      id:S.bookingRef,
+      date:S.selectedDate,
+      time:S.selectedTime,
+      customer:{...S.customer},
+      vehicle:{...S.vehicle,bodyType:S.bodyType},
+      address:S.address,
+      services:[...S.cart],
+      total:cartTotal(),
+      deposit:cartDeposit(),
+      balance:cartTotal()-cartDeposit(),
+      status:'confirmed',
+      createdAt:new Date().toISOString()
+    };
+    saveNewBooking(booking);
+    goStep(8);
+  },2200);
+}
+
+function checkAdminPw(){
+  const pw=document.getElementById('f-adminpw')?.value;
+  if(pw==='admin123'){S.adminLoggedIn=true;S.adminPwError=false;S.adminTab='dashboard';render();}
+  else{S.adminPwError=true;render();}
+}
+
+function saveServicePrice(id){
+  const val=parseInt(document.getElementById('price-'+id)?.value);
+  if(isNaN(val)||val<0){alert('Invalid price');return;}
+  const pp=getServicePrices();pp[id]=val;saveServicePrices(pp);
+  showToast('Price updated successfully!');
+}
+
+function saveValetPrice(id){
+  const val=parseInt(document.getElementById('valet-'+id)?.value);
+  if(isNaN(val)||val<0){alert('Invalid price');return;}
+  const vp=getValetPrices();vp[id]=val;saveValetPrices(vp);
+  showToast('Valet price updated!');
+}
+
+function updateBookingStatus(id,status){
+  const arr=getBookings();
+  const idx=arr.findIndex(b=>b.id===id);
+  if(idx>=0){arr[idx].status=status;localStorage.setItem('mm_bookings',JSON.stringify(arr));}
+  showToast('Status updated!');
+}
+
+function addDemoBooking(){
+  const makes=VEHICLES;
+  const ref=generateRef();
+  const d=new Date();d.setDate(d.getDate()+Math.floor(Math.random()*14+1));
+  const dateStr=d.toISOString().split('T')[0];
+  const slot=TIME_SLOTS[Math.floor(Math.random()*TIME_SLOTS.length)];
+  const services=[DEFAULT_SERVICES[Math.floor(Math.random()*DEFAULT_SERVICES.length)]];
+  const total=services.reduce((a,s)=>a+s.price,0);
+  const names=['Sipho Dlamini','Nomsa Khumalo','Thabo Nkosi','Ayanda Zulu','Lerato Mokoena','Pieter van der Berg','Fatima Patel','Johan Smith'];
+  const name=names[Math.floor(Math.random()*names.length)];
+  const booking={
+    id:ref,date:dateStr,time:slot,
+    customer:{name,phone:`07${Math.floor(10000000+Math.random()*89999999)}`,email:`${name.split(' ')[0].toLowerCase()}@email.co.za`,whatsapp:`07${Math.floor(10000000+Math.random()*89999999)}`},
+    vehicle:{make:makes[Math.floor(Math.random()*makes.length)],model:'1.6',bodyType:'hatchback',reg:`AB ${Math.floor(1000+Math.random()*9000)} GP`,vin:'WVW0000000000001',engine:'ENG001',license:'LIC001'},
+    address:`${Math.floor(10+Math.random()*990)} Main Street, Johannesburg`,
+    services:services.map(s=>({id:s.id,name:s.name,price:s.price,icon:s.icon})),
+    total,deposit:Math.round(total*0.5),balance:Math.round(total*0.5),
+    status:'confirmed',createdAt:new Date().toISOString()
+  };
+  saveNewBooking(booking);
+  renderAdmin2();
+  showToast('Demo booking added!');
+}
+
+function exportReport(){
+  const bkgs=getBookings();
+  const headers=['Ref','Date','Time','Customer','Phone','Email','Vehicle','Body Type','Services','Total','Deposit','Balance','Status'];
+  const rows=bkgs.map(b=>[b.id,b.date,b.time,b.customer.name,b.customer.phone,b.customer.email,`${b.vehicle.make} ${b.vehicle.model}`,b.vehicle.bodyType||'',b.services.map(s=>s.name).join('; '),b.total,b.deposit,b.balance,b.status||'confirmed']);
+  let csv=headers.join(',')+'\n'+rows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`auto-haus-torque-report-${new Date().toISOString().split('T')[0]}.csv`;a.click();
+  URL.revokeObjectURL(url);
+}
+
+function submitRating(){
+  const comment=document.getElementById('f-comment')?.value;
+  // Save rating to booking
+  const arr=getBookings();
+  const last=arr.find(b=>b.id===S.bookingRef);
+  if(last){last.rating=S.rating;last.comment=comment;last.status='completed';localStorage.setItem('mm_bookings',JSON.stringify(arr));}
+  alert(`Thank you for your ${S.rating}-star rating! We appreciate your feedback.`);
+  goHome();
+}
+
+function showToast(msg){
+  const el=document.createElement('div');
+  el.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--black);color:#fff;font-family:var(--ff);font-size:.95rem;font-weight:700;padding:12px 24px;border-radius:30px;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.3);animation:fadeIn .3s ease-out';
+  el.textContent='✓ '+msg;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),3000);
+}
+
+// INIT
+render();
+</script>
+</body>
+</html>

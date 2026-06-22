@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AUTO-HAUS TORQUE | Your Drive, Our Doorstep – Gqeberha &amp; Surrounds</title>
+
+<!-- Barlow Condensed: web-safe fallback for Univers Condensed -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ══════════════════════════════════════════
+   DESIGN TOKENS
+   Company colours: Black · Lime · Light Grey
+══════════════════════════════════════════ */
+:root {
+  --lime:         #A8E000;
+  --lime-light:   #C6FF2D;
+  --lime-dark:    #7AB800;
+  --black:        #000000;
+  --dark:         #080808;
+  --dark2:        #101010;
+  --dark3:        #1a1a1a;
+  --card-bg:      #141414;
+  --light-grey:   #D0D0D0;
+  --mid-grey:     #888888;
+  --white:        #FFFFFF;
+  --sa-green:     #007A4D;
+  --sa-blue:      #002395;
+  --sa-red:       #DE3831;
+  --sa-yellow:    #FFB612;
+
+  /* ── Univers Condensed typeface (company-specified).
+        Arial Narrow = system condensed fallback.
+        Barlow Condensed = web-safe Google fallback. ── */
+  --font: 'Univers Condensed','Arial Narrow','Barlow Condensed',sans-serif;
+  --font-body: 'Barlow','Arial Narrow',sans-serif;
+}
+
+/* ══════════════════════════════════════════
+   RESET & BASE  (12 px as per spec)
+══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:12px;}
+body{
+  font-family:var(--font);
+  font-size:1rem;
+  background:var(--dark);
+  color:var(--white);
+  overflow-x:hidden;
+  line-height:1.65;
+}
+
+/* ══════════════════════════════════════════
+   GLOBAL HEADING RULE — underline every heading
+══════════════════════════════════════════ */
+h1,h2,h3,h4,h5,h6{
+  font-family:var(--font);
+  font-weight:900;
+  text-decoration:underline;
+  text-underline-offset:0.22em;
+  text-decoration-thickness:2px;
+  text-decoration-color:var(--lime);
+}
+
+/* ── scrollbar ── */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--dark2);}
+::-webkit-scrollbar-thumb{background:var(--lime);border-radius:3px;}
+
+/* ══════════════════════════════════════════
+   UTILITY
+══════════════════════════════════════════ */
+.section-label{
+  font-family:var(--font);
+  font-size:.95rem;font-weight:700;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:var(--lime);display:block;margin-bottom:.75rem;
+}
+.section-title{
+  font-family:var(--font);
+  font-size:clamp(1.3rem,2.6vw,2.2rem);
+  line-height:1.1;letter-spacing:.03em;font-weight:900;
+}
+.section-title span{color:var(--lime);}
+.section-sub{
+  font-size:1.25rem;color:var(--light-grey);
+  max-width:600px;margin-top:.75rem;line-height:1.7;
+}
+
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 2rem;border-radius:3px;
+  font-family:var(--font);font-weight:700;font-size:1.18rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;cursor:pointer;border:none;
+  transition:all .25s ease;
+}
+.btn-primary{background:linear-gradient(135deg,var(--lime),var(--lime-light));color:var(--black);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(168,224,0,.45);}
+.btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.3);}
+.btn-outline:hover{border-color:var(--lime);color:var(--lime);}
+.btn-ghost{background:transparent;color:var(--lime);border:2px solid var(--lime);}
+.btn-ghost:hover{background:var(--lime);color:var(--black);}
+.btn-dark{background:var(--black);color:var(--white);border:2px solid rgba(255,255,255,.18);}
+.btn-dark:hover{background:var(--dark3);transform:translateY(-2px);}
+.btn-white{background:var(--white);color:var(--black);}
+.btn-white:hover{background:var(--light-grey);transform:translateY(-2px);}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(0,0,0,.95);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(168,224,0,.14);
+  transition:background .3s;
+}
+.nav-top{
+  background:linear-gradient(90deg,var(--sa-green),var(--sa-blue) 40%,var(--sa-red) 80%,var(--sa-yellow));
+  text-align:center;padding:.3rem 1rem;
+  font-family:var(--font);font-size:1rem;font-weight:700;
+  letter-spacing:.12em;color:var(--white);
+}
+.nav-inner{
+  max-width:1400px;margin:0 auto;padding:0 1.5rem;
+  display:flex;align-items:center;gap:1.25rem;height:70px;
+}
+/* brand block */
+.nav-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;flex-shrink:0;}
+.nav-brand img.co-logo{height:46px;width:auto;object-fit:contain;}
+.nav-brand-text{display:flex;flex-direction:column;line-height:1.1;}
+.nav-brand-name{
+  font-family:var(--font);font-size:1rem;font-weight:900;
+  letter-spacing:.08em;color:var(--white);text-decoration:none;
+}
+.nav-brand-tag{font-family:var(--font);font-size:.82rem;color:var(--lime);letter-spacing:.18em;text-transform:uppercase;}
+/* Proudly SA divider + logo */
+.nav-sa-wrap{
+  display:flex;align-items:center;gap:.65rem;
+  padding-left:.85rem;
+  border-left:1px solid rgba(168,224,0,.22);
+  flex-shrink:0;
+}
+.nav-sa-wrap img{height:44px;width:auto;object-fit:contain;}
+.nav-sa-label{
+  font-family:var(--font);font-size:.88rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--lime);line-height:1.3;
+  display:flex;flex-direction:column;
+}
+.nav-sa-label span{color:var(--light-grey);font-weight:400;}
+/* links */
+.nav-links{display:flex;align-items:center;gap:.15rem;margin:0 auto;list-style:none;}
+.nav-links a{
+  font-family:var(--font);font-size:1.08rem;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;
+  color:var(--light-grey);text-decoration:none;
+  padding:.4rem .7rem;border-radius:2px;transition:all .2s;
+}
+.nav-links a:hover{color:var(--lime);background:rgba(168,224,0,.08);}
+/* right CTA */
+.nav-right{display:flex;align-items:center;gap:.85rem;flex-shrink:0;}
+.nav-phone{
+  display:flex;align-items:center;gap:.4rem;
+  font-family:var(--font);font-size:1.06rem;font-weight:700;
+  color:var(--white);text-decoration:none;letter-spacing:.05em;
+}
+.nav-phone span{color:var(--lime);}
+/* hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem;margin-left:auto;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all .3s;}
+.mobile-menu{display:none;background:var(--dark2);border-top:1px solid rgba(168,224,0,.12);padding:1rem 1.5rem;}
+.mobile-menu a{
+  display:block;font-family:var(--font);font-size:1.4rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--white);text-decoration:none;
+  padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.mobile-menu a:hover{color:var(--lime);}
+.mobile-menu.open{display:block;}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+#hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;
+  overflow:hidden;padding-top:108px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 72% 50%,rgba(168,224,0,.13) 0%,transparent 60%),
+    radial-gradient(ellipse at 18% 80%,rgba(168,224,0,.07) 0%,transparent 50%),
+    var(--black);
+}
+.hero-flag-strip{
+  position:absolute;left:0;top:0;bottom:0;width:5px;
+  background:linear-gradient(180deg,
+    var(--sa-green) 0%,var(--sa-green) 33%,
+    var(--sa-yellow) 33%,var(--sa-yellow) 43%,
+    #000 43%,#000 57%,
+    var(--sa-red) 57%,var(--sa-red) 67%,
+    var(--sa-blue) 67%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(168,224,0,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(168,224,0,.035) 1px,transparent 1px);
+  background-size:56px 56px;
+}
+.hero-sunburst{
+  position:absolute;right:-8%;top:50%;
+  transform:translateY(-50%);
+  width:min(680px,68vw);height:min(680px,68vw);
+  border-radius:50%;
+  background:conic-gradient(
+    from 0deg,
+    transparent 0deg,rgba(168,224,0,.05) 10deg,
+    transparent 20deg,rgba(198,255,45,.04) 30deg,
+    transparent 40deg,rgba(168,224,0,.04) 50deg,
+    transparent 60deg,rgba(198,255,45,.05) 70deg,
+    transparent 80deg,rgba(168,224,0,.04) 90deg,
+    transparent 100deg,rgba(198,255,45,.04) 110deg,
+    transparent 120deg,rgba(168,224,0,.05) 130deg,
+    transparent 140deg,rgba(198,255,45,.04) 150deg,
+    transparent 160deg,rgba(168,224,0,.05) 170deg,
+    transparent 180deg,rgba(198,255,45,.04) 190deg,
+    transparent 200deg,rgba(168,224,0,.04) 210deg,
+    transparent 220deg,rgba(198,255,45,.05) 230deg,
+    transparent 240deg,rgba(168,224,0,.04) 250deg,
+    transparent 260deg,rgba(198,255,45,.05) 270deg,
+    transparent 280deg,rgba(168,224,0,.04) 290deg,
+    transparent 300deg,rgba(198,255,45,.05) 310deg,
+    transparent 320deg,rgba(168,224,0,.05) 330deg,
+    transparent 340deg,rgba(198,255,45,.04) 350deg,
+    transparent 360deg);
+  animation:rotateSun 42s linear infinite;
+  pointer-events:none;
+}
+@keyframes rotateSun{to{transform:translateY(-50%) rotate(360deg);}}
+.hero-inner{
+  max-width:1400px;margin:0 auto;
+  padding:3.5rem 2rem 5.5rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+  align-items:center;position:relative;z-index:2;
+}
+/* ── Left content ── */
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(168,224,0,.1);border:1px solid rgba(168,224,0,.3);
+  border-radius:50px;padding:.35rem 1rem;
+  font-family:var(--font);font-size:1rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--lime);
+  margin-bottom:1.5rem;animation:fadeUp .6s ease both;
+}
+h1.hero-h1{
+  font-family:var(--font);
+  font-size:clamp(1.6rem,3.4vw,3.1rem);
+  line-height:.96;letter-spacing:.02em;font-weight:900;
+  margin-bottom:.5rem;
+  animation:fadeUp .6s .1s ease both;
+  text-decoration-color:var(--lime);
+}
+.hero-h1 .accent{color:var(--lime);}
+.hero-h1 .thin{color:var(--light-grey);}
+.hero-tagline{
+  font-family:var(--font);font-size:1.45rem;font-weight:700;
+  letter-spacing:.1em;color:var(--mid-grey);text-transform:uppercase;
+  margin-bottom:1.5rem;animation:fadeUp .6s .2s ease both;
+}
+.hero-tagline strong{color:var(--white);}
+.hero-desc{
+  font-size:1.3rem;color:rgba(208,208,208,.9);
+  max-width:520px;margin-bottom:2rem;line-height:1.8;
+  animation:fadeUp .6s .3s ease both;
+}
+.hero-desc em{color:var(--lime);font-style:normal;font-weight:700;}
+.hero-btns{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem;animation:fadeUp .6s .4s ease both;}
+.hero-lang{
+  display:flex;align-items:center;gap:.5rem;
+  font-family:var(--font);font-size:1rem;
+  letter-spacing:.08em;color:var(--mid-grey);
+  animation:fadeUp .6s .5s ease both;
+}
+.hero-lang span{background:rgba(255,255,255,.05);border-radius:3px;padding:.2rem .5rem;font-size:.92rem;}
+.hero-lang span.active{background:rgba(168,224,0,.15);color:var(--lime);}
+/* ── Right visual ── */
+.hero-visual{position:relative;}
+.hero-img-frame{
+  position:relative;border-radius:12px;overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,.75),0 0 0 1px rgba(168,224,0,.2);
+}
+.hero-img-frame::after{
+  content:'';position:absolute;inset:0;border-radius:12px;pointer-events:none;
+  background:
+    linear-gradient(180deg,transparent 50%,rgba(0,0,0,.82) 100%),
+    linear-gradient(90deg,rgba(168,224,0,.07),transparent 60%);
+}
+.hero-car-img{
+  width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+  background:var(--dark3);
+}
+.hero-badge{
+  position:absolute;bottom:1.25rem;left:50%;transform:translateX(-50%);z-index:3;
+  background:linear-gradient(135deg,var(--lime),var(--lime-light));
+  color:var(--black);font-family:var(--font);font-weight:900;
+  font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;
+  padding:.5rem 1.5rem;border-radius:50px;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(168,224,0,.45);
+}
+.hero-stats{
+  position:absolute;top:1rem;right:-1.5rem;
+  display:flex;flex-direction:column;gap:.75rem;z-index:3;
+}
+.hero-stat-pill{
+  background:rgba(0,0,0,.9);border:1px solid rgba(168,224,0,.25);
+  border-radius:8px;padding:.6rem 1rem;
+  display:flex;align-items:center;gap:.6rem;
+  backdrop-filter:blur(10px);
+  box-shadow:0 8px 24px rgba(0,0,0,.55);
+  animation:floatPill 4s ease-in-out infinite;
+}
+.hero-stat-pill:nth-child(2){animation-delay:1.5s;}
+.hero-stat-pill:nth-child(3){animation-delay:3s;}
+@keyframes floatPill{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.hero-stat-icon{font-size:1.4rem;}
+.hero-stat-num{font-family:var(--font);font-size:1.4rem;font-weight:900;line-height:1;color:var(--lime);}
+.hero-stat-label{font-family:var(--font);font-size:.88rem;letter-spacing:.1em;color:var(--light-grey);text-transform:uppercase;}
+/* scroll indicator */
+.hero-scroll{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  z-index:3;animation:fadeUp .6s .8s ease both;
+}
+.hero-scroll span{font-family:var(--font);font-size:.9rem;letter-spacing:.2em;color:var(--mid-grey);text-transform:uppercase;}
+.scroll-line{width:1px;height:40px;background:linear-gradient(180deg,var(--lime),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:1;transform:scaleY(1);}50%{opacity:.4;transform:scaleY(.5);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══════════════════════════════════════════
+   VEHICLE TYPES STRIP
+══════════════════════════════════════════ */
+#vehicles{
+  background:var(--dark2);
+  border-top:1px solid rgba(168,224,0,.1);
+  border-bottom:1px solid rgba(168,224,0,.1);
+  padding:2.5rem 0;
+}
+.vehicles-inner{max-width:1400px;margin:0 auto;padding:0 2rem;}
+.vehicles-label{
+  text-align:center;font-family:var(--font);
+  font-size:1rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--mid-grey);margin-bottom:1.5rem;
+}
+.vehicles-label strong{color:var(--lime);}
+.vehicles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.vehicle-card{
+  position:relative;border-radius:8px;overflow:hidden;
+  border:1px solid rgba(168,224,0,.08);
+  transition:all .3s ease;cursor:pointer;
+  background:var(--dark3);aspect-ratio:4/3;
+}
+.vehicle-card:hover{border-color:var(--lime);transform:translateY(-4px);box-shadow:0 20px 50px rgba(168,224,0,.18);}
+.vehicle-card img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+.vehicle-card:hover img{transform:scale(1.05);}
+.vehicle-card-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(0,0,0,.88) 0%,transparent 55%);
+  display:flex;align-items:flex-end;padding:1rem;
+}
+.vehicle-card-label{font-family:var(--font);font-size:1.25rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--white);}
+.vehicle-card-label small{display:block;font-size:.9rem;color:var(--lime);letter-spacing:.15em;margin-top:.1rem;}
+
+/* ══════════════════════════════════════════
+   WHO WE SERVE
+══════════════════════════════════════════ */
+#serve{padding:6rem 2rem;background:var(--dark);position:relative;overflow:hidden;}
+#serve::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--lime),transparent);}
+.serve-inner{max-width:1400px;margin:0 auto;}
+.serve-header{text-align:center;margin-bottom:4rem;}
+.serve-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.serve-card{
+  background:var(--card-bg);border:1px solid rgba(168,224,0,.09);
+  border-radius:10px;padding:2.5rem 2rem;
+  position:relative;overflow:hidden;transition:all .3s ease;
+}
+.serve-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--lime),var(--lime-light));
+  transform:scaleX(0);transition:transform .3s ease;transform-origin:left;
+}
+.serve-card:hover::before{transform:scaleX(1);}
+.serve-card:hover{border-color:rgba(168,224,0,.28);transform:translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,.55);}
+.serve-icon{font-size:2.5rem;margin-bottom:1rem;display:block;}
+.serve-card h3{font-size:1.05rem;letter-spacing:.04em;margin-bottom:.75rem;color:var(--white);}
+.serve-card h3 span{color:var(--lime);}
+.serve-card p{font-size:1.18rem;color:var(--light-grey);line-height:1.75;}
+.serve-card .xhosa-note{display:inline-block;margin-top:1rem;font-family:var(--font);font-size:1rem;letter-spacing:.08em;color:var(--lime-light);font-style:italic;}
+
+/* ══════════════════════════════════════════
+   CORE VALUES
+══════════════════════════════════════════ */
+#values{padding:6rem 2rem;background:var(--dark2);position:relative;}
+.values-inner{max-width:1400px;margin:0 auto;}
+.values-header{text-align:center;margin-bottom:4rem;}
+.values-quote{font-family:var(--font);font-size:1.3rem;font-weight:600;letter-spacing:.06em;color:var(--lime-light);font-style:italic;margin-top:1rem;opacity:.9;}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.value-card{
+  background:var(--dark3);border:1px solid rgba(255,255,255,.05);
+  border-radius:10px;padding:2rem 1.75rem;
+  position:relative;overflow:hidden;transition:all .3s ease;
+}
+.value-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--lime),transparent);opacity:0;transition:opacity .3s;}
+.value-card:hover::after{opacity:1;}
+.value-card:hover{background:rgba(168,224,0,.04);border-color:rgba(168,224,0,.2);transform:translateY(-3px);}
+.value-card.featured{background:linear-gradient(135deg,rgba(168,224,0,.1),rgba(198,255,45,.04));border-color:rgba(168,224,0,.28);}
+.value-icon{font-size:2rem;margin-bottom:1rem;display:block;}
+.value-card h3{font-size:.9rem;letter-spacing:.04em;margin-bottom:.6rem;color:var(--white);}
+.value-card p{font-size:1.15rem;color:var(--light-grey);line-height:1.72;}
+.value-card .afrikaans{display:inline-block;margin-top:.75rem;font-family:var(--font);font-size:1rem;letter-spacing:.08em;color:var(--lime);font-style:italic;}
+
+/* ══════════════════════════════════════════
+   SERVICES
+══════════════════════════════════════════ */
+#services{padding:6rem 2rem;background:var(--dark);position:relative;overflow:hidden;}
+.services-inner{max-width:1400px;margin:0 auto;}
+.services-header{text-align:center;margin-bottom:4rem;}
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:3rem;}
+.service-card{
+  background:var(--card-bg);border:1px solid rgba(255,255,255,.05);
+  border-radius:8px;padding:1.75rem 1.5rem;
+  position:relative;overflow:hidden;transition:all .3s ease;
+}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:linear-gradient(180deg,var(--lime),var(--lime-light));transition:height .3s ease;}
+.service-card:hover::before{height:100%;}
+.service-card:hover{border-color:rgba(168,224,0,.22);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.55);}
+.service-icon{font-size:2.2rem;margin-bottom:1rem;display:block;}
+.service-card h3{font-size:.82rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.6rem;color:var(--lime);}
+.service-card p{font-size:1.15rem;color:var(--light-grey);line-height:1.7;}
+.services-cta{text-align:center;margin-top:2rem;}
+.services-cta p{font-family:var(--font);font-size:1.25rem;color:var(--mid-grey);margin-bottom:1rem;letter-spacing:.05em;}
+
+/* ══════════════════════════════════════════
+   HOW IT WORKS
+══════════════════════════════════════════ */
+#howitworks{padding:6rem 2rem;background:var(--dark2);position:relative;overflow:hidden;}
+#howitworks::before{
+  content:'HOW IT WORKS';position:absolute;bottom:-.5rem;right:2rem;
+  font-family:var(--font);font-size:clamp(4rem,10vw,10rem);font-weight:900;
+  color:rgba(255,255,255,.018);pointer-events:none;letter-spacing:.1em;white-space:nowrap;
+}
+.howitworks-inner{max-width:1400px;margin:0 auto;}
+.howitworks-header{text-align:center;margin-bottom:5rem;}
+.steps-container{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;}
+.steps-container::before{
+  content:'';position:absolute;top:2.5rem;
+  left:calc(10% + 1px);right:calc(10% + 1px);
+  height:2px;background:linear-gradient(90deg,var(--lime),var(--lime-light),var(--lime));z-index:0;
+}
+.step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 .75rem;position:relative;z-index:1;}
+.step-num{
+  width:5rem;height:5rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font);font-size:1.8rem;font-weight:900;
+  margin-bottom:1.5rem;border:2px solid var(--lime);
+  background:var(--dark2);color:var(--lime);
+  transition:all .3s;flex-shrink:0;
+}
+.step:hover .step-num{background:linear-gradient(135deg,var(--lime),var(--lime-light));color:var(--black);box-shadow:0 0 30px rgba(168,224,0,.5);}
+.step-content h3{font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--white);margin-bottom:.5rem;}
+.step-content p{font-size:1.1rem;color:var(--light-grey);line-height:1.65;}
+.howitworks-footer{text-align:center;margin-top:4rem;font-family:var(--font);font-size:clamp(.85rem,1.5vw,1.3rem);font-weight:900;letter-spacing:.08em;color:var(--white);}
+.howitworks-footer span{color:var(--lime);}
+
+/* ══════════════════════════════════════════
+   CUSTOMER EXPERIENCE
+══════════════════════════════════════════ */
+#experience{padding:6rem 2rem;background:var(--dark);position:relative;}
+.experience-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.experience-header{margin-bottom:2.5rem;}
+.experience-list{display:flex;flex-direction:column;gap:1.25rem;}
+.exp-item{
+  display:flex;gap:1.25rem;align-items:flex-start;
+  padding:1.25rem 1.5rem;background:var(--card-bg);
+  border:1px solid rgba(255,255,255,.04);border-radius:8px;transition:all .3s;
+}
+.exp-item:hover{border-color:rgba(168,224,0,.22);background:rgba(168,224,0,.04);}
+.exp-num{font-family:var(--font);font-size:2.5rem;font-weight:900;line-height:1;color:rgba(168,224,0,.2);flex-shrink:0;width:2.5rem;transition:color .3s;}
+.exp-item:hover .exp-num{color:var(--lime);}
+.exp-body h4{font-size:.82rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--white);margin-bottom:.35rem;}
+.exp-body p{font-size:1.15rem;color:var(--light-grey);line-height:1.7;}
+.experience-visual{position:relative;}
+.exp-visual-box{background:var(--card-bg);border:1px solid rgba(168,224,0,.14);border-radius:14px;padding:2.5rem;position:relative;overflow:hidden;}
+.exp-visual-box::before{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(168,224,0,.1) 0%,transparent 70%);}
+.exp-rating-box{text-align:center;margin-bottom:1.5rem;}
+.exp-rating-box .stars{font-size:2rem;letter-spacing:.1rem;display:block;margin-bottom:.5rem;}
+.exp-rating-box strong{font-family:var(--font);font-size:1.8rem;font-weight:900;color:var(--lime);display:block;line-height:1;}
+.exp-rating-box span{font-family:var(--font);font-size:1rem;letter-spacing:.12em;color:var(--mid-grey);text-transform:uppercase;}
+.exp-features{display:flex;flex-direction:column;gap:.6rem;}
+.exp-feature{display:flex;align-items:center;gap:.6rem;font-family:var(--font);font-size:1.15rem;font-weight:700;letter-spacing:.04em;color:var(--light-grey);}
+.exp-feature::before{content:'✓';color:var(--lime);font-weight:900;font-size:1.1rem;}
+.exp-payment-methods{margin-top:2rem;display:flex;flex-direction:column;gap:.75rem;}
+.payment-row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;}
+.payment-tag{background:rgba(255,255,255,.06);border-radius:4px;padding:.35rem .75rem;font-family:var(--font);font-size:1rem;font-weight:700;letter-spacing:.06em;color:var(--white);}
+
+/* ══════════════════════════════════════════
+   OUR STORY
+══════════════════════════════════════════ */
+#story{padding:6rem 2rem;background:var(--dark2);position:relative;overflow:hidden;}
+.story-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.story-timeline{display:flex;flex-direction:column;gap:0;}
+.timeline-item{display:flex;gap:1.5rem;position:relative;padding-bottom:2rem;}
+.timeline-item:last-child{padding-bottom:0;}
+.timeline-item:not(:last-child)::before{content:'';position:absolute;left:1.35rem;top:3.5rem;bottom:0;width:1px;background:linear-gradient(180deg,var(--lime),transparent);}
+.timeline-dot{width:2.7rem;height:2.7rem;border-radius:50%;border:2px solid var(--lime);background:var(--dark2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;position:relative;z-index:1;}
+.timeline-body h4{font-size:.72rem;font-weight:700;letter-spacing:.15em;color:var(--lime);text-transform:uppercase;margin-bottom:.3rem;}
+.timeline-body p{font-size:1.15rem;color:var(--light-grey);line-height:1.65;}
+.team-roles{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:2rem;}
+.team-role{display:flex;align-items:center;gap:.5rem;background:var(--dark3);border-radius:5px;padding:.6rem .75rem;font-family:var(--font);font-size:1rem;font-weight:700;letter-spacing:.04em;color:var(--light-grey);}
+.team-role span:first-child{color:var(--lime);}
+
+/* ══════════════════════════════════════════
+   ECO PROMISE
+   ▸ Background image added via CSS
+   ▸ All content/styling UNCHANGED
+   ▸ Leaf watermark (::before) RETAINED
+══════════════════════════════════════════ */
+#eco{
+  padding:5rem 2rem;
+  background:
+    linear-gradient(135deg,rgba(4,46,26,.85),rgba(7,29,53,.85),rgba(26,46,0,.85)),
+    url('https://raw.githubusercontent.com/zakssrangs-max/Auto/main/image.png') center center / cover no-repeat;
+  position:relative;overflow:hidden;
+  border-top:1px solid rgba(0,122,77,.3);
+  border-bottom:1px solid rgba(0,122,77,.3);
+}
+#eco::before{
+  content:'🌿';
+  position:absolute;right:5%;top:50%;
+  transform:translateY(-50%);
+  font-size:clamp(8rem,20vw,16rem);
+  opacity:.06;pointer-events:none;
+}
+.eco-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.eco-header .section-label{color:var(--sa-green);}
+.eco-header .section-title span{color:#4ade80;}
+.eco-header p{font-size:1.25rem;color:rgba(255,255,255,.7);line-height:1.8;margin-top:1.25rem;}
+.eco-pillars{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.eco-pillar{background:rgba(0,122,77,.1);border:1px solid rgba(0,122,77,.25);border-radius:10px;padding:1.5rem;transition:all .3s;}
+.eco-pillar:hover{background:rgba(0,122,77,.2);transform:translateY(-3px);}
+.eco-pillar .icon{font-size:1.8rem;margin-bottom:.6rem;display:block;}
+.eco-pillar h4{font-family:var(--font);font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#4ade80;margin-bottom:.4rem;}
+.eco-pillar p{font-size:1.08rem;color:rgba(255,255,255,.55);line-height:1.6;}
+
+/* ══════════════════════════════════════════
+   PRICING
+══════════════════════════════════════════ */
+#pricing{padding:6rem 2rem;background:var(--dark);position:relative;}
+.pricing-inner{max-width:900px;margin:0 auto;text-align:center;}
+.pricing-header{margin-bottom:3.5rem;}
+.pricing-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:linear-gradient(135deg,rgba(168,224,0,.12),rgba(198,255,45,.06));
+  border:1px solid rgba(168,224,0,.28);border-radius:6px;
+  padding:.5rem 1.25rem;font-family:var(--font);font-size:1.06rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:1.5rem;
+}
+.pricing-promises{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:3rem;text-align:left;}
+.pricing-promise{
+  background:var(--card-bg);border:1px solid rgba(255,255,255,.05);
+  border-radius:8px;padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:all .3s;
+}
+.pricing-promise:hover{border-color:rgba(168,224,0,.22);transform:translateY(-2px);}
+.pp-icon{font-size:1.5rem;flex-shrink:0;}
+.pp-text h4{font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--white);margin-bottom:.3rem;}
+.pp-text p{font-size:1.1rem;color:var(--light-grey);line-height:1.65;}
+
+/* ══════════════════════════════════════════
+   POLICIES
+══════════════════════════════════════════ */
+#policies{padding:4rem 2rem;background:var(--dark2);}
+.policies-inner{max-width:1400px;margin:0 auto;}
+.policies-header{text-align:center;margin-bottom:2.5rem;}
+.policies-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.policy-item{
+  background:var(--dark3);border:1px solid rgba(255,255,255,.05);
+  border-radius:8px;padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:all .3s;
+}
+.policy-item:hover{border-color:rgba(168,224,0,.2);background:rgba(168,224,0,.03);}
+.policy-icon{font-size:1.5rem;flex-shrink:0;}
+.policy-body h4{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--lime);margin-bottom:.3rem;}
+.policy-body p{font-size:1.1rem;color:var(--light-grey);line-height:1.65;}
+
+/* ══════════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════════ */
+#testimonials{padding:6rem 2rem;background:var(--dark);position:relative;overflow:hidden;}
+#testimonials::before{content:'"';position:absolute;top:-2rem;left:5%;font-family:var(--font);font-size:clamp(10rem,25vw,20rem);font-weight:900;color:rgba(168,224,0,.03);line-height:1;pointer-events:none;}
+.testimonials-inner{max-width:1400px;margin:0 auto;}
+.testimonials-header{text-align:center;margin-bottom:4rem;}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.testimonial-card{background:var(--card-bg);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:2rem;position:relative;transition:all .3s;}
+.testimonial-card:hover{border-color:rgba(168,224,0,.22);transform:translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,.55);}
+.t-stars{color:var(--lime);font-size:1.2rem;letter-spacing:.1rem;margin-bottom:1rem;display:block;}
+.t-quote{font-size:1.2rem;color:var(--light-grey);line-height:1.75;margin-bottom:1.5rem;font-style:italic;}
+.t-author{display:flex;align-items:center;gap:.75rem;}
+.t-avatar{width:2.5rem;height:2.5rem;border-radius:50%;background:linear-gradient(135deg,var(--lime),var(--lime-light));display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:1.1rem;font-weight:900;color:var(--black);flex-shrink:0;}
+.t-info strong{display:block;font-family:var(--font);font-size:1.15rem;font-weight:700;letter-spacing:.04em;color:var(--white);}
+.t-info span{font-size:1rem;color:var(--mid-grey);}
+
+/* ══════════════════════════════════════════
+   BOOK CTA
+══════════════════════════════════════════ */
+#book-cta{padding:5rem 2rem;background:linear-gradient(135deg,var(--lime-dark) 0%,var(--lime) 60%,var(--lime-light) 100%);position:relative;overflow:hidden;}
+#book-cta::before{content:'HAMBA KAHLE';position:absolute;right:-2%;bottom:-1rem;font-family:var(--font);font-size:clamp(4rem,12vw,10rem);font-weight:900;color:rgba(0,0,0,.07);letter-spacing:.05em;pointer-events:none;white-space:nowrap;}
+.book-cta-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;z-index:1;}
+.book-cta-text h2{font-family:var(--font);font-size:clamp(1.1rem,2.2vw,1.9rem);color:var(--black);letter-spacing:.04em;line-height:1.15;margin-bottom:.5rem;text-decoration-color:var(--black);}
+.book-cta-text p{font-size:1.3rem;color:rgba(0,0,0,.65);font-weight:600;}
+.book-cta-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer{background:var(--black);padding:4rem 2rem 2rem;border-top:1px solid rgba(168,224,0,.1);}
+.footer-inner{max-width:1400px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-logo{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;text-decoration:none;}
+.footer-logo img{height:42px;width:auto;object-fit:contain;}
+.footer-logo-name{font-family:var(--font);font-size:.9rem;font-weight:900;letter-spacing:.08em;color:var(--white);}
+.footer-brand p{font-size:1.15rem;color:var(--mid-grey);line-height:1.7;max-width:300px;margin-bottom:1.5rem;}
+.footer-socials{display:flex;gap:.6rem;}
+.footer-social{width:2.2rem;height:2.2rem;border-radius:5px;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:.9rem;text-decoration:none;transition:all .2s;}
+.footer-social:hover{border-color:var(--lime);background:rgba(168,224,0,.08);}
+.footer-col h5{font-family:var(--font);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:1rem;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.footer-col ul li a{font-size:1.1rem;color:var(--mid-grey);text-decoration:none;transition:color .2s;}
+.footer-col ul li a:hover{color:var(--white);}
+.footer-col .contact-item{display:flex;align-items:flex-start;gap:.5rem;font-size:1.1rem;color:var(--mid-grey);margin-bottom:.5rem;}
+.footer-col .contact-item strong{color:var(--white);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-bottom p{font-size:1rem;color:rgba(255,255,255,.3);}
+.footer-bottom p span{color:var(--lime);}
+.footer-flag{display:flex;align-items:center;gap:.5rem;font-family:var(--font);font-size:.97rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.sa-flag-mini{display:flex;height:16px;border-radius:2px;overflow:hidden;border:1px solid rgba(255,255,255,.15);}
+.sf-green{width:14px;background:var(--sa-green);}
+.sf-middle{display:flex;flex-direction:column;width:10px;}
+.sf-yellow{flex:1;background:var(--sa-yellow);}
+.sf-black{flex:1;background:#000;}
+.sf-white-top{flex:1;background:#fff;}
+.sf-red{flex:1;background:var(--sa-red);}
+.sf-blue{width:14px;background:var(--sa-blue);}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:1100px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-visual{order:-1;}
+  .hero-stats{right:1rem;}
+  .services-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .story-inner,.experience-inner,.eco-inner{grid-template-columns:1fr;}
+}
+@media(max-width:900px){
+  .vehicles-grid{grid-template-columns:repeat(2,1fr);}
+  .serve-grid{grid-template-columns:1fr;}
+  .values-grid{grid-template-columns:1fr 1fr;}
+  .steps-container{grid-template-columns:1fr;}
+  .steps-container::before{display:none;}
+  .step{flex-direction:row;text-align:left;align-items:flex-start;}
+  .step-num{margin-bottom:0;}
+  .step-content{padding-top:.5rem;}
+  .testimonials-grid{grid-template-columns:1fr;}
+  .policies-grid{grid-template-columns:1fr 1fr;}
+  .pricing-promises{grid-template-columns:1fr;}
+  .eco-pillars{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  .nav-links,.nav-right{display:none;}
+  .hamburger{display:flex;}
+  .hero-stats{display:none;}
+  .nav-sa-wrap{display:none;}
+  .values-grid{grid-template-columns:1fr;}
+  .team-roles{grid-template-columns:1fr;}
+  .policies-grid{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;gap:2rem;}
+  .book-cta-inner{flex-direction:column;text-align:center;}
+}
+@media(max-width:480px){
+  .vehicles-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<header id="nav">
+  <div class="nav-top">
+    🇿🇦 &nbsp; Proudly serving in English, Afrikaans &amp; isiXhosa &nbsp;|&nbsp; Gqeberha &amp; Surrounding Areas
+  </div>
+  <nav class="nav-inner">
+
+    <!-- Company logo + name -->
+    <a class="nav-brand" href="#">
+      <img class="co-logo"
+           src="https://raw.githubusercontent.com/Zachy065/Our-Work-/main/logo.png"
+           alt="AUTO-HAUS TORQUE Logo"
+           onerror="this.style.display='none'" />
+      <div class="nav-brand-text">
+        <span class="nav-brand-name">AUTO-HAUS TORQUE</span>
+        <span class="nav-brand-tag">Your Drive, Our Doorstep</span>
+      </div>
+    </a>
+
+    <!-- Proudly South African badge — next to company name -->
+    <div class="nav-sa-wrap">
+      <img src="https://raw.githubusercontent.com/zakssrangs-max/Auto/main/416ba628225add4333334d650f3592ad.png"
+           alt="Proudly South African"
+           title="Proudly South African Member"
+           onerror="this.style.display='none'" />
+      <span class="nav-sa-label">Proudly<span>South African</span></span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#howitworks">How It Works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#eco">Eco Promise</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a class="nav-phone" href="tel:+27000000000">📞 <span>Call / WhatsApp</span></a>
+      <a class="btn btn-outline" href="#pricing" style="padding:.6rem 1rem;font-size:.82rem;">Instant Quote</a>
+      <a class="btn btn-primary" href="booking_matched.html" style="padding:.6rem 1.25rem;font-size:.85rem;">Book Now</a>
+    </div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#hero">Home</a>
+    <a href="#services">Services</a>
+    <a href="#story">Our Story</a>
+    <a href="#howitworks">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#eco">Eco Promise</a>
+    <a href="booking_matched.html" style="color:var(--lime);font-weight:900;margin-top:.5rem;">📅 Book Now</a>
+    <a href="tel:+27000000000" style="color:var(--lime-light);">📞 Call / WhatsApp</a>
+  </div>
+</header>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-flag-strip"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-sunburst"></div>
+
+  <div class="hero-inner">
+
+    <!-- Left: Copy -->
+    <div class="hero-content">
+      <div class="hero-kicker">🔧 Gqeberha's #1 Mobile Auto Service</div>
+      <h1 class="hero-h1">AUTO<span class="accent">-</span>HAUS<br /><span class="thin">TORQUE</span></h1>
+      <p class="hero-tagline"><strong>Your Drive,</strong> Our Doorstep – Gqeberha &amp; Surrounds</p>
+      <p class="hero-desc">
+        Gqeberha's <em>premier mobile mechanics</em> – we bring the workshop straight to your driveway, complex, or fleet yard.
+        No towing. No waiting rooms. No nonsense. Just expert, <em>certified workmanship</em> at your door.
+        <br/><br/>
+        <span style="color:var(--lime-light);font-style:italic;">"Ons kom na jou toe!" &nbsp;|&nbsp; "Siyeza kuwe!"</span>
+      </p>
+      <div class="hero-btns">
+        <a class="btn btn-primary" href="booking_matched.html">📅 Book in 60 Seconds</a>
+        <a class="btn btn-outline" href="#services">🔍 View Our Services</a>
+        <a class="btn btn-ghost" href="tel:+27000000000" style="padding:.85rem 1.5rem;">📞 Call / WhatsApp</a>
+      </div>
+      <div class="hero-lang">
+        <span class="active">English</span>
+        <span>Afrikaans</span>
+        <span>isiXhosa</span>
+        <span style="margin-left:.5rem;color:rgba(255,255,255,.25);">Serving all communities 🇿🇦</span>
+      </div>
+    </div>
+
+    <!-- Right: Car Photo (replaces SVG illustration) -->
+    <div class="hero-visual">
+      <div class="hero-img-frame">
+        <img class="hero-car-img"
+             src="https://raw.githubusercontent.com/zakssrangs-max/Auto/main/How-to-Spot-a-Reliable-Used-Car-1080x675.jpg"
+             alt="AUTO-HAUS TORQUE – Professional Mobile Car Service, Gqeberha"
+             onerror="this.style.background='linear-gradient(135deg,#1a1a1a,#0a0a0a)'" />
+        <div class="hero-badge">🇿🇦 Fully Registered &amp; Insured Business</div>
+      </div>
+
+      <!-- Floating stat pills -->
+      <div class="hero-stats">
+        <div class="hero-stat-pill">
+          <span class="hero-stat-icon">🔧</span>
+          <div>
+            <div class="hero-stat-num">2015</div>
+            <div class="hero-stat-label">Est. Gqeberha</div>
+          </div>
+        </div>
+        <div class="hero-stat-pill">
+          <span class="hero-stat-icon">⭐</span>
+          <div>
+            <div class="hero-stat-num">5★</div>
+            <div class="hero-stat-label">Rated Service</div>
+          </div>
+        </div>
+        <div class="hero-stat-pill">
+          <span class="hero-stat-icon">🛡️</span>
+          <div>
+            <div class="hero-stat-num">100%</div>
+            <div class="hero-stat-label">Insured &amp; Warrantied</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ VEHICLE TYPES ═══════════════ -->
+<section id="vehicles">
+  <div class="vehicles-inner">
+    <p class="vehicles-label">All Makes &amp; Models — <strong>We Service Every Vehicle on Mzansi Roads</strong></p>
+    <div class="vehicles-grid">
+      <div class="vehicle-card">
+        <img src="https://raw.githubusercontent.com/Zachy065/Our-Work-/main/Hatchbacks.png" alt="Hatchbacks" onerror="this.style.background='#1a1a1a'" />
+        <div class="vehicle-card-overlay"><div class="vehicle-card-label">Hatchbacks<small>City Runabouts</small></div></div>
+      </div>
+      <div class="vehicle-card">
+        <img src="https://raw.githubusercontent.com/Zachy065/Our-Work-/main/Sedan.png" alt="Sedans" onerror="this.style.background='#1a1a1a'" />
+        <div class="vehicle-card-overlay"><div class="vehicle-card-label">Sedans<small>Family &amp; Executive</small></div></div>
+      </div>
+      <div class="vehicle-card">
+        <img src="https://raw.githubusercontent.com/Zachy065/Our-Work-/main/bakkie.png" alt="Bakkies &amp; Vans" onerror="this.style.background='#1a1a1a'" />
+        <div class="vehicle-card-overlay"><div class="vehicle-card-label">Bakkies / Vans<small>Workhorse Vehicles</small></div></div>
+      </div>
+      <div class="vehicle-card">
+        <img src="https://raw.githubusercontent.com/Zachy065/Our-Work-/main/MInibus.png" alt="Minibuses &amp; Taxis" onerror="this.style.background='#1a1a1a'" />
+        <div class="vehicle-card-overlay"><div class="vehicle-card-label">Minibuses / Taxis<small>Fleet &amp; Public Transport</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ WHO WE SERVE ═══════════════ -->
+<section id="serve">
+  <div class="serve-inner">
+    <div class="serve-header">
+      <span class="section-label">The Mzansi Flavour</span>
+      <h2 class="section-title">Who We <span>Serve</span></h2>
+      <p class="section-sub">From residential complexes to taxi ranks — we understand the heartbeat of Gqeberha and we've got you covered.</p>
+    </div>
+    <div class="serve-grid">
+      <div class="serve-card">
+        <span class="serve-icon">🏘️</span>
+        <h3>Residential <span>Complexes</span></h3>
+        <p>Living in a complex means your time is valuable. We navigate gate access, handle the paperwork, and service your car right in your designated parking bay. No need to take leave from work — we work around your schedule, including <strong style="color:var(--white);">evenings and weekends</strong>.<br/><br/>Because your car shouldn't have to go anywhere to get fixed. Hoe maklik is dit? (How easy is that?)</p>
+        <span class="xhosa-note">"Siyeza – Asilindeli nina!" (We come to you – you don't wait for us!)</span>
+      </div>
+      <div class="serve-card">
+        <span class="serve-icon">🚖</span>
+        <h3>Uber, Bolt &amp; <span>Fleet Owners</span></h3>
+        <p>Time is money in the transport industry. We minimize downtime with <strong style="color:var(--white);">fleet/onsite maintenance, ECU programming, and rapid diagnostics</strong>. We understand the need for reliability and affordable pricing to keep your wheels turning for profit.<br/><br/>A vehicle off the road is income lost. We make sure your fleet stays where it belongs — on the road.</p>
+        <span class="xhosa-note">"Ons hou jou vloot aan die gang!" (We keep your fleet rolling!)</span>
+      </div>
+      <div class="serve-card">
+        <span class="serve-icon">🚐</span>
+        <h3>Local SA <span>Taxis</span></h3>
+        <p><strong style="color:var(--white);">Heavy-duty suspension repairs, clutch repairs, and engine overhauls</strong> done on your turf. We know that a taxi off the road is a loss of income, so we prioritize efficiency and durable workmanship above all else.<br/><br/>The backbone of Mzansi deserves the best. No arguments there.</p>
+        <span class="xhosa-note">"Siyakwazi ukusebenza ngesiXhosa nawe!" (We work with you in isiXhosa!)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CORE VALUES ═══════════════ -->
+<section id="values">
+  <div class="values-inner">
+    <div class="values-header">
+      <span class="section-label">Why Choose Us</span>
+      <h2 class="section-title">Our Core <span>Values</span></h2>
+      <p class="section-sub values-quote">"We don't just fix cars. We protect your time, your wallet, your peace of mind, and the roads we all share."</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card"><span class="value-icon">🏠</span><h3>Convenience</h3><p>We come to your home, office, or residential complex across Gqeberha &amp; surrounding towns. Flexible scheduling — evenings, weekends, same-day where possible. Your car never leaves your driveway.</p><span class="afrikaans">"Ons kom na jou toe!" – We come to you!</span></div>
+      <div class="value-card featured"><span class="value-icon">🔍</span><h3>Transparency</h3><p>Fixed prices clearly listed on this site — parts + labour + travel included. No hidden fees. Real-time updates from booking to completion. Detailed reports &amp; new job cards only with your explicit approval. <em style="color:var(--lime-light);">No nasty surprises. Ever.</em></p></div>
+      <div class="value-card"><span class="value-icon">🛡️</span><h3>Fully Insured &amp; Warrantied</h3><p>As a fully registered business, we carry comprehensive worker's compensation and liability. We partner with reputable suppliers to offer warranties on parts and labour. Prefer to supply your own parts? We can do that too, with a simple documented agreement.</p></div>
+      <div class="value-card"><span class="value-icon">👔</span><h3>Professionalism</h3><p>Branded uniforms, visible ID &amp; driver's licence, name tags. Pre-service vehicle inspection to protect against dents/scratches. Your property is always covered and left spotless — <em style="color:var(--lime-light);">skoon soos 'n fluit</em> (clean as a whistle).</p><span class="afrikaans">"Netjies en professioneel – elke keer!"</span></div>
+      <div class="value-card"><span class="value-icon">🤝</span><h3>Customer Service</h3><p>Integrated booking system tracks every step — technician arrival, parts purchased, job progress, completion &amp; your rating. Friendly, multi-lingual team that treats every customer like <em style="color:var(--lime-light);">umndeni</em> (family).</p><span class="afrikaans">"Ons sorg vir jou soos familie!" – We care for you like family!</span></div>
+      <div class="value-card featured"><span class="value-icon">🏆</span><h3>Quality Workmanship</h3><p>Team of certified experts: Auto-electricians, Engine &amp; Mechanical Specialists, Diagnostics &amp; Coding Pros, Brake &amp; Suspension Technicians, A/C &amp; HVAC Masters, Transmission &amp; Drivetrain Experts, and Fleet/On-Site Pros. Certified. Passionate. Dependable.</p></div>
+      <div class="value-card"><span class="value-icon">💰</span><h3>Affordability</h3><p>Honest, competitive pricing that beats dealerships without compromising quality. Customer-supplied parts welcome (with documented agreement). Your money should stay in your pocket — where it belongs.</p><span class="afrikaans">"Eerlike pryse vir eerlike mense." – Fair prices for honest people.</span></div>
+      <div class="value-card"><span class="value-icon">🦺</span><h3>Safety First</h3><p>Our team's safety and yours is non-negotiable. Full workers' compensation, liability cover, and strict safety protocols on every job. PPE worn. Always. Because a safe mechanic is a good mechanic.</p></div>
+      <div class="value-card"><span class="value-icon">⏰</span><h3>Punctual &amp; On Time</h3><p>We respect your time. Through rigorous route planning and scheduling, we eliminate overbooking and avoid late arrivals. Flexible scheduling for evenings and weekends. <em style="color:var(--lime-light);">"Op tyd, elke keer."</em></p><span class="afrikaans">"Hamba kahle – siyeza ngexesha!" (We arrive on time!)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<section id="services">
+  <div class="services-inner">
+    <div class="services-header">
+      <span class="section-label">Our Services at a Glance</span>
+      <h2 class="section-title">What We <span>Fix</span></h2>
+      <p class="section-sub">All makes &amp; models — Cars, Bakkies, Taxis, Uber/Bolt Fleets. Expert workmanship. Your driveway.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card"><span class="service-icon">🔧</span><h3>Routine Maintenance &amp; Valet</h3><p>Minor &amp; major services, full car valet — keep your vehicle running smoothly and looking showroom-fresh, right at home. Gereed om te ry! (Ready to roll!)</p></div>
+      <div class="service-card"><span class="service-icon">🛑</span><h3>Brakes &amp; Suspension</h3><p>Brake service, clutch repair, full suspension work — safer stops and smoother rides on Mzansi roads. Because potholes wait for no one.</p></div>
+      <div class="service-card"><span class="service-icon">⚡</span><h3>Electrical &amp; Diagnostics</h3><p>Advanced electrical diagnosis, ECU/module/key programming &amp; coding — fix warning lights and modern electronics fast. No more mystery dashboard lights.</p></div>
+      <div class="service-card"><span class="service-icon">🔩</span><h3>Engine &amp; Mechanical</h3><p>Expert engine work and general mobile maintenance by seasoned mechanical repair specialists. Your engine is in safe hands — belowe (promised).</p></div>
+      <div class="service-card"><span class="service-icon">❄️</span><h3>Air Conditioning &amp; HVAC</h3><p>Stay cool in the Eastern Cape heat — full A/C diagnostics, repair &amp; recharge. Sweat is not included in the service fee. We promise.</p></div>
+      <div class="service-card"><span class="service-icon">⚙️</span><h3>Transmission &amp; Drivetrain</h3><p>Smooth gear changes and reliable power delivery for taxis and daily drivers. No more cringe-worthy gear crunches at the robots.</p></div>
+      <div class="service-card"><span class="service-icon">🚛</span><h3>Fleet &amp; On-Site Solutions</h3><p>Perfect for Uber/Bolt operators and local businesses — scheduled fleet maintenance at your yard. We come to you. Always.</p></div>
+      <div class="service-card" style="background:linear-gradient(135deg,rgba(168,224,0,.1),rgba(198,255,45,.04));border-color:rgba(168,224,0,.28);"><span class="service-icon">💻</span><h3>ECU Programming &amp; Coding</h3><p>Key programming, module coding, ECU calibration — the high-tech stuff your average roadside guy simply cannot do. We can.</p></div>
+    </div>
+    <div class="services-cta">
+      <p>All services include parts + labour + travel. Fixed prices. No surprises.</p>
+      <a class="btn btn-primary" href="#pricing">See Full Service List + Fixed Pricing →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section id="howitworks">
+  <div class="howitworks-inner">
+    <div class="howitworks-header">
+      <span class="section-label">From Booking to Happy Drive</span>
+      <h2 class="section-title">How It <span>Works</span></h2>
+      <p class="section-sub" style="margin:.75rem auto 0;font-size:1.25rem;">Simple. Transparent. Stress-free. The way it should always have been.</p>
+    </div>
+    <div class="steps-container">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h3>Book in 60 Seconds</h3><p>Online calendar or WhatsApp. Choose your slot — morning, evening, or weekend. Ngokukhawuleza! (Quick &amp; easy!)</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Clear Scope &amp; Quote</h3><p>Fixed price confirmed upfront — parts + labour + travel. What you see is what you pay. Geen verborge koste nie. (No hidden costs.)</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h3>We Arrive Prepared</h3><p>Branded, ID visible, safety-first, property protected with magnetic covers and tool mats. Real-time tracking available.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h3>Work + Updates</h3><p>Real-time notifications. Pre-inspection done. Clean work area. Detailed findings report. Your approval required for any extras.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h3>Done &amp; Protected</h3><p>Warranty on labour &amp; parts. Digital invoice. Pay via EFT, cards, or mobile wallets. Rate your technician!</p></div></div>
+    </div>
+    <div class="howitworks-footer">"No surprises. Just <span>excellence</span> — every time."</div>
+  </div>
+</section>
+
+<!-- ═══════════════ CUSTOMER EXPERIENCE ═══════════════ -->
+<section id="experience">
+  <div class="experience-inner">
+    <div class="experience-content">
+      <div class="experience-header">
+        <span class="section-label">The Ultimate Customer Experience</span>
+        <h2 class="section-title">Smooth from <span>Start</span> to Finish</h2>
+        <p class="section-sub">We have invested in a state-of-the-art, end-to-end booking system to keep you in the loop. No guessing, no waiting, no surprises.</p>
+      </div>
+      <div class="experience-list">
+        <div class="exp-item"><div class="exp-num">01</div><div class="exp-body"><h4>Seamless Booking &amp; Clear Scope</h4><p>Book online and receive a clear scope of work. What you see is what you pay — fixed prices clearly outline parts, labour, and travel costs.</p></div></div>
+        <div class="exp-item"><div class="exp-num">02</div><div class="exp-body"><h4>Live Updates &amp; Technician Tracking</h4><p>Our system notifies you when your parts are secured and allows you to track your technician's arrival in real-time. Like Uber, but for your car repair.</p></div></div>
+        <div class="exp-item"><div class="exp-num">03</div><div class="exp-body"><h4>Pre-Service 360° Inspection</h4><p>Before we touch a tool, we conduct a thorough vehicle inspection with you to log any existing dents or scratches. Your property is 100% protected.</p></div></div>
+        <div class="exp-item"><div class="exp-num">04</div><div class="exp-body"><h4>Transparent Execution</h4><p>If we discover an underlying issue, we stop and communicate. No additional work ever done without your explicit approval. Comprehensive digital report provided.</p></div></div>
+        <div class="exp-item"><div class="exp-num">05</div><div class="exp-body"><h4>Digital Invoice &amp; Rating</h4><p>Receive a clear digital invoice upon completion. Pay via integrated bank gateways, EFT, or Mobile Wallets. Rate your technician to maintain our flawless standards!</p></div></div>
+      </div>
+    </div>
+    <div class="experience-visual">
+      <div class="exp-visual-box">
+        <div class="exp-rating-box">
+          <span class="stars">⭐⭐⭐⭐⭐</span>
+          <strong>5.0</strong>
+          <span>Customer Satisfaction Rating</span>
+        </div>
+        <div class="exp-features">
+          <div class="exp-feature">Live technician tracking</div>
+          <div class="exp-feature">Real-time job notifications</div>
+          <div class="exp-feature">Digital job cards &amp; reports</div>
+          <div class="exp-feature">Warranty on labour &amp; parts</div>
+          <div class="exp-feature">Pre-service vehicle inspection</div>
+          <div class="exp-feature">No work without your approval</div>
+          <div class="exp-feature">Multi-lingual communication</div>
+        </div>
+        <div class="exp-payment-methods">
+          <p style="font-family:var(--font);font-size:1rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid-grey);margin-bottom:.5rem;">We accept</p>
+          <div class="payment-row"><span class="payment-tag">💳 Card</span><span class="payment-tag">🏦 EFT</span><span class="payment-tag">📱 Mobile Wallets</span></div>
+          <div class="payment-row"><span class="payment-tag">🔗 Bank Gateway</span><span class="payment-tag">💸 SnapScan</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ OUR STORY ═══════════════ -->
+<section id="story">
+  <div class="story-inner">
+    <div>
+      <span class="section-label">Our Story &amp; Expert Team</span>
+      <h2 class="section-title">Built on <span>Trust</span></h2>
+      <p class="section-sub" style="margin-bottom:2rem;font-size:1.25rem;">From humble beginnings in 2015 to a fully registered, professional mobile operation today — we've grown because Gqeberha drivers trust us. <em style="color:var(--lime-light);">"Unyamezele" — perseverance defines us.</em></p>
+      <div class="story-timeline">
+        <div class="timeline-item"><div class="timeline-dot">🔧</div><div class="timeline-body"><h4>2015 — The Beginning</h4><p>Started with a single van, a set of tools, and an unshakeable belief that mobile mechanics could deliver dealership-quality service at your door in Gqeberha.</p></div></div>
+        <div class="timeline-item"><div class="timeline-dot">📈</div><div class="timeline-body"><h4>Growth — Earning Your Trust</h4><p>Word spread fast. Residential complexes, taxi fleet owners, Uber operators — they all came to trust the branded van that shows up, does the job, and leaves no mess.</p></div></div>
+        <div class="timeline-item"><div class="timeline-dot">🏆</div><div class="timeline-body"><h4>Today — Fully Registered &amp; Growing</h4><p>A fully registered business with a hand-picked crew of certified specialists. Carrying comprehensive insurance, modern diagnostic equipment, and a reputation built on honesty. <em style="color:var(--lime-light);">"Sisebenza ngeqiniso." (We work with integrity.)</em></p></div></div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:1.05rem;letter-spacing:.04em;margin-bottom:1.5rem;">Our <span style="color:var(--lime);">Expert Crew</span></h3>
+      <p style="font-size:1.15rem;color:var(--light-grey);line-height:1.75;margin-bottom:1.5rem;">Every technician follows our strict procedures, arrives in branded attire, carries the certifications you deserve, and treats your vehicle like their own.</p>
+      <div class="team-roles">
+        <div class="team-role"><span>⚡</span>Auto-Electricians</div>
+        <div class="team-role"><span>🔩</span>Engine &amp; Mechanical Experts</div>
+        <div class="team-role"><span>💻</span>Diagnostics &amp; Coding Specialists</div>
+        <div class="team-role"><span>🛑</span>Brake &amp; Suspension Techs</div>
+        <div class="team-role"><span>🔧</span>General Maintenance Pros</div>
+        <div class="team-role"><span>❄️</span>A/C &amp; HVAC Specialists</div>
+        <div class="team-role"><span>⚙️</span>Transmission &amp; Drivetrain</div>
+        <div class="team-role"><span>🚛</span>Fleet &amp; ECU Programming</div>
+      </div>
+      <div style="margin-top:2rem;padding:1.5rem;background:linear-gradient(135deg,rgba(168,224,0,.09),rgba(198,255,45,.04));border:1px solid rgba(168,224,0,.22);border-radius:8px;">
+        <p style="font-family:var(--font);font-size:1.1rem;letter-spacing:.05em;color:var(--light-grey);line-height:1.7;">
+          🇿🇦 &nbsp; <strong style="color:var(--lime);">Registered South African Business</strong> — Full workers' compensation, public liability insurance, and a team that represents the very best of Gqeberha's automotive expertise.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ECO PROMISE ═══════════════
+     Content UNCHANGED. Background image applied via CSS only.
+     Leaf watermark retained in ::before CSS rule. -->
+<section id="eco">
+  <div class="eco-inner">
+    <div class="eco-header">
+      <span class="section-label">Eco-Friendly Promise</span>
+      <h2 class="section-title">We Care About <span>The Bay</span></h2>
+      <p>We care about the roads and the environment around Nelson Mandela Bay. All used oils, fluids, batteries, and parts are collected and handed to <strong>licensed South African waste handlers and recyclers</strong> — never dumped or burned.<br/><br/>Sustainable practices are baked into every job because a healthier planet means better drives for our children and future Mzansi generations. <em style="color:#4ade80;">"Inzala yethu iyalinda." (Our children are watching.)</em></p>
+    </div>
+    <div class="eco-pillars">
+      <div class="eco-pillar"><span class="icon">🛢️</span><h4>Oil &amp; Fluid Disposal</h4><p>Used oils and coolants are collected and handed to licensed SA recyclers. Never dumped.</p></div>
+      <div class="eco-pillar"><span class="icon">🔋</span><h4>Battery Recycling</h4><p>Old batteries handed to certified recycling partners — lead-acid recycling that doesn't harm the Bay.</p></div>
+      <div class="eco-pillar"><span class="icon">♻️</span><h4>Parts &amp; Waste</h4><p>Old parts and workshop waste sorted and directed to approved SA waste management facilities.</p></div>
+      <div class="eco-pillar"><span class="icon">🌿</span><h4>Clean Work Sites</h4><p>Your driveway is left spotless. We carry clean-up materials on every job. No spills, no mess, no trace.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PRICING ═══════════════ -->
+<section id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header">
+      <div class="pricing-badge">💰 No Hidden Costs. Ever.</div>
+      <h2 class="section-title">Pricing <span>Transparency</span></h2>
+      <p class="section-sub" style="margin:.75rem auto 0;font-size:1.25rem;">Every service price includes parts + labour + travel. What you see is what you pay.</p>
+    </div>
+    <div class="pricing-promises">
+      <div class="pricing-promise"><div class="pp-icon">📋</div><div class="pp-text"><h4>Instant Online Quotes</h4><p>Get a fixed quote online before you commit. Browse our full service price list — no need to call, no need to haggle.</p></div></div>
+      <div class="pricing-promise"><div class="pp-icon">📞</div><div class="pp-text"><h4>Changes? We Call You First</h4><p>If anything changes during the job, we stop and call you immediately. No additional work without your explicit approval. Jy besluit altyd! (You always decide!)</p></div></div>
+      <div class="pricing-promise"><div class="pp-icon">📄</div><div class="pp-text"><h4>Detailed End-of-Job Report</h4><p>Receive a comprehensive digital report and invoice upon completion. Know exactly what was done, what parts were fitted, and what the warranty covers.</p></div></div>
+      <div class="pricing-promise"><div class="pp-icon">🔑</div><div class="pp-text"><h4>Customer-Supplied Parts Welcome</h4><p>Want to source your own parts? No problem — we fit them with a simple documented agreement. We just make sure they meet quality standards for your safety.</p></div></div>
+    </div>
+    <a class="btn btn-primary" href="#services" style="font-size:1.05rem;padding:1rem 2.5rem;">Browse Fixed Prices Now →</a>
+  </div>
+</section>
+
+<!-- ═══════════════ POLICIES ═══════════════ -->
+<section id="policies">
+  <div class="policies-inner">
+    <div class="policies-header">
+      <span class="section-label">Transparency &amp; Policies</span>
+      <h2 class="section-title">The Fine Print — <span>Made Friendly</span></h2>
+    </div>
+    <div class="policies-grid">
+      <div class="policy-item"><div class="policy-icon">💰</div><div class="policy-body"><h4>Fixed Price Promise</h4><p>The price you see on the site is the price you pay. Travel costs are included in the quote. Geen ekstra geld nie. (No extra money.)</p></div></div>
+      <div class="policy-item"><div class="policy-icon">🔄</div><div class="policy-body"><h4>Warranty</h4><p>We provide a warranty on labour and parts. If a part fails due to workmanship, we fix it. Simple, honest, the way it should be.</p></div></div>
+      <div class="policy-item"><div class="policy-icon">🏠</div><div class="policy-body"><h4>Respect for Your Property</h4><p>We use magnetic fender covers to protect your paint, lay down mats for our tools, and leave your driveway cleaner than we found it.</p></div></div>
+      <div class="policy-item"><div class="policy-icon">🔑</div><div class="policy-body"><h4>Your Parts, Your Choice</h4><p>Want to supply your own parts? We allow it with a documented agreement — we fit them for you. Your car, your call.</p></div></div>
+      <div class="policy-item"><div class="policy-icon">📞</div><div class="policy-body"><h4>Constant Communication</h4><p>For complex jobs, we keep you updated on timelines. Flexible scheduling for weekends and evenings to suit your lifestyle. Always reachable.</p></div></div>
+      <div class="policy-item"><div class="policy-icon">🦺</div><div class="policy-body"><h4>Full PPE &amp; Safety Compliance</h4><p>Every technician arrives in full PPE. Safety is not optional — it's standard. For them, for you, for everyone nearby.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section id="testimonials">
+  <div class="testimonials-inner">
+    <div class="testimonials-header">
+      <span class="section-label">What Our Clients Say</span>
+      <h2 class="section-title">Real <span>Reviews</span></h2>
+      <p class="section-sub">Don't take our word for it — hear it from the people of Gqeberha.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card"><span class="t-stars">⭐⭐⭐⭐⭐</span><p class="t-quote">"Saved me hours — fixed my Uber at my complex gate! They arrived on time, full uniform, left no mess, and the price was exactly what they quoted. I haven't used anyone else since."</p><div class="t-author"><div class="t-avatar">T</div><div class="t-info"><strong>Thabo M.</strong><span>Uber Driver, Gqeberha</span></div></div></div>
+      <div class="testimonial-card" style="border-color:rgba(168,224,0,.18);"><span class="t-stars">⭐⭐⭐⭐⭐</span><p class="t-quote">"Transparent pricing and spotless work. Best decision for my taxi fleet. They understand that a taxi off the road is money lost. They minimise downtime — I can trust them completely."</p><div class="t-author"><div class="t-avatar" style="background:linear-gradient(135deg,var(--sa-green),#4ade80);">N</div><div class="t-info"><strong>Nomvula K.</strong><span>Taxi Fleet Owner, Nelson Mandela Bay</span></div></div></div>
+      <div class="testimonial-card"><span class="t-stars">⭐⭐⭐⭐⭐</span><p class="t-quote">"Professional, on time, and eco-conscious. Highly recommend! The digital report they sent after the service gave me full confidence in exactly what was done. Uitstekende diens! (Excellent service!)"</p><div class="t-author"><div class="t-avatar" style="background:linear-gradient(135deg,var(--sa-blue),#60a5fa);">J</div><div class="t-info"><strong>Johan van der Merwe</strong><span>Residential Client, Gqeberha</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ BOOK CTA ═══════════════ -->
+<section id="book-cta">
+  <div class="book-cta-inner">
+    <div class="book-cta-text">
+      <h2>Ready for a Workshop<br/>at Your Doorstep?</h2>
+      <p>Book in 60 seconds. Get a fixed quote. No surprises. Just results. <em>"Siyeza!" (We're coming!)</em></p>
+    </div>
+    <div class="book-cta-btns">
+      <a class="btn btn-dark" href="booking_matched.html" style="font-size:1rem;padding:1rem 2rem;">📅 Book Now — It's Free to Start</a>
+      <a class="btn btn-white" href="tel:+27000000000" style="font-size:1rem;padding:1rem 2rem;">📞 Call / WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="footer-logo" href="#">
+          <img src="https://raw.githubusercontent.com/Zachy065/Our-Work-/main/logo.png" alt="AUTO-HAUS TORQUE" onerror="this.style.display='none'" />
+          <span class="footer-logo-name">AUTO-HAUS TORQUE</span>
+        </a>
+        <p>Gqeberha's trusted mobile automotive specialists. Serving residential complexes, Uber/Bolt fleets, taxi operators, and everyday drivers since 2015. We come to you — always.</p>
+        <div class="footer-socials">
+          <a class="footer-social" href="#" title="Facebook">📘</a>
+          <a class="footer-social" href="#" title="Instagram">📷</a>
+          <a class="footer-social" href="#" title="WhatsApp">💬</a>
+          <a class="footer-social" href="#" title="Google">🔍</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#howitworks">How It Works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#eco">Eco Promise</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Routine Maintenance</a></li>
+          <li><a href="#services">Brakes &amp; Suspension</a></li>
+          <li><a href="#services">Electrical &amp; Diagnostics</a></li>
+          <li><a href="#services">Engine &amp; Mechanical</a></li>
+          <li><a href="#services">Air Conditioning</a></li>
+          <li><a href="#services">Transmission</a></li>
+          <li><a href="#services">Fleet Solutions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact Us</h5>
+        <div class="contact-item">📞 <span><strong>Call / WhatsApp</strong><br/>+27 000 000 0000</span></div>
+        <div class="contact-item">📧 <span><strong>Email</strong><br/>info@autohaustor que.co.za</span></div>
+        <div class="contact-item">📍 <span><strong>Service Area</strong><br/>Gqeberha &amp; Surrounds, Eastern Cape</span></div>
+        <div class="contact-item">🕐 <span><strong>Hours</strong><br/>Mon–Sun incl. Evenings &amp; Weekends</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span>AUTO-HAUS TORQUE</span>. All rights reserved. Registered South African Business. | Built with pride in <span>🇿🇦 Gqeberha</span></p>
+      <div class="footer-flag">
+        <div class="sa-flag-mini">
+          <div class="sf-green"></div>
+          <div class="sf-middle"><div class="sf-white-top"></div><div class="sf-yellow"></div><div class="sf-black"></div></div>
+          <div class="sf-red"></div><div class="sf-blue"></div>
+        </div>
+        Proudly South African
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* hamburger */
+const hbtn=document.getElementById('hamburgerBtn'),mmenu=document.getElementById('mobileMenu');
+if(hbtn&&mmenu){
+  hbtn.addEventListener('click',()=>mmenu.classList.toggle('open'));
+  mmenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mmenu.classList.remove('open')));
+}
+/* sticky nav */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.background=window.scrollY>50?'rgba(0,0,0,1)':'rgba(0,0,0,.95)';
+});
+/* scroll-reveal */
+const revEls=document.querySelectorAll(
+  '.serve-card,.value-card,.service-card,.step,.exp-item,.timeline-item,.testimonial-card,.eco-pillar,.pricing-promise,.policy-item,.vehicle-card'
+);
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';io.unobserve(e.target);}
+  });
+},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+revEls.forEach((el,i)=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(28px)';
+  el.style.transition=`opacity .55s ${i*.04}s ease,transform .55s ${i*.04}s ease`;
+  io.observe(el);
+});
+</script>
+</body>
+</html>
